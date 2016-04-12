@@ -1,0 +1,63 @@
+script-dir: /etc/nodepool/scripts
+elements-dir: /etc/nodepool/elements
+images-dir: /opt/nodepool_dib
+dburi: '{{ DBURI }}'
+
+#cron:
+#  cleanup: '*/1 * * * *'
+#  check: '*/15 * * * *'
+#  image-update: '14 14 * * *'
+
+zmq-publishers:
+  - tcp://jenkins.ng.mirantis.net:8888
+
+gearman-servers:
+  - host: zuul.ng.mirantis.net
+
+labels:
+  - name: ng-minimal
+    #image: ng-minimal
+    image: ng-ubuntu
+    min-ready: 1
+    providers:
+      - name: nextgen-ci
+
+providers:
+  - name: nextgen-ci
+    region-name: 'RegionOne'
+    service-type: 'compute'
+    service-name: 'nova'
+    username: '{{ PROVIDERS_USERNAME }}'
+    password: '{{ PROVIDERS_PASSWORD }}'
+    project-id: 'nextgen-ci'
+    auth-url: 'https://horizon-us.ssl.mirantis.net:5000/v2.0'
+    boot-timeout: 120
+    max-servers: 2
+    rate: 0.001
+    #networks:
+    # - net-label: 'sandbox-net'
+    pool: 'ext_float'
+    images:
+      - name: ng-ubuntu
+        base-image: 'trusty-server-cloudimg-amd64'
+        setup: ng-slave.sh
+        username: jenkins
+        private-key: /var/lib/nodepool/.ssh/id_rsa
+        min-ram: 4096
+        name-filter: 'm1.medium'
+
+targets:
+  - name: jenkins
+    jenkins:
+      url: 'https://jenkins.ng.mirantis.net'
+      user: '{{ TARGETS_USERNAME }}'
+      apikey: '{{ TARGETS_APIKEY }}'
+      credentials-id: '{{ TARGETS_CREDENTIALSID }}'
+
+diskimages:
+  - name: ng-minimal
+    elements:
+      - base
+      - ubuntu
+    release: trusty
+    qemu-img-options: compat=0.10
