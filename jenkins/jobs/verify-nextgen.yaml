@@ -1,0 +1,11 @@
+- project:
+    name: verify-nextgen-tox-tests
+    jobs:
+      - 'verify-tox-{tox-test}-{job-label}':
+          tox-test:
+            - pep8
+            - py27
+    job-label:
+      - 'nextgen-specs':
+          branch: 'master'
+          repo: 'nextgen/nextgen-specs'

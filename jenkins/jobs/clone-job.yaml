@@ -1,0 +1,55 @@
+#
+# Template for job executed manually
+#
+- job-template:
+    name: example-manual-job-{repo}
+    description: |
+      Simple test executed manually
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/test.sh'
+    concurrent: true
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'openstack/{repo}'
+
+#
+# Template for job triggered by gerrit event
+#
+- job-template:
+    name: example-trigger-job-{repo}
+    description: |
+      Simple test executed by trigger
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/test.sh'
+    concurrent: true
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra_trigger:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'openstack/{repo}'
+    triggers:
+      - fuel-infra:
+          project-pattern: 'openstack/{repo}'
+    publishers:
+      - logs-private
+
+- project:
+    name: example-simple-clone-job
+    jobs:
+       - 'example-manual-job-{repo}'
+       - 'example-trigger-job-{repo}'
+    repo:
+       - 'kolla':
+           branch: 'mirantis'
+       - 'kolla-mesos':
+           branch: 'mirantis'

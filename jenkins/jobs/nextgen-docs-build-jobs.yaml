@@ -1,0 +1,54 @@
+#
+# Template for job executed manually
+#
+- job-template:
+    name: build-all-docs-manual-job-{repo}
+    description: |
+      Docs build job executed manually
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/ng-build-specs.sh'
+    concurrent: true
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'nextgen/{repo}'
+
+#
+# Template for job triggered by gerrit event
+#
+- job-template:
+    name: build-merged-trigger-docs-job-{repo}
+    description: |
+      Docs build job executed manually
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/ng-build-specs.sh'
+    concurrent: true
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra_trigger:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'nextgen/{repo}'
+    triggers:
+      - fuel-infra-patchset-merged:
+          project-pattern: 'nextgen/{repo}'
+    publishers:
+      - logs-private
+
+
+- project:
+    name: nextgen-docs-build-jobs
+    jobs:
+       - 'build-all-docs-manual-job-{repo}'
+       - 'build-merged-trigger-docs-job-{repo}'
+    repo:
+       - 'nextgen-specs':
+           branch: 'master'

@@ -1,0 +1,89 @@
+#
+# Template for job executed manually
+#
+- job-template:
+    name: deploy-manual-job-{repo}
+    description: |
+      Kolla deploy job executed manually
+    node: rax
+    properties:
+      - inject:
+          properties-content: |
+            AIO=true
+            PRIMARY_ETH="p1p1.602"
+            SECONDARY_ETH="p1p1"
+            DOCKER_IMAGE_TAG="latest"
+            FULL_CLEANUP=true
+            DOCKER_PRIVATE_REGISTRY_PRIMARY="registry01-scc.fuel-infra.org"
+            DOCKER_PRIVATE_REGISTRY_SECONDARY="registry01-bud.fuel-infra.org"
+            DOCKER_PRIVATE_REGISTRY=${DOCKER_PRIVATE_REGISTRY_PRIMARY}
+            DOCKER_PRIVATE_REGISTRY_NAMESPACE="nextgen"
+            DOCKER_IMAGE_TAG="${GERRIT_BRANCH}_${GERRIT_CHANGE_NUMBER}"
+            GERRIT_USER=""
+            INFRA_ONLY=false
+            OPENSTACK_ONLY=false
+    builders:
+      - shell:
+          !include-raw-escape 'builders/kolla-deploy-custom.sh'
+    concurrent: false
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'openstack/{repo}'
+      - kolla-all
+
+#
+# Template for job triggered by gerrit event
+#
+- job-template:
+    name: deploy-trigger-job-{repo}
+    description: |
+      Kolla deploy job executed by trigger
+    node: rax
+    properties:
+      - inject:
+          properties-content: |
+            AIO=true
+            PRIMARY_ETH="p1p1.602"
+            SECONDARY_ETH="p1p1"
+            FULL_CLEANUP=true
+            DOCKER_PRIVATE_REGISTRY_PRIMARY="registry01-scc.fuel-infra.org"
+            DOCKER_PRIVATE_REGISTRY_SECONDARY="registry01-bud.fuel-infra.org"
+            DOCKER_PRIVATE_REGISTRY=${DOCKER_PRIVATE_REGISTRY_PRIMARY}
+            DOCKER_PRIVATE_REGISTRY_NAMESPACE="nextgen"
+            DOCKER_IMAGE_TAG="${GERRIT_BRANCH}_${GERRIT_CHANGE_NUMBER}"
+            GERRIT_USER=""
+            INFRA_ONLY=false
+            OPENSTACK_ONLY=false
+    builders:
+      - shell:
+          !include-raw-escape 'builders/kolla-deploy-custom.sh'
+    concurrent: false
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra_trigger:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'openstack/{repo}'
+      - kolla-all
+    triggers:
+      - fuel-infra-no-vote:
+          project-pattern: 'openstack/{repo}'
+    publishers:
+      - logs-private
+
+
+- project:
+    name: kolla-deploy-jobs
+    jobs:
+       - 'deploy-manual-job-{repo}'
+       - 'deploy-trigger-job-{repo}'
+    repo:
+       - 'kolla':
+           branch: 'mirantis'
+       - 'kolla-mesos':
+           branch: 'mirantis'
