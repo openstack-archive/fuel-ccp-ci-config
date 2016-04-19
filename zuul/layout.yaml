@@ -1,0 +1,76 @@
+piplines:
+  - name: check
+    description: Verify new patchset
+    success-message: Build succeeded
+    failure-message: Build failed
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: normal
+    require:
+      open: True
+      current-patchset: True
+    trigger:
+      gerrit:
+        - event: patchset-created
+        - event: comment-added
+        comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify)
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 1
+    failure:
+      gerrit:
+        verfied: -1
+
+  - name: gate
+    description: Merge after succesfull verification
+    success-message: Build succeded
+    failure-message: Build failed
+    manager: DependentPipelineManager
+    source: gerrit
+    precedence: high
+    require:
+      open: True
+      current-patchset: True
+      approval:
+        - verified: [1,2]
+          user: jenkins
+        - workflow: 1
+      trigger:
+        gerrit:
+          - event: comment-added
+            approval:
+              - workflow: 1
+          - event: comment-added
+            approval:
+              - verified: 1
+                username: jenkins
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 2
+        submit: true
+    failure:
+      gerrit:
+        verfied: -2
+
+
+project-template:
+  - name: verify-tox
+    check:
+      - 'verify-{name}-tox-tests'
+
+project:
+  - name: nextgen/nextgen-specs
+    check:
+      - verify-nextgen-tox-tests
+
+project:
+  - name: openstack/kolla
+    template:
+      - verify-tox
+
