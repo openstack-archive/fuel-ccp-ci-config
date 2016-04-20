@@ -62,12 +62,14 @@ pipelines:
 project-templates:
   - name: verify-tox
     check:
-      - 'verify-{name}-tox-tests'
+      - 'verify-tox-pep8-{name}'
+      - 'verify-tox-py27-{name}'
 
 projects:
   - name: nextgen/nextgen-specs
     check:
-      - verify-nextgen-tox-tests
+      - verify-tox-py27-nextgen-specs
+      - verify-tox-pep8-nextgen-specs
 
   - name: openstack/kolla
     template:
