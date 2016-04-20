@@ -49,7 +49,5 @@
        - 'example-manual-job-{repo}'
        - 'example-trigger-job-{repo}'
     repo:
-       - 'kolla':
-           branch: 'mirantis'
-       - 'kolla-mesos':
-           branch: 'mirantis'
+       - 'nextgen-specs':
+           branch: 'master'

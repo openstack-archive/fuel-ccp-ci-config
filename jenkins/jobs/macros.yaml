@@ -91,22 +91,6 @@
 # Static repositories
 #
 
-# Kolla repos:
-- scm:
-    name: kolla-all
-    scm:
-      - git:
-          url: 'ssh://nextgen-ci@review.fuel-infra.org:29418/openstack/kolla.git'
-          basedir: 'kolla-all-kolla'
-          skip-tag: true
-          branches:
-            - 'mirantis'
-      - git:
-          url: 'ssh://nextgen-ci@review.fuel-infra.org:29418/openstack/kolla-mesos.git'
-          basedir: 'kolla-all-kolla-mesos'
-          skip-tag: true
-          branches:
-            - 'mirantis'
 
 #
 # SSH credentials

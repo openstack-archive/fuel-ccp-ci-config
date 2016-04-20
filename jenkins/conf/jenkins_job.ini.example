@@ -1,7 +1,7 @@
 [jenkins]
 user=USER
 password=APIKEY
-url=https://ci.ng.mirantis.net
+url=https://jenkins.ng.mirantis.net
 query_plugins_info=False
 
 [job_builder]
