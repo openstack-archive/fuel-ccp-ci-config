@@ -13,7 +13,7 @@ piplines:
       gerrit:
         - event: patchset-created
         - event: comment-added
-        comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify)
+          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify)
     start:
       gerrit:
         verified: 0
