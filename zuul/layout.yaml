@@ -1,4 +1,4 @@
-piplines:
+pipelines:
   - name: check
     description: Verify new patchset
     success-message: Build succeeded
