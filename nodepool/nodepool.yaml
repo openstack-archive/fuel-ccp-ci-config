@@ -18,7 +18,7 @@ labels:
   - name: ng-minimal
     #image: ng-minimal
     image: ng-ubuntu
-    min-ready: 1
+    min-ready: 5
     providers:
       - name: nextgen-ci
 
@@ -32,14 +32,14 @@ providers:
     project-id: 'nextgen-ci'
     auth-url: 'https://horizon-us.ssl.mirantis.net:5000/v2.0'
     boot-timeout: 120
-    max-servers: 2
+    max-servers: 5
     rate: 0.001
     #networks:
     # - net-label: 'sandbox-net'
     pool: 'ext_float'
     images:
       - name: ng-ubuntu
-        base-image: 'trusty-server-cloudimg-amd64'
+        base-image: 'pub-ub14.04-64v2.qcow2'
         setup: ng-slave.sh
         username: jenkins
         private-key: /var/lib/nodepool/.ssh/id_rsa
