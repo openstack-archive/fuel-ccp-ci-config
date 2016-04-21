@@ -17,6 +17,3 @@
           scm-basedir: ''
           scm-branch: '{branch}'
           scm-repo: '{repo}'
-    triggers:
-      - fuel-infra-no-vote:
-          project-pattern: '{repo}'
