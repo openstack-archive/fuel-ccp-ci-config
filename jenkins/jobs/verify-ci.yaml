@@ -14,23 +14,6 @@
     node: standard
     wrappers:
       - nextgen-ci-jenkins
-    scm:
-      - fuel-infra_trigger:
-          scm-basedir: ''
-          scm-repo: 'tools/{repo}'
-    triggers:
-      - gerrit:
-          trigger-on:
-            - patchset-created-event
-            - comment-added-contains-event:
-                comment-contains-value: 'recheck'
-          projects:
-            - project-compare-type: PLAIN
-              project-pattern: 'tools/{repo}'
-              branches:
-                - branch-compare-type: ANT
-                  branch-pattern: '**'
-          custom-url: '* $JOB_NAME $BUILD_URL'
 
 # JJB
 - job-template:
@@ -44,23 +27,6 @@
     node: standard
     wrappers:
       - nextgen-ci-jenkins
-    scm:
-      - fuel-infra_trigger:
-          scm-basedir: ''
-          scm-repo: 'tools/{repo}'
-    triggers:
-      - gerrit:
-          trigger-on:
-            - patchset-created-event
-            - comment-added-contains-event:
-                comment-contains-value: 'recheck'
-          projects:
-            - project-compare-type: PLAIN
-              project-pattern: 'tools/{repo}'
-              branches:
-                - branch-compare-type: ANT
-                  branch-pattern: '**'
-          custom-url: '* $JOB_NAME $BUILD_URL'
 
 - project:
     name: verify-ci-bashate

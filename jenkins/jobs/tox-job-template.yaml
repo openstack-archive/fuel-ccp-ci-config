@@ -4,6 +4,14 @@
 - job-template:
     name: verify-tox-{tox-test}-{job-label}
     builders:
+      - shell: |
+          env | grep ZUUL
+          pwd
+          ls -la
+          git clean -x -f -d -q
+          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT
+          git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
+          git checkout FETCH_HEAD
       - check-tox:
           tox-test: '{tox-test}'
     concurrent: true
@@ -12,8 +20,5 @@
     node: standard
     wrappers:
       - nextgen-ci-jenkins
-    scm:
-      - fuel-infra_trigger:
-          scm-basedir: ''
-          scm-branch: '{branch}'
-          scm-repo: '{repo}'
+    triggers:
+      - zuul
