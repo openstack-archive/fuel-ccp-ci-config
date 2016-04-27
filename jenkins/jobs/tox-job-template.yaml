@@ -19,6 +19,7 @@
       Tox {tox-test} syntax test
     node: standard
     wrappers:
+      - ng-cleanup
       - nextgen-ci-jenkins
     triggers:
       - zuul

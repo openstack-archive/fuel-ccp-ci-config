@@ -59,6 +59,11 @@
             - '77acc946-f346-4665-8271-c141b6ae9764'
             - '04a7dbe6-f3cd-4cc1-afc5-b8f2bd6cbb38'
 
+- wrapper:
+    name: 'ng-cleanup'
+    wrappers:
+      - workspace-cleanup
+
 #
 # Publishers
 #
