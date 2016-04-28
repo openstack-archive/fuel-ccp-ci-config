@@ -25,7 +25,7 @@ pipelines:
         verfied: -1
 
   - name: gate
-    description: Merge after succesfull verification
+    description: Test after verifed and workflow
     success-message: Build succeded
     failure-message: Build failed
     manager: DependentPipelineManager
@@ -36,7 +36,7 @@ pipelines:
       current-patchset: True
       approval:
         - verified: [1,2]
-          user: jenkins
+          username: nextgen-ci
         - workflow: 1
     trigger:
       gerrit:
@@ -46,7 +46,7 @@ pipelines:
         - event: comment-added
           approval:
             - verified: 1
-              username: jenkins
+              username: nextgen-ci
     start:
       gerrit:
         verified: 0
@@ -58,6 +58,15 @@ pipelines:
       gerrit:
         verfied: -2
 
+  - name: post
+    description: Job run after merge
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: low
+    trigger:
+      gerrit:
+        - event: ref-updated
+          ref: ^(?!refs/).*$
 
 project-templates:
   - name: verify-tox
@@ -70,8 +79,17 @@ projects:
     check:
       - verify-tox-py27-nextgen-specs
       - verify-tox-pep8-nextgen-specs
+    post:
+      - nextgen-docs-build-jobs
 
   - name: openstack/kolla
     template:
       - name: verify-tox
 
+  - name: tools/ng-ci-scripts
+    check:
+      - ng-scripts-check-triggered-job
+    gate:
+      - ng-scripts-gate-triggered-job
+    post:
+      - ng-scripts-post-triggered-job
