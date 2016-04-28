@@ -1,0 +1,19 @@
+- job-template:
+    name: solar-prepare-env
+    description: |
+      Solar prepare env
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/solar-prepare-env.sh'
+    concurrent: false
+    scm:
+      - solar:
+          scm-basedir: ''
+          scm-branch: 'master'
+
+- project:
+    name: Solar Deploy
+    jobs:
+       - 'solar-prepare-env'
+
