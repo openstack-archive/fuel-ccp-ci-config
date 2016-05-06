@@ -8,9 +8,10 @@
           !include-raw 'builders/solar-prepare-env.sh'
     concurrent: false
     scm:
-      - solar:
+      - mcpinstaller:
           scm-basedir: ''
           scm-branch: 'master'
+          scm-repo: 'nextgen/mcpinstaller'
 
 - project:
     name: Solar Deploy
