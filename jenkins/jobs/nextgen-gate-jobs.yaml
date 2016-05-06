@@ -1,0 +1,495 @@
+- job:
+    name: nextgen-microservices-gate-job
+    description: |
+      Some gate nextgen-microservices test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-microservices-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-aodh-gate-job
+    description: |
+      Some gate nextgen-ms-aodh test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-aodh-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-ceilometer-gate-job
+    description: |
+      Some gate nextgen-ms-ceilometer test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-ceilometer-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-ceph-gate-job
+    description: |
+      Some gate nextgen-ms-ceph test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-ceph-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-cinder-gate-job
+    description: |
+      Some gate nextgen-ms-cinder test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-cinder-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-debian-base-gate-job
+    description: |
+      Some gate nextgen-ms-debian-base test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-debian-base-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-designate-gate-job
+    description: |
+      Some gate nextgen-ms-designate test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-designate-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-elasticsearch-gate-job
+    description: |
+      Some gate nextgen-ms-elasticsearch test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-elasticsearch-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-ext-config-gate-job
+    description: |
+      Some gate nextgen-ms-ext-config test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-ext-config-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-glance-gate-job
+    description: |
+      Some gate nextgen-ms-glance test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-glance-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-heat-gate-job
+    description: |
+      Some gate nextgen-ms-heat test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-heat-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-heka-gate-job
+    description: |
+      Some gate nextgen-ms-heka test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-heka-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-horizon-gate-job
+    description: |
+      Some gate nextgen-ms-horizon test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-horizon-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-ironic-gate-job
+    description: |
+      Some gate nextgen-ms-ironic test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-ironic-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-kibana-gate-job
+    description: |
+      Some gate nextgen-ms-kibana test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-kibana-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-magnum-gate-job
+    description: |
+      Some gate nextgen-ms-magnum test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-magnum-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-manila-gate-job
+    description: |
+      Some gate nextgen-ms-manila test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-manila-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-mariadb-gate-job
+    description: |
+      Some gate nextgen-ms-mariadb test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-mariadb-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-memcached-gate-job
+    description: |
+      Some gate nextgen-ms-memcached test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-memcached-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-mistral-gate-job
+    description: |
+      Some gate nextgen-ms-mistral test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-mistral-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-mongodb-gate-job
+    description: |
+      Some gate nextgen-ms-mongodb test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-mongodb-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-murano-gate-job
+    description: |
+      Some gate nextgen-ms-murano test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-murano-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-neutron-gate-job
+    description: |
+      Some gate nextgen-ms-neutron test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-neutron-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-nova-gate-job
+    description: |
+      Some gate nextgen-ms-nova test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-nova-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-openstack-base-gate-job
+    description: |
+      Some gate nextgen-ms-openstack-base test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-openstack-base-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-openvswitch-gate-job
+    description: |
+      Some gate nextgen-ms-openvswitch test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-openvswitch-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-rabbitmq-gate-job
+    description: |
+      Some gate nextgen-ms-rabbitmq test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-rabbitmq-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-sahara-gate-job
+    description: |
+      Some gate nextgen-ms-sahara test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-sahara-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-swift-gate-job
+    description: |
+      Some gate nextgen-ms-swift test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-swift-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-tempest-gate-job
+    description: |
+      Some gate nextgen-ms-tempest test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-tempest-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-toolbox-gate-job
+    description: |
+      Some gate nextgen-ms-toolbox test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-toolbox-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-trove-gate-job
+    description: |
+      Some gate nextgen-ms-trove test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-trove-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
+    name: nextgen-ms-zaqar-gate-job
+    description: |
+      Some gate nextgen-ms-zaqar test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-zaqar-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+

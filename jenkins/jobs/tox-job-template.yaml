@@ -2,7 +2,7 @@
 # Template used to execute tox tests
 #
 - job-template:
-    name: verify-tox-{tox-test}-{job-label}
+    name: verify-tox-{tox-test}
     builders:
       - shell: |
           env | grep ZUUL

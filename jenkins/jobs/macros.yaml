@@ -100,3 +100,12 @@
     name: check-tox
     builders:
       - shell: 'tox -v -e {tox-test}'
+
+- builder:
+    name: get-from-zuul
+    builders:
+      - shell: |
+          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
+          git checkout FETCH_HEAD
+          git status
