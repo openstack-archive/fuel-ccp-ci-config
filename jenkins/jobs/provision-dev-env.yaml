@@ -1,0 +1,14 @@
+- job-template:
+    name: provision-dev-env
+    description: |
+      Provision dev env job
+    node: dev
+    builders:
+      - shell:
+          !include-raw 'builders/provision-dev-env.sh'
+    concurrent: false
+
+- project:
+    name: Provision dev env
+    jobs:
+       - 'provision-dev-env'
