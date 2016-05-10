@@ -127,6 +127,7 @@ projects:
   - name: nextgen/ms-debian-base
     check:
       - verify-tox-bashate
+      - check-build-job
     gate:
       - nextgen-ms-debian-base-gate-job
 
@@ -293,6 +294,8 @@ projects:
       - nextgen-ms-zaqar-gate-job
 
   - name: nextgen/mcpinstaller
+    template:
+      - name: verify-tox
     check:
       - verify-tox-bashate
     gate:
