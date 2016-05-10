@@ -77,8 +77,8 @@ project-templates:
 projects:
   - name: nextgen/nextgen-specs
     check:
-      - verify-tox-py27-nextgen-specs
-      - verify-tox-pep8-nextgen-specs
+      - verify-tox-py27
+      - verify-tox-pep8
     post:
       - nextgen-docs-build-jobs
 
@@ -93,6 +93,7 @@ projects:
       - ng-scripts-gate-triggered-job
     post:
       - ng-scripts-post-triggered-job
+
   - name: nextgen/microservices
     template:
       - name: verify-tox
@@ -100,44 +101,44 @@ projects:
       - nextgen-microservices-gate-job
 
   - name: nextgen/ms-aodh
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-aodh-gate-job
 
   - name: nextgen/ms-ceilometer
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-ceilometer-gate-job
 
   - name: nextgen/ms-ceph
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-ceph-gate-job
 
   - name: nextgen/ms-cinder
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-cinder-gate-job
 
   - name: nextgen/ms-debian-base
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-debian-base-gate-job
 
   - name: nextgen/ms-designate
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-designate-gate-job
 
   - name: nextgen/ms-elasticsearch
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-elasticsearch-gate-job
 
@@ -148,128 +149,128 @@ projects:
       - nextgen-ms-ext-config-gate-job
 
   - name: nextgen/ms-glance
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-glance-gate-job
 
   - name: nextgen/ms-heat
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-heat-gate-job
 
   - name: nextgen/ms-heka
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-heka-gate-job
 
   - name: nextgen/ms-horizon
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-horizon-gate-job
 
   - name: nextgen/ms-ironic
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-ironic-gate-job
 
   - name: nextgen/ms-kibana
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-kibana-gate-job
 
   - name: nextgen/ms-magnum
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-magnum-gate-job
 
   - name: nextgen/ms-manila
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-manila-gate-job
 
   - name: nextgen/ms-mariadb
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-mariadb-gate-job
 
   - name: nextgen/ms-memcached
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-memcached-gate-job
 
   - name: nextgen/ms-mistral
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-mistral-gate-job
 
   - name: nextgen/ms-mongodb
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-mongodb-gate-job
 
   - name: nextgen/ms-murano
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-murano-gate-job
 
   - name: nextgen/ms-neutron
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-neutron-gate-job
 
   - name: nextgen/ms-nova
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-nova-gate-job
 
   - name: nextgen/ms-openstack-base
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-openstack-base-gate-job
 
   - name: nextgen/ms-openvswitch
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-openvswitch-gate-job
 
   - name: nextgen/ms-rabbitmq
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-rabbitmq-gate-job
 
   - name: nextgen/ms-sahara
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-sahara-gate-job
 
   - name: nextgen/ms-swift
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-swift-gate-job
 
   - name: nextgen/ms-tempest
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-tempest-gate-job
 
@@ -280,13 +281,19 @@ projects:
       - nextgen-ms-toolbox-gate-job
 
   - name: nextgen/ms-trove
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-trove-gate-job
 
   - name: nextgen/ms-zaqar
-    template:
-      - name: verify-tox
+    check:
+      - verify-tox-bashate
     gate:
       - nextgen-ms-zaqar-gate-job
+
+  - name: nextgen/mcpinstaller
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-mcpinstaller

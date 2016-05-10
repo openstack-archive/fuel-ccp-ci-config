@@ -5,3 +5,4 @@
           tox-test:
             - pep8
             - py27
+            - bashate

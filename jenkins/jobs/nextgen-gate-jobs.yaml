@@ -493,3 +493,18 @@
     triggers:
       - zuul
 
+- job:
+    name: nextgen-mcpinstaller
+    description: |
+      Some gate mcpinstaller test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-mcpinstaller-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
