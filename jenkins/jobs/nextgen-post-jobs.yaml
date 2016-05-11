@@ -4,12 +4,13 @@
       Update jenkins jobs after merge
     node: standard
     builders:
-      - get-from-zuul
       - shell: !include-raw builders/update-jenkins-post-job.sh
     concurrent: true
     wrappers:
       - ng-cleanup
       - nextgen-ci-jenkins
+      - inject-passwords:
+          global: true
     triggers:
       - zuul
 

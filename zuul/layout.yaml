@@ -303,7 +303,6 @@ projects:
 
   - name: nextgen/project-config
     check:
-      - verify-tox-bashate
       - verify-jjb-project-config
-    gate:
-      - nextgen-project-config
+    post:
+      - update-jenkins-jobs
