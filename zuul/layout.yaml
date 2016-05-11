@@ -300,3 +300,10 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-mcpinstaller
+
+  - name: nextgen/project-config
+    check:
+      - verify-tox-bashate
+      - verify-jjb-project-config
+    gate:
+      - nextgen-project-config

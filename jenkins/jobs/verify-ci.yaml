@@ -6,6 +6,7 @@
 - job-template:
     name: verify-bashate-{repo}
     builders:
+      - get-from-zuul
       - check-tox:
           tox-test: bashate
     concurrent: true
@@ -13,12 +14,14 @@
       Bashate syntax test
     node: standard
     wrappers:
+      - ng-cleanup
       - nextgen-ci-jenkins
 
 # JJB
 - job-template:
     name: verify-jjb-{repo}
     builders:
+      - get-from-zuul
       - check-tox:
           tox-test: nextgen-ci
     concurrent: true
@@ -26,6 +29,7 @@
       JJB syntax test
     node: standard
     wrappers:
+      - ng-cleanup
       - nextgen-ci-jenkins
 
 - project:
@@ -40,4 +44,4 @@
     jobs:
        - 'verify-jjb-{repo}'
     repo:
-       - 'ng-ci-configs'
+       - 'project-config'

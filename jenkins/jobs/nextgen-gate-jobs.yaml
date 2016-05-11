@@ -508,3 +508,17 @@
     triggers:
       - zuul
 
+- job:
+    name: nextgen-project-config
+    description: |
+      Some nextgen project config gate test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-project-config-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
