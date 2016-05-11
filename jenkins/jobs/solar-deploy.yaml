@@ -2,7 +2,7 @@
     name: solar-prepare-env
     description: |
       Solar prepare env
-    node: standard
+    node: solar
     builders:
       - shell:
           !include-raw 'builders/solar-prepare-env.sh'

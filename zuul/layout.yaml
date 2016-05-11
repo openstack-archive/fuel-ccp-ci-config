@@ -304,5 +304,7 @@ projects:
   - name: nextgen/project-config
     check:
       - verify-jjb-project-config
+    gate:
+      - verify-jjb-project-config
     post:
       - update-jenkins-jobs

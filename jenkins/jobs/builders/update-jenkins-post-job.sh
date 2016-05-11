@@ -5,7 +5,7 @@ echo "This is job for update jenkins jobs after merge"
 
 git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
 
-cat > "jenkins_jobs.ini" << EOF
+cat > jenkins_jobs.ini << EOF
 [jenkins]
 user=${JJB_USER}
 password=${JJB_PASS}
@@ -16,4 +16,4 @@ ignore_cache=True
 recursive=True
 EOF
 
-jenkins-jobs --conf jenkins_jobs.ini" update jenkins/jobs
+jenkins-jobs --conf jenkins_jobs.ini update jenkins/jobs
