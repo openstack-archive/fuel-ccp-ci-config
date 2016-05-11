@@ -1,0 +1,24 @@
+- job-template:
+    name: example-neverending-job
+    description: |
+      Sample never-ending job with post action after abort.
+    node: solar
+    builders:
+      - shell: 'while [ 1 ]; do sleep 2; done'
+    concurrent: true
+    wrappers:
+      - timeout:
+          timeout: 0
+          fail: false
+    publishers:
+    - postbuildscript:
+        builders:
+          - shell: 'echo "Post built script"'
+        script-only-if-succeeded: False
+        script-only-if-failed: False
+
+- project:
+    name: Sample never-ending job with post action after abort.
+    jobs:
+       - 'example-neverending-job'
+
