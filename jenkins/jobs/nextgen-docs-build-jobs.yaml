@@ -5,14 +5,14 @@
     name: build-all-docs-manual-job-{repo}
     description: |
       Docs build job executed manually
-    node: standard
+    node: docs
     builders:
       - shell:
           !include-raw 'builders/ng-build-specs.sh'
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - nextgen-ci-docs
     scm:
       - fuel-infra:
           scm-basedir: ''
@@ -25,7 +25,7 @@
     name: build-all-docs-triggered-job-{repo}
     description: |
       Docs build job triggered
-    node: standard
+    node: docs
     builders:
       - shell: |
           git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
@@ -36,7 +36,7 @@
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - nextgen-ci-docs
     triggers:
       - zuul
 
