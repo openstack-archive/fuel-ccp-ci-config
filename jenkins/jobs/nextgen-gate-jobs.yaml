@@ -1,4 +1,19 @@
 - job:
+    name: nextgen-dev-env-gate-job
+    description: |
+      Gate job for nextgen-dev-env
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-dev-env-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
     name: nextgen-microservices-gate-job
     description: |
       Some gate nextgen-microservices test job

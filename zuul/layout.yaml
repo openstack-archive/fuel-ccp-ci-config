@@ -94,6 +94,12 @@ projects:
     post:
       - ng-scripts-post-triggered-job
 
+  - name: nextgen/dev-env
+    check:
+      - name: verify-tox-bashate
+    gate:
+      - nextgen-dev-env-gate-job
+
   - name: nextgen/microservices
     template:
       - name: verify-tox
