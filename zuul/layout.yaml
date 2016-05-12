@@ -96,7 +96,7 @@ projects:
 
   - name: nextgen/dev-env
     check:
-      - name: verify-tox-bashate
+      - verify-tox-bashate
     gate:
       - nextgen-dev-env-gate-job
 
