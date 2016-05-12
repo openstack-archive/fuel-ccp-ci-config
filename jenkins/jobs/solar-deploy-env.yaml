@@ -1,0 +1,34 @@
+- job-template:
+    name: solar-deploy-env
+    description: |
+      Deploy development environment using Solar.
+    node: solar
+    builders:
+      - shell:
+          !include-raw 'builders/solar-deploy-env.sh'
+    concurrent: false
+    scm:
+      - mcpinstaller:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'nextgen/mcpinstaller'
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+      - timeout:
+          timeout: 44640
+          fail: false
+    publishers:
+      - post-tasks:
+        - matches:
+          - log-text: Build was aborted
+          escalate-status: true
+          run-if-job-successful: false
+          script: |
+            builders/solar-clear-env.sh
+
+- project:
+    name: Deploy development environment using Solar.
+    jobs:
+       - 'solar-deploy-env'
+
