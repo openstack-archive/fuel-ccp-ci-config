@@ -12,6 +12,9 @@
           scm-basedir: ''
           scm-branch: 'master'
           scm-repo: 'nextgen/mcpinstaller'
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
 
 - project:
     name: Solar Deploy
