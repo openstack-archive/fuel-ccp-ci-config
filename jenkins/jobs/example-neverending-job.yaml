@@ -8,7 +8,7 @@
     concurrent: true
     wrappers:
       - timeout:
-          timeout: 0
+          timeout: 44640
           fail: false
     publishers:
       - post-tasks:
