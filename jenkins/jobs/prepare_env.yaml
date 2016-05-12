@@ -5,7 +5,7 @@
     concurrent: true
     description: |
       Creates a python virtual environment for system tests. Stores additional images.<br><br>
-      For 6.1 and above environments choose 2.9.x DevOps version from fuel-qa repository and old, 2.5.x from fuel-main for prior to 6.1.
+      For current and above environments choose 2.9.x DevOps version from fuel-qa repository.
     logrotate:
       daysToKeep: 14
     name: prepare_env
@@ -13,9 +13,6 @@
       - bool:
           name: 'update_devops_2_9_x'
           default: true
-      - bool:
-          name: 'update_devops_2_5_x'
-          default: false
       - bool:
           name: 'download_images'
           default: false

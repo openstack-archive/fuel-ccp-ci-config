@@ -63,11 +63,6 @@ function download_images () {
   mkdir -p ${TARGET_CLOUD_DIR}
 }
 
-# DevOps 2.5.x
-if [[ ${update_devops_2_5_x} == "true" ]]; then
-  update_devops "" "fuel-main" "stable/6.1"
-fi
-
 # DevOps 2.9.x
 if [[ ${update_devops_2_9_x} == "true" ]]; then
   update_devops "-2.9" "fuel-qa" "master"
