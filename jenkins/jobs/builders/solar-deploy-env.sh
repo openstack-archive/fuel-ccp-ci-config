@@ -6,6 +6,7 @@ export ENV_NAME="solar-k8s-env-$BUILD_NUMBER.$BUILD_ID"
 export MASTER_IMAGE_PATH="/home/jenkins/workspace/cloud-images/alpine-img.qcow2"
 export IMAGE_PATH="/home/jenkins/workspace/cloud-images/fedora-23-x86_64.qcow2"
 export DONT_DESTROY_ON_SUCCESS=1
+export VLAN_BRIDGE="vlan450"
 
 source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
