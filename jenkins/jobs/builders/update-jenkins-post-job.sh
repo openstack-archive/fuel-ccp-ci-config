@@ -20,4 +20,4 @@ ignore_cache=True
 recursive=True
 EOF
 
-jenkins-jobs --conf jenkins_jobs.ini update jenkins/jobs
+jenkins-jobs --flush-cache --conf jenkins_jobs.ini update --delete-old jenkins/jobs
