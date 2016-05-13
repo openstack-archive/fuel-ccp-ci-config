@@ -522,3 +522,18 @@
       - nextgen-ci-jenkins
     triggers:
       - zuul
+
+- job:
+    name: nextgen-mcp-qa
+    description: |
+      Gate mcp-qa test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-mcp-qa-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul

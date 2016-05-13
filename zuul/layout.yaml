@@ -308,6 +308,13 @@ projects:
     gate:
       - nextgen-mcpinstaller
 
+  - name: nextgen/mcp-qa
+    check:
+      - verify-tox-py27
+      - verify-tox-pep8
+    gate:
+      - nextgen-mcp-qa
+
   - name: nextgen/project-config
     check:
       - verify-jjb-project-config
