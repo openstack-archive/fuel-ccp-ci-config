@@ -38,6 +38,7 @@ pipelines:
         - verified: [1,2]
           username: nextgen-ci
         - workflow: 1
+        - code-review: 2
     trigger:
       gerrit:
         - event: comment-added
