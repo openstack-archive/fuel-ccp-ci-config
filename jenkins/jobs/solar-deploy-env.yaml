@@ -21,11 +21,11 @@
     publishers:
       - post-tasks:
         - matches:
-          - log-text: Build was aborted
+          - log-text: ''
           escalate-status: true
           run-if-job-successful: false
           script: |
-            builders/solar-clear-env.sh
+            !include-raw-escaped 'builders/solar-clear-env.sh'
 
 - project:
     name: Deploy development environment using Solar.
