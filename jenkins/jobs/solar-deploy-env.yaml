@@ -25,10 +25,19 @@
           escalate-status: true
           run-if-job-successful: false
           script: |
-            !include-raw-escaped 'builders/solar-clear-env.sh'
+            #!/bin/bash
+
+            set -ex
+
+            export ENV_NAME="solar-k8s-env-$BUILD_NUMBER.$BUILD_ID"
+
+            source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
+            echo "Running on $NODE_NAME: $ENV_NAME"
+
+            dos.py erase $ENV_NAME
+            deactivate
 
 - project:
     name: Deploy development environment using Solar.
     jobs:
        - 'solar-deploy-env'
-
