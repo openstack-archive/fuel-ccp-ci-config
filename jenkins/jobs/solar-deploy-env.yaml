@@ -1,11 +1,11 @@
 - job-template:
-    name: solar-deploy-env
+    name: solar-deploy-env-k8s
     description: |
-      Deploy development environment using Solar.
-    node: solar
+      Deploy development environment with just K8s using Solar.
+    node: dev
     builders:
       - shell:
-          !include-raw 'builders/solar-deploy-env.sh'
+          !include-raw 'builders/solar-deploy-env-k8s.sh'
     concurrent: false
     scm:
       - mcpinstaller:
@@ -37,7 +37,48 @@
             dos.py erase $ENV_NAME
             deactivate
 
+- job-template:
+    name: solar-deploy-env-openstack
+    description: |
+      Deploy development environment with OpenStack on K8s using Solar.
+    node: dev
+    builders:
+      - shell:
+          !include-raw 'builders/solar-deploy-env-openstack.sh'
+    concurrent: false
+    scm:
+      - mcpinstaller:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'nextgen/mcpinstaller'
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+      - timeout:
+          timeout: 44640
+          fail: false
+    publishers:
+      - post-tasks:
+        - matches:
+          - log-text: ''
+          escalate-status: true
+          run-if-job-successful: false
+          script: |
+            #!/bin/bash
+
+            set -ex
+
+            export ENV_NAME="solar-k8s-env-$BUILD_NUMBER.$BUILD_ID"
+
+            source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
+            echo "Running on $NODE_NAME: $ENV_NAME"
+
+            dos.py erase $ENV_NAME
+            deactivate
+
+
 - project:
     name: Deploy development environment using Solar.
     jobs:
-       - 'solar-deploy-env'
+       - 'solar-deploy-env-k8s'
+       - 'solar-deploy-env-openstack'
