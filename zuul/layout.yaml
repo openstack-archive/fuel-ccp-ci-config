@@ -186,6 +186,12 @@ projects:
     gate:
       - nextgen-ms-ironic-gate-job
 
+- name: nextgen/ms-keystone
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-keystone
+
   - name: nextgen/ms-kibana
     check:
       - verify-tox-bashate

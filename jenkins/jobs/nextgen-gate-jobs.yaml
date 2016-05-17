@@ -224,6 +224,21 @@
       - zuul
 
 - job:
+    name: nextgen-ms-keystone-gate-job
+    description: |
+      Keystone gate job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-keystone-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
     name: nextgen-ms-kibana-gate-job
     description: |
       Some gate nextgen-ms-kibana test job
