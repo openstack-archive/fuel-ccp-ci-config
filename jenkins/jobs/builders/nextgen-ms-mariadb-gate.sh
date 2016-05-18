@@ -14,5 +14,5 @@ mcp-microservices --images-base_distro debian --images-base_tag 8.4 \
 
 deactivate
 
-docker rm $(docker images | awk '/mariadbbuild/ {print $3}')
+docker rmi $(docker images | awk '/mariadbbuild/ {print $3}')
 

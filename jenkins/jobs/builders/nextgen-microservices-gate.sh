@@ -14,4 +14,4 @@ build
 
 deactivate
 
-docker rm $(docker images | awk '/microbuild/ {print $3}')
+docker rmi $(docker images | awk '/microbuild/ {print $3}')
