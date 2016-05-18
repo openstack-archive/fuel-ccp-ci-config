@@ -20,8 +20,7 @@ cd microservices
 pip install .
 cd ..
 
-cat /var/lib/libvirt/dnsmasq/default.leases
-cubeip=`cat /var/lib/libvirt/dnsmasq/default.leases | head -n 1 | awk '{print $3;}'`
+cubeip=`cat ./mcpinstaller/VLAN_IPS | head -n 1`
 
 mcp-microservices \
     --images-base_distro debian \

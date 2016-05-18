@@ -18,5 +18,3 @@ mcp-microservices --images-base_distro debian --images-base_tag 8.4 \
 
 deactivate
 
-docker rmi $(docker images | awk '/keystonebuild/ {print $3}')
-
