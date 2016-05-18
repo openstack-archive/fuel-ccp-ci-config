@@ -11,7 +11,26 @@ export VLAN_BRIDGE="vlan450"
 source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
 
+pushd mcpinstaller
 sh -x "utils/jenkins/run_k8s_deploy_test.sh"
+popd
+
+echo "Deploying OpenStack"
+cd microservices
+pip install .
+cd ..
+mcp-microservices \
+    --images-base_distro debian \
+    --images-base_tag 8.4 \
+    --images-maintainer mos-microservices@mirantis.com \
+    --auth-gerrit-username nextgen-ci \
+    --auth-registry \
+    --builder-registry registry01-bud.ng.mirantis.net \
+    --images-namespace nextgen \
+    --images-tag latest \
+    --repositories-path microservices-repos \
+    deploy
+
 deactivate
 
 echo "Entering infinite loop to lock slot on this Jenkins worker."

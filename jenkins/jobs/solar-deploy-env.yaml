@@ -48,9 +48,13 @@
     concurrent: false
     scm:
       - mcpinstaller:
-          scm-basedir: ''
+          scm-basedir: 'mcpinstaller'
           scm-branch: 'master'
           scm-repo: 'nextgen/mcpinstaller'
+      - fuel-infra:
+          scm-basedir: 'microservices'
+          scm-branch: 'master'
+          scm-repo: 'nextgen/microservices'
     wrappers:
       - ng-cleanup
       - nextgen-ci-jenkins
