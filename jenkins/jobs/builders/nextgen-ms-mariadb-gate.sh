@@ -4,12 +4,16 @@ virtualenv mariadbenv
 
 source mariadbenv/bin/activate
 
+cd microservices
+
 pip install .
+
+cd ..
 
 mcp-microservices --images-base_distro debian --images-base_tag 8.4 \
     --images-maintainer mirantis@mirantis.com \
     --images-namespace mariadbbuild --images-tag latest \
-    --repositories-path mirantis/k8s --auth-gerrit-username nextgen-ci \
+    --repositories-path containers --auth-gerrit-username nextgen-ci \
     build
 
 ts=`date +%s`

@@ -289,7 +289,7 @@
       Some gate nextgen-ms-mariadb test job
     node: standard
     builders:
-      - get-from-zuul
+      - get-from-zuul-container
       - shell: !include-raw builders/nextgen-ms-mariadb-gate.sh
     concurrent: true
     wrappers:
