@@ -6,10 +6,19 @@ virtualenv mcp
 source mcp/bin/activate
 pip install .
 
-mcp-microservices --images-base_distro debian --images-base_tag 8.4 \
---images-maintainer mirantis@mirantis.com --images-namespace mcp \
---images-tag latest --repositories-path mirantis/mcp \
+mcp-microservices \
+--images-base_distro debian \
+--images-base_tag 8.4 \
+--images-maintainer mos-microservices@mirantis.com \
 --auth-gerrit-username nextgen-ci \
+--builder-push \
+--auth-registry \
+--builder-registry registry01-bud.ng.mirantis.net \
+--auth-registry-username nextgen \
+--auth-registry-password ti5Eeng3 \
+--images-namespace nextgen \
+--images-tag latest \
+--repositories-path microservices-repos \
 build
 
 deactivate
