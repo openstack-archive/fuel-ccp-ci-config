@@ -19,11 +19,11 @@ mcp-microservices --images-base_distro debian --images-base_tag 8.4 \
 ts=`date +%s`
 
 docker run -d --name mariadb-${ts} -it -e DB_ROOT_PASSWORD="password" \
-           registry01-bud.ng.mirantis.net/test/mariadb:latest
+           mariadbbuild/mariadb:latest
 
 sleep 20
 
-docker exec -it mariadb-${ts} mysql -u root -ppassword -e "show databases"
+docker exec mariadb-${ts} mysql -u root -ppassword -e "show databases"
 
 docker stop mariadb-${ts}
 docker rm mariadb-${ts}
