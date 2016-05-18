@@ -44,7 +44,7 @@
     node: dev
     builders:
       - shell:
-          !include-raw 'builders/solar-deploy-env-openstack.sh'
+          !include-raw-escape 'builders/solar-deploy-env-openstack.sh'
     concurrent: false
     scm:
       - mcpinstaller:
