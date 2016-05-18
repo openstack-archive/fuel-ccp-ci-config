@@ -190,7 +190,7 @@ projects:
     check:
       - verify-tox-bashate
     gate:
-      - nextgen-ms-keystone
+      - nextgen-ms-keystone-gate-job
 
   - name: nextgen/ms-kibana
     check:

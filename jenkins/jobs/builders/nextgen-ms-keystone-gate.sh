@@ -4,15 +4,19 @@ virtualenv keystoneenv
 
 source keystoneenv/bin/activate
 
+cd microservices
+
 pip install .
+
+cd ..
 
 mcp-microservices --images-base_distro debian --images-base_tag 8.4 \
     --images-maintainer mirantis@mirantis.com \
     --images-namespace keystonebuild --images-tag latest \
-    --repositories-path mirantis/k8s --auth-gerrit-username nextgen-ci \
+    --repositories-path containers --auth-gerrit-username nextgen-ci \
     build
 
 deactivate
 
-docker rm $(docker images | awk '/keystonebuild/ {print $3}')
+docker rmi $(docker images | awk '/keystonebuild/ {print $3}')
 

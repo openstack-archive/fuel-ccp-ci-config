@@ -229,7 +229,7 @@
       Keystone gate job
     node: standard
     builders:
-      - get-from-zuul
+      - get-from-zuul-container
       - shell: !include-raw builders/nextgen-ms-keystone-gate.sh
     concurrent: true
     wrappers:
