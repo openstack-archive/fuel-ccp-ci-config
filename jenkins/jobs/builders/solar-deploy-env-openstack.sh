@@ -38,6 +38,7 @@ mcp-microservices \
     --builder-registry registry01-bud.ng.mirantis.net \
     --images-namespace nextgen \
     --images-tag latest \
+    --builder-push \
     --repositories-path microservices-repos \
     --kubernetes-server $cubeip:8080 \
     deploy
