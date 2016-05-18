@@ -2,7 +2,7 @@
     name: example-neverending-job
     description: |
       Sample never-ending job with post action after abort.
-    node: solar
+    node: dev
     builders:
       - shell: 'while [ 1 ]; do sleep 60; done'
     concurrent: true
