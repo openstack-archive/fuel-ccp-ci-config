@@ -16,6 +16,12 @@ sh -x "utils/jenkins/run_k8s_deploy_test.sh"
 popd
 
 echo "Deploying OpenStack"
+mkdir bin
+cd bin
+curl -O https://storage.googleapis.com/kubernetes-release/release/v1.2.4/bin/linux/amd64/kubectl
+cd ..
+export PATH=$PATH:$WORKSPACE/bin
+
 cd microservices
 pip install .
 cd ..
