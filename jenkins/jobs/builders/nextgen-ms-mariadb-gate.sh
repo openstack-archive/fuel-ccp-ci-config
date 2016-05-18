@@ -30,5 +30,3 @@ docker rm mariadb-${ts}
 
 deactivate
 
-docker rmi $(docker images | awk '/mariadbbuild/ {print $3}')
-
