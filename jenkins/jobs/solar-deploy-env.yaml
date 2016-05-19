@@ -6,7 +6,7 @@
     builders:
       - shell:
           !include-raw 'builders/solar-deploy-env-k8s.sh'
-    concurrent: false
+    concurrent: true
     scm:
       - mcpinstaller:
           scm-basedir: ''
@@ -45,7 +45,7 @@
     builders:
       - shell:
           !include-raw-escape 'builders/solar-deploy-env-openstack.sh'
-    concurrent: false
+    concurrent: true
     scm:
       - mcpinstaller:
           scm-basedir: 'mcpinstaller'
