@@ -199,7 +199,7 @@
       Some gate nextgen-ms-horizon test job
     node: standard
     builders:
-      - get-from-zuul
+      - get-from-zuul-container
       - shell: !include-raw builders/nextgen-ms-horizon-gate.sh
     concurrent: true
     wrappers:
