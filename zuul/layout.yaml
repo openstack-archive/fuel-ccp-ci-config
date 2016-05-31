@@ -80,6 +80,8 @@ projects:
     check:
       - verify-tox-py27
       - verify-tox-pep8
+    gate:
+      - verify-tox-pep8
     post:
       - nextgen-docs-build-jobs
 
