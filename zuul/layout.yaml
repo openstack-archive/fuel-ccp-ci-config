@@ -320,8 +320,8 @@ projects:
     check:
       - verify-tox-py27
       - verify-tox-pep8
-     gate:
-     - nextgen-mcp-qa
+    gate:
+      - nextgen-mcp-qa
 
   - name: nextgen/project-config
     check:
