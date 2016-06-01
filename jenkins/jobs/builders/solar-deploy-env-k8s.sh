@@ -12,7 +12,7 @@ export DEPLOY_METHOD="solar"
 source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
 
-sh -x "utils/jenkins/run_k8s_deploy_test.sh"
+bash -x "utils/jenkins/run_k8s_deploy_test.sh"
 deactivate
 
 echo "Entering infinite loop to lock slot on this Jenkins worker."
