@@ -7,8 +7,8 @@ source mcp/bin/activate
 pip install .
 
 mcp-microservices \
---images-base_distro debian \
---images-base_tag 8.4 \
+--images-base-distro debian \
+--images-base-tag 8.4 \
 --images-maintainer mos-microservices@mirantis.com \
 --auth-gerrit-username nextgen-ci \
 --builder-push \
