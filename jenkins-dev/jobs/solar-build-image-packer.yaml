@@ -1,0 +1,27 @@
+- job:
+    name: solar-build-image-packer
+    description: |
+      Solar job which uses packer builder tool to create images
+    node: dev
+    parameters:
+      - text:
+          name: URL
+          default: 'https://releases.hashicorp.com/packer/0.8.6/packer_0.8.6_linux_amd64.zip'
+      - text:
+          name: ARCHIVE
+          default: 'packer.zip'
+      - text:
+          name: IMAGE_NAME
+          default: 'ubuntu1404'
+      - text:
+          name: IMAGE_DST_DIR
+          default: '/home/jenkins/workspace/cloud-images'
+    builders:
+      - shell:
+          !include-raw 'builders/solar-build-image-packer.sh'
+    concurrent: false
+    scm:
+      - openstack:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'openstack/solar'
