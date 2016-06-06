@@ -200,6 +200,12 @@ projects:
     gate:
       - nextgen-ms-kibana-gate-job
 
+  - name: nextgen/ms-lma
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-lma-gate-job
+
   - name: nextgen/ms-magnum
     check:
       - verify-tox-bashate

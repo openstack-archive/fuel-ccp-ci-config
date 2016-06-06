@@ -254,6 +254,21 @@
       - zuul
 
 - job:
+    name: nextgen-ms-lma-gate-job
+    description: \
+      Some gate nextgen-ms-lma test job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-ms-lma-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
     name: nextgen-ms-magnum-gate-job
     description: |
       Some gate nextgen-ms-magnum test job
