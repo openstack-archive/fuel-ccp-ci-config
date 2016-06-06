@@ -1,0 +1,45 @@
+- job-template:
+    name: kargo-deploy-env-k8s
+    description: |
+      Deploy development environment with just K8s using Kargo.
+    node: dev
+    builders:
+      - shell:
+          !include-raw 'builders/kargo-deploy-env-k8s.sh'
+    concurrent: true
+    scm:
+      - mcpinstaller:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'nextgen/mcpinstaller'
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+      - timeout:
+          timeout: 44640
+          fail: false
+    publishers:
+      - post-tasks:
+        - matches:
+          - log-text: ''
+          escalate-status: true
+          run-if-job-successful: false
+          script: |
+            #!/bin/bash
+
+            set -ex
+
+            export ENV_NAME="kargo-k8s-env-$BUILD_TAG"
+
+            source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
+            echo "Running on $NODE_NAME: $ENV_NAME"
+
+            dos.py erase $ENV_NAME
+            deactivate
+
+
+
+- project:
+    name: Deploy development environment using Kargo.
+    jobs:
+       - 'kargo-deploy-env-k8s'
