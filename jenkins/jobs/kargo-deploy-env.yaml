@@ -18,6 +18,11 @@
       - timeout:
           timeout: 44640
           fail: false
+    parameters:
+      - text:
+          name: CUSTOM_YAML
+          description: "Copy and paste valid YAML data to customize deployment"
+
     publishers:
       - post-tasks:
         - matches:
