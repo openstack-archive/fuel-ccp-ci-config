@@ -259,7 +259,7 @@
       Some gate nextgen-ms-lma test job
     node: standard
     builders:
-      - get-from-zuul
+      - get-from-zuul-container
       - shell: !include-raw builders/nextgen-ms-lma-gate.sh
     concurrent: true
     wrappers:
