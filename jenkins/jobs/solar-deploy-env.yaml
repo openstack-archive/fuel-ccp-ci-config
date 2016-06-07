@@ -72,7 +72,7 @@
 
             set -ex
 
-            export ENV_NAME="solar-k8s-openstack-env-$BUILD_TAG"
+            export ENV_NAME="solar-k8s-env-$BUILD_TAG"
 
             source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
             echo "Running on $NODE_NAME: $ENV_NAME"
