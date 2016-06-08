@@ -1,5 +1,5 @@
 - job-template:
-    name: kargo-deploy-env-k8s
+    name: kargo-deploy-env-k8s-experimental
     description: |
       Deploy development environment with just K8s using Kargo.
     node: dev
@@ -47,4 +47,4 @@
 - project:
     name: Deploy development environment using Kargo.
     jobs:
-       - 'kargo-deploy-env-k8s'
+       - 'kargo-deploy-env-k8s-experimental'
