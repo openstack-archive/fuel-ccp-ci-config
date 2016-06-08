@@ -45,6 +45,6 @@
 
 
 - project:
-    name: Deploy development environment using Kargo.
+    name: Deploy development environment using Kargo - experimental.
     jobs:
        - 'kargo-deploy-env-k8s-experimental'
