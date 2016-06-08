@@ -182,6 +182,12 @@ projects:
     gate:
       - nextgen-ms-horizon-gate-job
 
+  - name: nextgen/ms-influxdb
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-influxdb-gate-job
+
   - name: nextgen/ms-ironic
     check:
       - verify-tox-bashate

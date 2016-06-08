@@ -209,6 +209,21 @@
       - zuul
 
 - job:
+    name: nextgen-ms-influxdb-gate-job
+    description: \
+      Some gate nextgen-ms-influxdb test job
+    node: standard
+    builders:
+      - get-from-zuul-container
+      - shell: !include-raw builders/nextgen-ms-influxdb-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
     name: nextgen-ms-ironic-gate-job
     description: |
       Some gate nextgen-ms-ironic test job
