@@ -44,7 +44,7 @@
     wrappers:
       - ssh-agent-credentials:
           users:
-            - '4baabd94-8b47-45fa-813e-9e7e245c5148'
+            - '04a7dbe6-f3cd-4cc1-afc5-b8f2bd6cbb38'
 
 - wrapper:
     name: 'ng-cleanup'
