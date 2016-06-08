@@ -4,12 +4,13 @@ set -ex
 
 env
 
-export ENV_NAME="kargo-k8s-env-$BUILD_NUMBER.$BUILD_ID"
+export ENV_NAME="kargo-k8s-env-$BUILD_TAG"
 export MASTER_IMAGE_PATH="/home/jenkins/workspace/cloud-images/alpine-img.qcow2"
 export IMAGE_PATH="/home/jenkins/workspace/cloud-images/packer-ubuntu-1604-server.qcow2"
 export DONT_DESTROY_ON_SUCCESS=1
 export VLAN_BRIDGE="vlan450"
 export DEPLOY_METHOD="kargo"
+export SLAVES_COUNT=${PARAM_SLAVES_COUNT}
 
 source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
