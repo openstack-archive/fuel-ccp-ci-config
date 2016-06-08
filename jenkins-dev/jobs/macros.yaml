@@ -37,14 +37,14 @@
     wrappers:
       - ssh-agent-credentials:
           users:
-            - '4baabd94-8b47-45fa-813e-9e7e245c5148'
+            - 'aa6a441a-d432-44df-88da-9249cf4ca1d2'
 
 - wrapper:
     name: nextgen-ci-docs
     wrappers:
       - ssh-agent-credentials:
           users:
-            - '04a7dbe6-f3cd-4cc1-afc5-b8f2bd6cbb38'
+            - 'b9d99ceb-a62e-454b-8677-7ddf9e349492'
 
 - wrapper:
     name: 'ng-cleanup'
