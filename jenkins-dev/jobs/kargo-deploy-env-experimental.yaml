@@ -21,7 +21,7 @@
     parameters:
       - text:
           name: PARAM_SLAVES_COUNT
-          default: 3
+          default: '3'
           description: "Number of VMs to spawn in this environment."
     publishers:
       - post-tasks:
@@ -45,6 +45,6 @@
 
 
 - project:
-    name: Deploy development environment using Kargo.
+    name: Deploy development environment using Kargo - experimental.
     jobs:
        - 'kargo-deploy-env-k8s-experimental'
