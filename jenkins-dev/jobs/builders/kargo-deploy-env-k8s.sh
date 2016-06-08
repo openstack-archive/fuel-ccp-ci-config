@@ -2,6 +2,8 @@
 
 set -ex
 
+env
+
 export ENV_NAME="kargo-k8s-env-$BUILD_NUMBER.$BUILD_ID"
 export MASTER_IMAGE_PATH="/home/jenkins/workspace/cloud-images/alpine-img.qcow2"
 export IMAGE_PATH="/home/jenkins/workspace/cloud-images/packer-ubuntu-1604-server.qcow2"
