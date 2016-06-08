@@ -10,7 +10,7 @@ export IMAGE_PATH="/home/jenkins/workspace/cloud-images/packer-ubuntu-1604-serve
 export DONT_DESTROY_ON_SUCCESS=1
 export VLAN_BRIDGE="vlan450"
 export DEPLOY_METHOD="kargo"
-export SLAVES_COUNT=${PARAM_SLAVES_COUNT}
+export SLAVES_COUNT=$PARAM_SLAVES_COUNT
 
 source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
