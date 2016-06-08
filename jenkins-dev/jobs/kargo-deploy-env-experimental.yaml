@@ -21,7 +21,7 @@
     parameters:
       - text:
           name: PARAM_SLAVES_COUNT
-          default: 3
+          default: '3'
           description: "Number of VMs to spawn in this environment."
     publishers:
       - post-tasks:
