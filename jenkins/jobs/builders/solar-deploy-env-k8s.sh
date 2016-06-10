@@ -22,10 +22,10 @@ chmod +x kubectl
 cd ..
 export PATH=$PATH:$WORKSPACE/bin
 
-cubeip=`cat ./mcpinstaller/VLAN_IPS | head -n 1`
+cubeip=`cat VLAN_IPS | head -n 1`
 
-kubectl -s $cubeip:8080 create -f ./mcpinstaller/registry/registry-pod.yaml
-kubectl -s $cubeip:8080 create -f ./mcpinstaller/registry/service-registry.yaml
+kubectl -s $cubeip:8080 create -f ./registry/registry-pod.yaml
+kubectl -s $cubeip:8080 create -f ./registry/service-registry.yaml
 
 echo "Entering infinite loop to lock slot on this Jenkins worker."
 echo "To release this environment please abort this job."
