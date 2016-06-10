@@ -22,6 +22,10 @@
       - text:
           name: CUSTOM_YAML
           description: "Copy and paste valid YAML data to customize deployment"
+          value: |
+            kube_network_plugin: "calico"
+            #Required for calico
+            kube_proxy_mode: "iptables"
 
     publishers:
       - post-tasks:
