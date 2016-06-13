@@ -24,6 +24,19 @@ export PATH=$PATH:$WORKSPACE/bin
 
 cubeip=`cat VLAN_IPS | head -n 1`
 
+COUNTER=0
+while [ $COUNTER -lt 100 ]; do
+    nc -z -v -w5 $cubeip 8080
+    if [ $? -ne 0 ]
+    then
+       echo "Waiting for k8s up"
+    else
+       break
+    fi
+    sleep 1
+    ((COUNTER++))
+done
+
 kubectl -s $cubeip:8080 create -f ./registry/registry-pod.yaml
 kubectl -s $cubeip:8080 create -f ./registry/service-registry.yaml
 
