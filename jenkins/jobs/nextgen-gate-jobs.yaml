@@ -164,6 +164,21 @@
       - zuul
 
 - job:
+    name: nextgen-ms-grafana-gate-job
+    description: \
+      Some gate nextgen-ms-grafana test job
+    node: standard
+    builders:
+      - get-from-zuul-container
+      - shell: !include-raw builders/nextgen-ms-grafana-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
     name: nextgen-ms-heat-gate-job
     description: |
       Some gate nextgen-ms-heat test job

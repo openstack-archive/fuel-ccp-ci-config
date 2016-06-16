@@ -166,6 +166,12 @@ projects:
     gate:
       - nextgen-ms-glance-gate-job
 
+  - name: nextgen/ms-grafana
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-grafana-gate-job
+
   - name: nextgen/ms-heat
     check:
       - verify-tox-bashate
