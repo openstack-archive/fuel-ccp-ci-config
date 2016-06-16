@@ -1,3 +1,15 @@
 #!/bin/bash -xe
-echo "This gate job is empty now and always returns en error - please implement it to include real test and recheck your commit. Thank you."
-exit 1
+
+virtualenv glanceenv
+
+source glanceenv/bin/activate
+
+pip install microservices/
+
+mcp-microservices --images-maintainer mirantis@mirantis.com \
+    --images-namespace glancebuild --images-tag latest \
+    --repositories-names ms-debian-base,ms-openstack-base,ms-glance \
+    --repositories-path containers/nextgen --auth-gerrit-username nextgen-ci \
+    build
+
+deactivate
