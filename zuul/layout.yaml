@@ -153,10 +153,10 @@ projects:
       - nextgen-ms-elasticsearch-gate-job
 
   - name: nextgen/ms-ext-config
-    template:
-      - name: verify-tox
     check:
-      - name: verify-tox-py34
+      - verify-tox-pep8
+      - verify-tox-py27
+      - verify-tox-py34
     gate:
       - nextgen-ms-ext-config-gate-job
 
