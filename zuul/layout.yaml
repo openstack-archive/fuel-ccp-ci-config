@@ -155,6 +155,8 @@ projects:
   - name: nextgen/ms-ext-config
     template:
       - name: verify-tox
+    check:
+      - name: verify-tox-py34
     gate:
       - nextgen-ms-ext-config-gate-job
 
