@@ -5,8 +5,6 @@
       Update jenkins jobs after merge
     node: standard
     builders:
-      - inject:
-          properties-content: 'CI_NAME={ci-name}'
       - shell: !include-raw builders/update-jenkins-post-job.sh
     concurrent: true
     scm:
@@ -30,6 +28,3 @@
               branches:
                 - branch-compare-type: PLAIN
                   branch-pattern: 'master'
-              file-paths:
-                - compare-type: ANT
-                  pattern: '{ci-name}/**'
