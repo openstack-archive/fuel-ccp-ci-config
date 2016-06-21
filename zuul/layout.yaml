@@ -108,6 +108,8 @@ projects:
       - name: verify-tox
     gate:
       - nextgen-microservices-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-aodh
     check:
@@ -165,12 +167,16 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-glance-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-grafana
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-grafana-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-heat
     check:
@@ -183,18 +189,24 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-heka-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-horizon
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-horizon-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-influxdb
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-influxdb-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-ironic
     check:
@@ -207,18 +219,24 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-keystone-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-kibana
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-kibana-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-lma
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-lma-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-magnum
     check:
@@ -237,12 +255,16 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-mariadb-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-memcached
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-memcached-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-mistral
     check:
@@ -267,30 +289,40 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-neutron-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-nova
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-nova-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-openstack-base
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-openstack-base-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-openvswitch
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-openvswitch-gate-job
+    post:
+      -mcp-build-images
 
   - name: nextgen/ms-rabbitmq
     check:
       - verify-tox-bashate
     gate:
       - nextgen-ms-rabbitmq-gate-job
+    post:
+      - mcp-build-images
 
   - name: nextgen/ms-sahara
     check:
