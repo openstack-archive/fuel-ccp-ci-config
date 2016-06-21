@@ -11,10 +11,10 @@ CLONEMAP=`mktemp`
 cat > $CLONEMAP << EOF
           clonemap:
             - name: $ZUUL_PROJECT
-              dest: .
+              dest: $ZUUL_PROJECT
 EOF
 zuul-cloner -m $CLONEMAP --cache-dir /opt/git \
-      ssh://nextgen-ci@review.fuel-infra.org $ZUUL_PROJECT
+      ssh://nextgen-ci@review.fuel-infra.org:29418 $ZUUL_PROJECT
 
 
 deactivate
