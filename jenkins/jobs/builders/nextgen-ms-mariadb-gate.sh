@@ -14,4 +14,6 @@ mcp-microservices --images-base-distro debian --images-base-tag 8.4 \
 
 deactivate
 
+pushd containers/nextgen/ms-mariadb
 tox -e py27
+popd
