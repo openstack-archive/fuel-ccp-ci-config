@@ -21,12 +21,6 @@ labels:
     min-ready: 5
     providers:
       - name: nextgen-ci
-  - name: k8s-xenial
-    image: k8s-xenial
-    min-ready: 5
-    providers:
-      - name: nextgen-ci
-
 
 providers:
   - name: nextgen-ci
@@ -38,7 +32,7 @@ providers:
     project-id: 'nextgen-ci'
     auth-url: 'https://horizon-us.ssl.mirantis.net:5000/v2.0'
     boot-timeout: 120
-    max-servers: 10
+    max-servers: 5
     rate: 0.001
     #networks:
     # - net-label: 'sandbox-net'
@@ -50,12 +44,6 @@ providers:
         username: jenkins
         private-key: /var/lib/nodepool/.ssh/id_rsa
         min-ram: 4096
-        name-filter: 'm1.medium'
-      - name: k8s-xenial
-        min-ram: 4096
-        diskimage: k8s-xenial
-        private-key: /var/lib/nodepool/.ssh/id_rsa
-        username: jenkins
         name-filter: 'm1.medium'
 
 targets:
@@ -73,12 +61,3 @@ diskimages:
       - ubuntu
     release: trusty
     qemu-img-options: compat=0.10
-  - name: k8s-xenial
-    elements:
-      - ubuntu-minimal
-      - vm
-      - simple-init
-      - growroot
-      - k8s-prep
-      - k8s-repos
-    release: xenial
