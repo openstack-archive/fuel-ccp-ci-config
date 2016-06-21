@@ -1,3 +1,20 @@
 #!/bin/bash -xe
-echo "This gate job is empty now and always returns en error - please implement it to include real test and recheck your commit. Thank you."
-exit 1
+
+rand=zuulenv-`echo $RANDOM`
+
+virtualenv $rand
+source $rand/bin/activate
+pip install zuul
+
+CLONEMAP=`mktemp`
+
+cat > $CLONEMAP << EOF
+          clonemap:
+            - name: $ZUUL_PROJECT
+              dest: .
+EOF
+zuul-cloner -m $CLONEMAP --cache-dir /opt/git \
+      ssh://nextgen-ci@review.fuel-infra.org $ZUUL_PROJECT
+
+
+deactivate
