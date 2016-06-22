@@ -12,7 +12,11 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKUgMk+HhqWFV3CwFdqsttUAqen+q5ahjb2DcFWcd8
 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCubqxYGmnTxVqrFGGU43EGt/a3HhL5eLDGUFsSkVdkRVt/zWo1T6vyLqoh3SnUPDC02DrSm+yrzO5ispVMPfwfLQXVVXijcIM025suGzdUFIN2RQQHMTJrx+yPo8F+iwIfsm0YflDlBGHfUWqRL9l7Mz6nTFyL8WVdPPwsobDeuBrDnZ5N5WuXbv0s9ooiSVuHGQFjNTLgskCLRaX/77ViHmH6d90JzufbTOJ8kO0BZTFps8R1jO27EuMySgR7sgWFHFKTL3XiPk8OHmVGyGSET4oM0rRwQHSTZul1blmFtFP0AnIEqhRlt9P6e9MqSryXzv15CBkQdZLHbdIpU+WV jenkins@nextgen-jenkins02-scc.ng.mirantis.net
 EOF
 
+#known_hosts
+ssh-keyscan -p 29418 review.fuel-infra.org > /home/jenkins/.ssh/known_hosts
+
 chmod 600 /home/jenkins/.ssh/authorized_keys
+chmod 600 /home/jenkins/.ssh/known_hosts
 chown -R jenkins:jenkins /home/jenkins/
 
 #directory for nodepool metadata
