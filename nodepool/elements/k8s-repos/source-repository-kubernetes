@@ -1,0 +1,1 @@
+kubernetes git /home/jenkins/kubernetes ssh://ng-repo-cacher@review.fuel-infra.org:29418/kubernetes/kubernetes

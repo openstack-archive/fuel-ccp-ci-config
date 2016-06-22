@@ -1,0 +1,15 @@
+#!/bin/bash
+# Prevent apt from installing recommended packages
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+dd of=/etc/apt/apt.conf.d/95disable-recommends << _EOF_
+APT::Install-Recommends "0";
+Apt::Install-Suggests "0";
+_EOF_
+
+

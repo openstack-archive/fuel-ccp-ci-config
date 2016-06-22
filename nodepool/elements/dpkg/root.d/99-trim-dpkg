@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+[ -n "$TARGET_ROOT" ]
+
+# During image build, sync calls are expensive overhead
+echo 'force-unsafe-io' | sudo tee $TARGET_ROOT/etc/dpkg/dpkg.cfg.d/02apt-speedup > /dev/null
+
+# and remove the translations, too
+echo 'Acquire::Languages "none";' | sudo tee $TARGET_ROOT/etc/apt/apt.conf.d/no-languages > /dev/null

@@ -1,0 +1,8 @@
+build-essential:
+git:
+golang:
+isc-dhcp-client:
+ifupdown:
+openjdk-8-jre-headless:
+openssh-server:
+net-tools:
