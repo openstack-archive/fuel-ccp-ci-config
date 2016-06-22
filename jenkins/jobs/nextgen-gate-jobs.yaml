@@ -1,4 +1,19 @@
 - job:
+    name: nextgen-deps-handler-job
+    description: |
+      Gate job to track dependencies
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/nextgen-deps-handler-gate.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+
+- job:
     name: nextgen-dev-env-gate-job
     description: |
       Gate job for nextgen-dev-env
