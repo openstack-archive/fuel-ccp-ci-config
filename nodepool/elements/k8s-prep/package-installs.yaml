@@ -1,6 +1,7 @@
 build-essential:
 git:
 golang:
+golang-race-detector-runtime:
 isc-dhcp-client:
 ifupdown:
 openjdk-8-jre-headless:
