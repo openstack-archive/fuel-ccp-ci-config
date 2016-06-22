@@ -52,11 +52,11 @@ providers:
         min-ram: 4096
         name-filter: 'm1.medium'
       - name: k8s-xenial
-        min-ram: 4096
+        min-ram: 8192
         diskimage: k8s-xenial
         private-key: /var/lib/nodepool/.ssh/id_rsa
         username: jenkins
-        name-filter: 'm1.medium'
+        name-filter: 'm1.large'
 
 targets:
   - name: jenkins
