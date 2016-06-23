@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -ex
+
+#passwordless sudo for a disposable slave
+cat > /etc/sudoers.d/jenkins <<EOF
+jenkins ALL=(ALL) NOPASSWD:ALL
+EOF

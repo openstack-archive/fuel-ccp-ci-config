@@ -3,7 +3,7 @@ set -x
 
 #add user
 useradd -s /bin/bash -m jenkins
-usermod jenkins -a -G sudo
+usermod jenkins -a -G sudo,docker,libvirtd
 
 #add pubkey
 mkdir /home/jenkins/.ssh
@@ -29,3 +29,7 @@ Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
 MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,hmac-sha1
 KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
 EOF
+
+#libvirt dir for E2E tests
+mkdir -p /var/lib/libvirt/images/kubernetes
+chown jenkins:jenkins /var/lib/libvirt/images/kubernetes

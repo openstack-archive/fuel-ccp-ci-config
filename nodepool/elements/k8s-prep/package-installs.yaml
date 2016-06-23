@@ -1,9 +1,15 @@
+bridge-utils:
 build-essential:
+docker.io:
 git:
 golang:
 golang-race-detector-runtime:
 isc-dhcp-client:
 ifupdown:
+libvirt-bin:
+net-tools:
 openjdk-8-jre-headless:
 openssh-server:
-net-tools:
+qemu-kvm:
+qemu-utils:
+ubuntu-vm-builder:
