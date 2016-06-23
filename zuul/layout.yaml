@@ -93,6 +93,14 @@ projects:
     post:
       - ng-scripts-post-triggered-job
 
+  - name: kubernetes/kubernetes
+    check:
+      - mcp-k8s-test-unit
+      - mcp-k8s-test-integration
+    gate:
+      - mcp-k8s-test-unit
+      - mcp-k8s-test-integration
+
   - name: nextgen/dev-env
     check:
       - verify-tox-bashate
