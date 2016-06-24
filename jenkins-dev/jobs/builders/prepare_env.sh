@@ -43,6 +43,9 @@ function update_devops () {
       exit 1
     fi
   fi
+  # FIXME: temporary solution use fuel-devops 3.0 which is not yet relased, thus taking it from the master
+  sed -i 's/fuel-devops.git@2.9.*/fuel-devops.git/g' "${WORKSPACE}/venv-requirements.txt"
+  # /FIXME
 
   # Upgrade pip inside virtualenv
   pip install pip --upgrade
@@ -63,9 +66,9 @@ function download_images () {
   mkdir -p ${TARGET_CLOUD_DIR}
 }
 
-# DevOps 2.9.x
-if [[ ${update_devops_2_9_x} == "true" ]]; then
-  update_devops "-2.9" "fuel-qa" "master"
+# DevOps 3.0.x
+if [[ ${update_devops_3_0_x} == "true" ]]; then
+  update_devops "-3.0" "fuel-qa" "master"
 fi
 
 if [[ ${download_images} == "true" ]]; then
