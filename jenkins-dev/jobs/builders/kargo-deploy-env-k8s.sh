@@ -15,7 +15,7 @@ export CUSTOM_YAML='kube_network_plugin: "calico"
 #Required for calico
 kube_proxy_mode: "iptables"'
 
-source /home/jenkins/venv-nailgun-tests-2.9/bin/activate
+source /home/jenkins/venv-nailgun-tests-3.0/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
 
 bash -x "utils/jenkins/run_k8s_deploy_test.sh"
