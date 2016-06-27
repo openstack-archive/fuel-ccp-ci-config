@@ -345,7 +345,6 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-tempest-gate-job
-      - nextgen-deps-handler-job
 
   - name: nextgen/ms-toolbox
     template:
@@ -358,7 +357,6 @@ projects:
       - verify-tox-bashate
     gate:
       - nextgen-ms-trove-gate-job
-      - nextgen-deps-handler-job
 
   - name: nextgen/ms-zaqar
     check:
