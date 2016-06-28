@@ -95,6 +95,7 @@ projects:
 
   - name: kubernetes/kubernetes
     check:
+      - mcp-k8s-e2e-conformance
       - mcp-k8s-test-unit
       - mcp-k8s-test-integration
     gate:
@@ -388,3 +389,7 @@ projects:
       - verify-jjb-project-config
     post:
       - update-jenkins-jobs
+
+jobs:
+  - name: mcp-k8s-e2e-conformance
+    voting: false

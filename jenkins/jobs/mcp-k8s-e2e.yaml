@@ -1,0 +1,27 @@
+- job-template:
+    name: mcp-k8s-e2e-{test_name}
+    description: |
+      Kubernetes e2e conformance tests
+    node: k8s-xenial
+    builders:
+      - shell:
+          !include-raw-escape builders/mcp-k8s-clone-repo.sh
+      - shell:
+          !include-raw-escape builders/mcp-k8s-e2e.sh
+
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+
+    publishers:
+      - archive:
+          allow-empty: true
+          artifacts: '_artifacts/*'
+          latest-only: false
+
+- project:
+    name: mcp-k8s-e2e
+    test_name: conformance
+    jobs:
+      - 'mcp-k8s-e2e-{test_name}'
