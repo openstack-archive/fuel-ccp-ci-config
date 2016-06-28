@@ -1,0 +1,364 @@
+pipelines:
+  - name: check
+    description: Verify new patchset
+    success-message: Build succeeded
+    failure-message: Build failed
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: normal
+    require:
+      open: True
+      current-patchset: True
+    trigger:
+      gerrit:
+        - event: patchset-created
+        - event: comment-added
+          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify)
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 1
+    failure:
+      gerrit:
+        verfied: -1
+
+  - name: gate
+    description: Test after verifed and workflow
+    success-message: Build succeded
+    failure-message: Build failed
+    manager: DependentPipelineManager
+    source: gerrit
+    precedence: high
+    require:
+      open: True
+      current-patchset: True
+      approval:
+        - verified: [1,2]
+          username: nextgen-ci
+        - workflow: 1
+        - code-review: 2
+    trigger:
+      gerrit:
+        - event: comment-added
+          approval:
+            - workflow: 1
+        - event: comment-added
+          approval:
+            - verified: 1
+              username: nextgen-ci
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 2
+        submit: true
+    failure:
+      gerrit:
+        verfied: -2
+
+  - name: post
+    description: Job run after merge
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: low
+    trigger:
+      gerrit:
+        - event: ref-updated
+          ref: ^(?!refs/).*$
+
+project-templates:
+  - name: verify-tox
+    check:
+      - 'verify-tox-pep8'
+      - 'verify-tox-py27'
+
+projects:
+  - name: nextgen/nextgen-specs
+    check:
+      - verify-tox-py27
+      - verify-tox-pep8
+    gate:
+      - verify-tox-pep8
+    post:
+      - nextgen-docs-build-jobs
+
+  - name: tools/ng-ci-scripts
+    check:
+      - ng-scripts-check-triggered-job
+    gate:
+      - ng-scripts-gate-triggered-job
+    post:
+      - ng-scripts-post-triggered-job
+
+  - name: kubernetes/kubernetes
+    check:
+      - mcp-k8s-test-unit
+      - mcp-k8s-test-integration
+    gate:
+      - mcp-k8s-test-unit
+      - mcp-k8s-test-integration
+
+  - name: nextgen/dev-env
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-dev-env-gate-job
+
+  - name: nextgen/microservices
+    template:
+      - name: verify-tox
+    gate:
+      - nextgen-microservices-gate-job
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-aodh
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-ceilometer
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-ceph
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-cinder
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-debian-base
+    check:
+      - verify-tox-bashate
+      - check-build-job
+    gate:
+      - test-build-debianbase
+
+  - name: nextgen/ms-designate
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-elasticsearch
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-ext-config
+    check:
+      - verify-tox-pep8
+      - verify-tox-py27
+      - verify-tox-py34
+    gate:
+      - nextgen-ms-ext-config-gate-job
+
+  - name: nextgen/ms-glance
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-glance
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-grafana
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-grafana
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-heat
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-heka
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-heka-gate-job
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-horizon
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-horizon
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-influxdb
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-influxdb
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-ironic
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-keystone
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-keystone
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-kibana
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-kibana-gate-job
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-lma
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-lma
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-magnum
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-manila
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-mariadb
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-mariadb
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-memcached
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-memcached
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-mistral
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-mongodb
+    check:
+      - verify-tox-bashate
+
+  - name: nextgen/ms-murano
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-murano-gate-job
+
+  - name: nextgen/ms-neutron
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-neutron
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-nova
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-nova
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-openstack-base
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-openstackbase
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-openvswitch
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-openvswitch
+    post:
+      -mcp-build-images
+
+  - name: nextgen/ms-rabbitmq
+    check:
+      - verify-tox-bashate
+    gate:
+      - test-build-rabbitmq
+    post:
+      - mcp-build-images
+
+  - name: nextgen/ms-sahara
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-sahara-gate-job
+
+  - name: nextgen/ms-swift
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-swift-gate-job
+
+  - name: nextgen/ms-tempest
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-tempest-gate-job
+
+  - name: nextgen/ms-toolbox
+    template:
+      - name: verify-tox
+    gate:
+      - nextgen-ms-toolbox-gate-job
+
+  - name: nextgen/ms-trove
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-trove-gate-job
+
+  - name: nextgen/ms-zaqar
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-ms-zaqar-gate-job
+
+  - name: nextgen/mcpinstaller
+    template:
+      - name: verify-tox
+    check:
+      - verify-tox-bashate
+    gate:
+      - nextgen-mcpinstaller
+
+  - name: nextgen/mcp-qa
+    check:
+      - verify-tox-py27
+      - verify-tox-pep8
+    gate:
+      - nextgen-mcp-qa
+
+  - name: nextgen/project-config
+    check:
+      - verify-jjb-project-config
+    gate:
+      - verify-jjb-project-config
+    post:
+      - update-jenkins-jobs

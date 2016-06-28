@@ -1,0 +1,26 @@
+- job-template:
+    name: example-neverending-job
+    description: |
+      Sample never-ending job with post action after abort.
+    node: dev
+    builders:
+      - shell: 'while [ 1 ]; do sleep 60; done'
+    concurrent: true
+    wrappers:
+      - timeout:
+          timeout: 44640
+          fail: false
+    publishers:
+      - post-tasks:
+        - matches:
+          - log-text: Build was aborted
+          escalate-status: true
+          run-if-job-successful: false
+          script: |
+            echo "Post-task after job was aborted."
+
+- project:
+    name: Sample never-ending job with post action after abort.
+    jobs:
+       - 'example-neverending-job'
+

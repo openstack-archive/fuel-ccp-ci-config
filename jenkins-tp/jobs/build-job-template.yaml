@@ -1,0 +1,19 @@
+#
+# Template used to execute tox tests
+#
+- job-template:
+    name: test-build-{component}
+    builders:
+      - get-from-zuul-container
+      - build-image:
+          component: '{component}'
+          repos: '{repos}'
+    concurrent: true
+    description: |
+      Test build {component} image job
+    node: standard
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul

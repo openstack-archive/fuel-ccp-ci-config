@@ -1,0 +1,93 @@
+- project:
+    name: ms-debian-base
+    jobs:
+      - test-build-{component}:
+          component: debianbase
+          repos: ms-debian-base
+
+- project:
+    name: ms-glance
+    jobs:
+      - test-build-{component}:
+          component: glance
+          repos: ms-debian-base,ms-openstack-base,ms-glance
+
+- project:
+    name: ms-grafana
+    jobs:
+      - test-build-{component}:
+          component: grafana
+          repos: ms-debian-base,ms-openstack-base,ms-grafana
+
+- project:
+    name: ms-horizon
+    jobs:
+      - test-build-{component}:
+          component: horizon
+          repos: ms-debian-base,ms-openstack-base,ms-horizon
+
+- project:
+    name: ms-influxdb
+    jobs:
+      - test-build-{component}:
+          component: influxdb
+          repos: ms-debian-base,ms-openstack-base,ms-influxdb
+
+- project:
+    name: ms-keystone
+    jobs: 
+      - test-build-{component}:
+          component: keystone
+          repos: ms-debian-base,ms-openstack-base,ms-keystone
+
+- project:
+    name: ms-lma
+    jobs:
+      - test-build-{component}:
+          component: lma
+          repos: ms-debian-base,ms-openstack-base,ms-keystone
+
+- project:
+    name: ms-memcached
+    jobs:
+      - test-build-with-tox-{component}:
+          component: memcached
+          repos: ms-debian-base,ms-memcached
+          tox-test: py27
+
+- project:
+    name: ms-mariadb
+    jobs:
+      - test-build-with-tox-{component}:
+          component: mariadb
+          repos: ms-debian-base,ms-mariadb
+          tox-test: py27
+
+- project:
+    name: ms-neutron
+    jobs: 
+      - test-build-{component}:
+          component: neutron
+          repos: ms-debian-base,ms-openstack-base,ms-neutron
+
+- project:
+    name: ms-openstack-base
+    jobs:
+      - test-build-{component}:
+          component: openstackbase
+          repos: ms-debian-base,ms-openstack-base
+
+- project:
+    name: ms-openvswitch
+    jobs:
+      - test-build-{component}:
+          component: openvswitch
+          repos: ms-debian-base,ms-openstack-base,ms-openvswitch
+
+- project:
+    name: ms-rabbitmq
+    jobs:
+      - test-build-{component}:
+          component: rabbitmq
+          repos: ms-debian-base,ms-rabbitmq
+
