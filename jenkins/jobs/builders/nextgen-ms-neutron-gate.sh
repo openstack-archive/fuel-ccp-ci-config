@@ -1,3 +1,16 @@
 #!/bin/bash -xe
-echo "This gate job is empty now and always returns en error - please implement it to include real test and recheck your commit. Thank you."
-exit 1
+
+virtualenv neutronenv
+
+source neutronenv/bin/activate
+
+pip install microservices/
+
+mcp-microservices --images-maintainer mirantis@mirantis.com \
+    --images-namespace neutronbuild --images-tag latest \
+    --repositories-names ms-debian-base,ms-openstack-base,ms-neutron \
+    --repositories-path containers/nextgen --auth-gerrit-username nextgen-ci \
+    build
+
+deactivate
+
