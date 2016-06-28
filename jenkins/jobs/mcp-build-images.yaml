@@ -2,7 +2,7 @@
     name: mcp-build-images
     description: |
       Build MCP Docker images and store them into Docker registry.
-    node: dev
+    node: standard
     builders:
       - shell:
           !include-raw 'builders/mcp-build-images.sh'
