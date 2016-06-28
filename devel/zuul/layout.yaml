@@ -1,0 +1,85 @@
+pipelines:
+  - name: check
+    description: Verify new patchset
+    success-message: Build succeeded
+    failure-message: Build failed
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: normal
+    require:
+      open: True
+      current-patchset: True
+    trigger:
+      gerrit:
+        - event: patchset-created
+        - event: comment-added
+          comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify)
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 1
+    failure:
+      gerrit:
+        verfied: -1
+
+  - name: gate
+    description: Test after verifed and workflow
+    success-message: Build succeded
+    failure-message: Build failed
+    manager: DependentPipelineManager
+    source: gerrit
+    precedence: high
+    require:
+      open: True
+      current-patchset: True
+      approval:
+        - verified: [1,2]
+          username: nextgen-ci01-dev
+        - workflow: 1
+        - code-review: 2
+    trigger:
+      gerrit:
+        - event: comment-added
+          approval:
+            - workflow: 1
+        - event: comment-added
+          approval:
+            - verified: 1
+              username: nextgen-ci01-dev
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 2
+        submit: true
+    failure:
+      gerrit:
+        verfied: -2
+
+  - name: post
+    description: Job run after merge
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: low
+    trigger:
+      gerrit:
+        - event: ref-updated
+          ref: ^(?!refs/).*$
+
+project-templates:
+  - name: verify-tox
+    check:
+      - 'verify-tox-pep8'
+      - 'verify-tox-py27'
+
+projects:
+  - name: nextgen/project-config
+    check:
+      - verify-jjb-project-config
+    gate:
+      - verify-jjb-project-config
+    post:
+      - update-jenkins-jobs

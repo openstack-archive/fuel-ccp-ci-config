@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+DIB_APT_LOCAL_CACHE=${DIB_APT_LOCAL_CACHE:-1}
+
+if [ $DIB_APT_LOCAL_CACHE = "0" ]; then
+    exit 0
+fi
+
+apt_cache_dir=$DIB_IMAGE_CACHE/apt/$DISTRO_NAME
+if [ ! -d $apt_cache_dir ]; then
+    mkdir -p $apt_cache_dir
+fi
+sudo mount --bind $apt_cache_dir $TARGET_ROOT/var/cache/apt/archives

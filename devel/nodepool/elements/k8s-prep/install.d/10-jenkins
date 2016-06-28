@@ -1,0 +1,37 @@
+#!/bin/bash
+set -x
+
+#add user
+useradd -s /bin/bash -m jenkins
+usermod jenkins -a -G sudo,docker,libvirtd
+
+#add pubkey
+mkdir /home/jenkins/.ssh
+cat > /home/jenkins/.ssh/authorized_keys <<EOF
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClT2iRC2/NyKxK+ZVHDMkAynwYBVOVeqABA4MBNecIXmlYEKpxT0uqKIOEFpeBxiune1saOeWdlqSlLRcM1uuVVLNZYMMY1Ys1iI46l+WKRFwuCrJM6eXiWllDCrG2rOhTodFW3LMFPRKat3uRL2pgeELEs2rwz0Jtx5ujcZ1Q4CJ8baQUXy0dn0Tul+8z02DGPttEJulM1GDtsHu1kXgadNFFbLZaoPMUqgxEv8uWV/vMM6c1lmDmwzEk4NV9CXedwg6GVgR9JvZ4sSuzAFOn7yDFJ9i6G2aGKaI+T6zdQtNAc5Qj9lx7YxeCEIXkIYl/6+Z2GaFqiV0jWFYe1JLR nodepool@nodepool01-scc.dev.mirantis.net
+# Jenkins pubkey todo
+#
+#
+EOF
+
+#known_hosts
+ssh-keyscan -p 29418 review.fuel-infra.org > /home/jenkins/.ssh/known_hosts
+
+chmod 600 /home/jenkins/.ssh/authorized_keys
+chmod 600 /home/jenkins/.ssh/known_hosts
+chown -R jenkins:jenkins /home/jenkins/
+
+#directory for nodepool metadata
+mkdir /etc/nodepool
+chown jenkins:jenkins /etc/nodepool
+
+#workaround for old paramiko on nodepool host
+cat >> /etc/ssh/sshd_config <<EOF
+Ciphers aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes128-ctr
+MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,umac-128-etm@openssh.com,hmac-sha2-512,hmac-sha2-256,hmac-ripemd160,hmac-sha1
+KexAlgorithms diffie-hellman-group-exchange-sha256,diffie-hellman-group14-sha1,diffie-hellman-group-exchange-sha1
+EOF
+
+#libvirt dir for E2E tests
+mkdir -p /var/lib/libvirt/images/kubernetes
+chown jenkins:jenkins /var/lib/libvirt/images/kubernetes

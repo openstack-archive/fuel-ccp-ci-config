@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ ${DIB_DEBUG_TRACE:-0} -gt 0 ]; then
+    set -x
+fi
+set -eu
+set -o pipefail
+
+[ -n "$TARGET_ROOT" ]
+
+# Configure APT not to fetch translations files
+sudo dd of=$TARGET_ROOT/etc/apt/apt.conf.d/95no-translations <<EOF
+APT::Acquire::Languages "none";
+EOF
+
+# And now make sure that we don't fall foul of Debian bug 641967
+find $TARGET_ROOT/var/lib/apt/lists/ -path $TARGET_ROOT/var/lib/apt/lists/partial -prune -o -type f -name '*_i18n_Translation-*' -print -exec sudo rm -f {} +
