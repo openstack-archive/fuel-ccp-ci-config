@@ -59,7 +59,7 @@ providers:
 targets:
   - name: jenkins
     jenkins:
-      url: 'https://jenkins.test.local'
+      url: 'https://ci01-dev.ng.mirantis.net'
       user: '{{ TARGETS_USERNAME }}'
       apikey: '{{ TARGETS_APIKEY }}'
       credentials-id: '{{ TARGETS_CREDENTIALSID }}'
