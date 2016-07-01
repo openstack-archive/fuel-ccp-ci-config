@@ -23,6 +23,24 @@
           name: PARAM_SLAVES_COUNT
           default: '3'
           description: "Number of VMs to spawn in this environment."
+      - text:
+          name: KARGO_REPO
+          default: "https://github.com/kubespray/kargo.git"
+      - text:
+          name: KARGO_COMMIT
+          default: "master"
+      - text:
+          name: CUSTOM_YAML
+          description: "Copy and paste valid YAML data to customize deployment"
+          default: |
+            kube_network_plugin: "calico"
+            #Required for calico
+            kube_proxy_mode: "iptables"
+            #Configure calico to set --nat-outgoing and --ipip pool option
+            cloud_provider: "generic"
+            #Experimental etcd container deployment
+            etcd_deployment_type: "docker"
+
     publishers:
       - post-tasks:
         - matches:
