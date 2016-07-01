@@ -110,6 +110,8 @@ projects:
   - name: nextgen/microservices
     template:
       - name: verify-tox
+    check:
+      - nextgen-microservices-gate-job
     gate:
       - nextgen-microservices-gate-job
     post:
