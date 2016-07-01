@@ -13,15 +13,13 @@ fi
 # ssh keys for root user TEMPORARY
 mkdir /root/.ssh
 cat > /root/.ssh/authorized_keys <<EOF
-ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClT2iRC2/NyKxK+ZVHDMkAynwYBVOVeqABA4MBNecIXmlYEKpxT0uqKIOEFpeBxiune1saOeWdlqSlLRcM1uuVVLNZYMMY1Ys1iI46l+WKRFwuCrJM6eXiWllDCrG2rOhTodFW3LMFPRKat3uRL2pgeELEs2rwz0Jtx5ujcZ1Q4CJ8baQUXy0dn0Tul+8z02DGPttEJulM1GDtsHu1kXgadNFFbLZaoPMUqgxEv8uWV/vMM6c1lmDmwzEk4NV9CXedwg6GVgR9JvZ4sSuzAFOn7yDFJ9i6G2aGKaI+T6zdQtNAc5Qj9lx7YxeCEIXkIYl/6+Z2GaFqiV0jWFYe1JLR nodepool
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDKUgMk+HhqWFV3CwFdqsttUAqen+q5ahjb2DcFWcd8VaXK2dGHVugIa1bcHqWXYCXcqDDNWsB35XBJ7eEz26Hz5y40LKPu5wsTiWJpBAXuBWjxenz+9TK9Q3vZp6IqkiOx+3MJzXBw0iY6qn4lLfpfPjHqDDMQsFmrBidDxSh8lcQFQZlm+XPaclOPMzFNJ5CgL12/UMQAj4g/FiA/7Xx5qjRQuwNdixrHSa9P9jAFCGEHnOJfNFCL5FGq4Nyy9WUXrRJtjh2n0tUh0r83m8CL+8WXaTEhjqNSXwcbJzrO+LVtRmpQOYJohvzCDuiB9djbhj3WlHuEJqLt4uq6SZ/p nodepool
 EOF
 chmod 600 /root/.ssh/authorized_keys
 
 apt-get update
 apt-get dist-upgrade -y
 apt-get install puppet puppet-common -y
-
-exit 0
 
 # puppet part!
 echo "puppet part!"
