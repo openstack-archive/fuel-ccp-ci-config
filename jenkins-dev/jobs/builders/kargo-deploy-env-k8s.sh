@@ -12,14 +12,14 @@ export DEPLOY_METHOD="kargo"
 export SLAVES_COUNT=$PARAM_SLAVES_COUNT
 export WORKSPACE="/home/jenkins/workspace"
 if [ -z "$CUSTOM_YAML" ]; then
-export CUSTOM_YAML='kube_network_plugin: "calico"
+    export CUSTOM_YAML='kube_network_plugin: "calico"
 #Required for calico
 kube_proxy_mode: "iptables"
 #Configure calico to set --nat-outgoing and --ipip pool option
 cloud_provider: "generic"
 #Experimental etcd container deployment
 etcd_deployment_type: "docker"'
-
+fi
 source /home/jenkins/venv-nailgun-tests-3.0/bin/activate
 echo "Running on $NODE_NAME: $ENV_NAME"
 
