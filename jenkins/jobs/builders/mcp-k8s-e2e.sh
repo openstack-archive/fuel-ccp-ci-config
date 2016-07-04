@@ -1,9 +1,6 @@
 #!/bin/bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
-set -o xtrace
+set -ex
 
 export HOME=${WORKSPACE}
 export GOPATH=${HOME}/_gopath
@@ -15,7 +12,7 @@ export KUBERNETES_PROVIDER=libvirt-coreos
 echo 1|sudo tee /sys/kernel/mm/ksm/run
 
 #get coreos image
-ln /home/jenkins/coreos_production_qemu_image.img.bz2 .
+ln /home/jenkins/coreos_production_qemu_image.img.bz2 cluster/libvirt-coreos/coreos_production_qemu_image.img.bz2
 
 #generate temporary key for k8s cluster
 mkdir .ssh
