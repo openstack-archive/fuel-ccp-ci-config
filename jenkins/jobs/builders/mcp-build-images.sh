@@ -8,7 +8,7 @@ pip install .
 
 mcp-microservices \
 --images-base-distro debian \
---images-base-tag 8.4 \
+--images-base-tag jessie \
 --images-maintainer mos-microservices@mirantis.com \
 --auth-gerrit-username nextgen-ci \
 --builder-push \
