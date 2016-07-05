@@ -11,14 +11,13 @@
 
     concurrent: true
     wrappers:
+      - ansicolor
       - ng-cleanup
       - nextgen-ci-jenkins
 
     publishers:
-      - archive:
-          allow-empty: true
-          artifacts: '_artifacts/*'
-          latest-only: false
+      - junit:
+          results: '_artifacts/**.xml'
 
 - project:
     name: mcp-k8s-e2e

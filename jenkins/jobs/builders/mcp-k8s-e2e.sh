@@ -5,8 +5,11 @@ set -ex
 export HOME=${WORKSPACE}
 export GOPATH=${HOME}/_gopath
 export PATH=${GOPATH}/bin:${PATH}
+export ARTIFACTS=${WORKSPACE}/_artifacts
 
 export KUBERNETES_PROVIDER=libvirt-coreos
+
+mkdir -p "${ARTIFACTS}"
 
 #enable ksm
 echo 1|sudo tee /sys/kernel/mm/ksm/run
@@ -22,4 +25,4 @@ make release-skip-tests
 
 ./cluster/kube-up.sh
 
-go run hack/e2e.go -v -test --test_args="--host=https://192.168.10.1:6443 --ginkgo.focus=\[Conformance\]"
+go run hack/e2e.go -v -test --test_args="--host=https://192.168.10.1:6443 --report-dir=${ARTIFACTS} --ginkgo.focus=\[Conformance\]"
