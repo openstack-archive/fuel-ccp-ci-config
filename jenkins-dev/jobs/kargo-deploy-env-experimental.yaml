@@ -40,7 +40,8 @@
             cloud_provider: "generic"
             #Experimental etcd container deployment
             etcd_deployment_type: "docker"
-
+            #Set kubernetes version. Note that v3.0.1 has bugs
+            kube_version: "v1.2.4"
     publishers:
       - post-tasks:
         - matches:
