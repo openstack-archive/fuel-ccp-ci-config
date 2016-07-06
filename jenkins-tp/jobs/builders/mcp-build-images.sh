@@ -7,15 +7,12 @@ source mcp/bin/activate
 pip install .
 
 mcp-microservices \
---images-base-distro debian \
---images-base-tag 8.4 \
 --images-maintainer mos-microservices@mirantis.com \
---auth-gerrit-username nextgen-ci \
 --builder-push \
 --auth-registry \
 --builder-registry registry01-bud.ng.mirantis.net \
---auth-registry-username nextgen \
---auth-registry-password ti5Eeng3 \
+--auth-registry-username $REG_USER \
+--auth-registry-password $REG_PASS \
 --images-namespace nextgen \
 --images-tag latest \
 --repositories-path microservices-repos \

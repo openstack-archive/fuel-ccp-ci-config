@@ -1,74 +1,69 @@
 - job:
-    name: nextgen-dev-env-gate-job
+    name: fuel-ccp-dev-env-gate-job
     description: |
-      Gate job for nextgen-dev-env
+      Gate job for fuel-ccp-dev-env
     node: standard
     builders:
       - get-from-zuul
-      - shell: !include-raw builders/nextgen-dev-env-gate.sh
+      - shell: !include-raw builders/fuel-ccp-dev-env-gate.sh
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
     triggers:
       - zuul
 
 - job:
-    name: nextgen-microservices-gate-job
+    name: fuel-ccp-gate-job
     description: |
-      Some gate nextgen-microservices test job
+      Fuel CCP gate job
     node: standard
     builders:
       - get-from-zuul
-      - shell: !include-raw builders/nextgen-microservices-gate.sh
+      - shell: !include-raw builders/fuel-ccp-gate.sh
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
     triggers:
       - zuul
 
 - job:
-    name: nextgen-ms-ext-config-gate-job
+    name: fuel-ccp-ms-ext-config-gate-job
     description: |
-      Some gate nextgen-ms-ext-config test job
+      Some gate fuel-ccp-ms-ext-config test job
     node: standard
     builders:
       - get-from-zuul
-      - shell: !include-raw builders/nextgen-ms-ext-config-gate.sh
+      - shell: !include-raw builders/fuel-ccp-ext-config-gate.sh
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
     triggers:
       - zuul
 
 - job:
-    name: nextgen-mcpinstaller
+    name: fuel-ccp-installer
     description: |
-      Some gate mcpinstaller test job
+      Fuel CCP Installer gate job
     node: standard
     builders:
       - get-from-zuul
-      - shell: !include-raw builders/nextgen-mcpinstaller-gate.sh
+      - shell: !include-raw builders/fuel-ccp-installer-gate.sh
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
     triggers:
       - zuul
 
 - job:
-    name: nextgen-mcp-qa
+    name: fuel-ccp-mcp-qa
     description: |
       Gate mcp-qa test job
     node: standard
     builders:
       - get-from-zuul
-      - shell: !include-raw builders/nextgen-mcp-qa-gate.sh
+      - shell: !include-raw builders/fuel-ccp-qa-gate.sh
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
     triggers:
       - zuul
