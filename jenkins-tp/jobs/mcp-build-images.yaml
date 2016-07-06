@@ -14,7 +14,7 @@
           scm-repo: 'nextgen/microservices'
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - fuel-ccp-ci-jenkins
 
 - project:
     name: Build MCP Docker images and store them into Docker registry.
