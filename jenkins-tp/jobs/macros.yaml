@@ -61,14 +61,14 @@
 # SSH credentials
 #
 - wrapper:
-    name: nextgen-ci-jenkins
+    name: fuel-ccp-ci-jenkins
     wrappers:
       - ssh-agent-credentials:
           users:
             - '77acc946-f346-4665-8271-c141b6ae9764'
 
 - wrapper:
-    name: nextgen-ci-docs
+    name: fuel-ccp-ci-docs
     wrappers:
       - ssh-agent-credentials:
           users:
@@ -82,12 +82,13 @@
 #
 # Publishers
 #
+#TODO: check target fuel-ccp-ci
 - publisher:
     name: logs-public
     publishers:
       - ssh:
           site: 'ci-logs.fuel-infra.org'
-          target: 'kolla-ci/$JOB_NAME/$BUILD_ID'
+          target: 'fuel-ccp-ci/$JOB_NAME/$BUILD_ID'
           source: 'logs/*'
           flatten: true
 
@@ -125,10 +126,10 @@
     name: get-from-zuul-container
     builders:
       - shell: |
-          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/nextgen/microservices
+          git clone https://git.openstack.org/openstack/fuel-ccp
           mkdir -p containers/$ZUUL_PROJECT
           cd containers/$ZUUL_PROJECT
-          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          git clone https://git.openstack.org/$ZUUL_PROJECT .
           git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
           git checkout FETCH_HEAD
 
@@ -136,7 +137,7 @@
     name: get-from-zuul
     builders:
       - shell: |
-          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          git clone https://git.openstack.org/$ZUUL_PROJECT .
           git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
           git checkout FETCH_HEAD
           git status

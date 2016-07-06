@@ -15,7 +15,7 @@
     node: standard
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - fuel-ccp-ci-jenkins
 
 # JJB
 - job-template:
@@ -30,7 +30,7 @@
     node: standard
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - fuel-ccp-ci-jenkins
 
 - project:
     name: verify-ci-bashate
