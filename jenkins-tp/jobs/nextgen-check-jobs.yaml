@@ -1,0 +1,15 @@
+- job:
+    name: check-build-job
+    description: |
+      Some check test build job
+    node: standard
+    builders:
+      - get-from-zuul
+      - shell: !include-raw builders/check-build-job.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+

@@ -1,0 +1,22 @@
+#
+# Template for triggered job
+#
+- job:
+    name: ng-scripts-check-triggered-job
+    description: |
+      Some check test job
+    node: standard
+    builders:
+      - shell: |
+          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
+          git checkout FETCH_HEAD
+          git status
+          echo "This is job triggered on check"
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+

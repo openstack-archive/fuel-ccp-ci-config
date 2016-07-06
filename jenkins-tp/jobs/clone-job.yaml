@@ -1,0 +1,27 @@
+#
+# Template for job executed manually
+#
+- job-template:
+    name: example-manual-job-{repo}
+    description: |
+      Simple test executed manually
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/test.sh'
+    concurrent: true
+    wrappers:
+      - nextgen-ci-jenkins
+    scm:
+      - fuel-infra:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'openstack/{repo}'
+
+- project:
+    name: example-simple-clone-job
+    jobs:
+       - 'example-manual-job-{repo}'
+    repo:
+       - 'nextgen-specs':
+           branch: 'master'

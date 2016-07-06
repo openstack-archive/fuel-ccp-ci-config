@@ -1,0 +1,19 @@
+#
+# Template for triggered job
+#
+- job:
+    name: ng-scripts-post-triggered-job
+    description: |
+      Some gate test job
+    node: standard
+    builders:
+      - shell: |
+          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          echo "This is job triggered on merge"
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - nextgen-ci-jenkins
+    triggers:
+      - zuul
+

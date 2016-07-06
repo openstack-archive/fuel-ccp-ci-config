@@ -1,0 +1,14 @@
+- job-template:
+    name: metal-example
+    description: |
+      Metal example job
+    node: metal
+    builders:
+      - shell:
+          !include-raw 'builders/metal-example.sh'
+    concurrent: false
+
+- project:
+    name: Metal Example Job
+    jobs:
+       - 'metal-example'
