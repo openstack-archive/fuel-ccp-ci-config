@@ -16,6 +16,6 @@
     node: standard
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - fuel-ccp-ci-jenkins
     triggers:
       - zuul
