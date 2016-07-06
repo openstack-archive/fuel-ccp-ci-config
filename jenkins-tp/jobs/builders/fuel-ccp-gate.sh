@@ -8,7 +8,7 @@ pip install .
 
 mcp-microservices --images-maintainer mirantis@mirantis.com \
     --images-namespace microbuild --images-tag latest \
-    --repositories-path mirantis/k8s --auth-gerrit-username nextgen-ci \
+    --repositories-path mirantis/k8s \
 build
 
 deactivate

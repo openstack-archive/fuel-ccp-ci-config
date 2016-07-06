@@ -3,11 +3,11 @@
 
 echo "This is job for update jenkins jobs after merge"
 
-git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+git clone https://git.openstack.org/$ZUUL_PROJECT .
 
-tox -e nextgen-ci
+tox -e fuel-ccp-ci
 
-source ".tox/nextgen-ci/bin/activate"
+source ".tox/fuel-ccp-ci/bin/activate"
 
 cat > jenkins_jobs.ini << EOF
 [jenkins]
@@ -21,3 +21,5 @@ recursive=True
 EOF
 
 jenkins-jobs --flush-cache --conf jenkins_jobs.ini update --delete-old jenkins-tp/jobs
+
+deactivate
