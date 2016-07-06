@@ -8,13 +8,12 @@
           !include-raw 'builders/mcp-build-images.sh'
     concurrent: false
     scm:
-      - fuel-infra:
+      - openstack:
           scm-basedir: ''
           scm-branch: 'master'
-          scm-repo: 'nextgen/microservices'
+          scm-repo: 'openstack/fuel-ccp'
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
 
 - project:
     name: Build MCP Docker images and store them into Docker registry.

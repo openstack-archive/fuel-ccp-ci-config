@@ -12,7 +12,7 @@
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-docs
+      - fuel-ccp-ci-docs
     scm:
       - fuel-infra:
           scm-basedir: ''
@@ -28,7 +28,7 @@
     node: docs
     builders:
       - shell: |
-          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          git clone https://git.openstack.org/openstack/$ZUUL_PROJECT .
           git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
           git checkout FETCH_HEAD
       - shell:
@@ -36,16 +36,16 @@
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-docs
+      - fuel-ccp-ci-docs
     triggers:
       - zuul
 
 
 - project:
-    name: nextgen-docs-build-jobs
+    name: fuel-ccp-docs-build-jobs
     jobs:
        - 'build-all-docs-manual-job-{repo}'
        - 'build-all-docs-triggered-job-{repo}'
     repo:
-       - 'nextgen-specs':
+       - 'fuel-ccp-specs':
            branch: 'master'
