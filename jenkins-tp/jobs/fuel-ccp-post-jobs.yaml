@@ -8,7 +8,7 @@
     concurrent: true
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
+      - fuel-ccp-ci-jenkins
       - inject-passwords:
           global: true
     triggers:

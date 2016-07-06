@@ -36,7 +36,7 @@ pipelines:
       current-patchset: True
       approval:
         - verified: [1,2]
-          username: nextgen-ci
+          username: mirantis-fuel-ccp-ci
         - workflow: 1
         - code-review: 2
     trigger:
@@ -47,7 +47,7 @@ pipelines:
         - event: comment-added
           approval:
             - verified: 1
-              username: nextgen-ci
+              username: fuel-ccp
     start:
       gerrit:
         verified: 0
@@ -76,7 +76,7 @@ project-templates:
       - 'verify-tox-py27'
 
 projects:
-  - name: nextgen/nextgen-specs
+  - name: openstack/fuel-ccp-nextgen-specs
     check:
       - verify-tox-py27
       - verify-tox-pep8
@@ -85,76 +85,30 @@ projects:
     post:
       - nextgen-docs-build-jobs
 
-  - name: tools/ng-ci-scripts
-    check:
-      - ng-scripts-check-triggered-job
-    gate:
-      - ng-scripts-gate-triggered-job
-    post:
-      - ng-scripts-post-triggered-job
-
-  - name: kubernetes/kubernetes
-    check:
-      - mcp-k8s-test-unit
-      - mcp-k8s-test-integration
-    gate:
-      - mcp-k8s-test-unit
-      - mcp-k8s-test-integration
-
-  - name: nextgen/dev-env
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-dev-env-gate-job
-
-  - name: nextgen/microservices
+  - name: openstack/fuel-ccp
     template:
       - name: verify-tox
     gate:
-      - nextgen-microservices-gate-job
+      - fuel-ccp-microservices-gate-job
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-aodh
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-ceilometer
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-ceph
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-cinder
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-debian-base
+  - name: openstack/fuel-ccp-debian-base
     check:
       - verify-tox-bashate
       - check-build-job
     gate:
       - test-build-debianbase
 
-  - name: nextgen/ms-designate
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-elasticsearch
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-ext-config
+  - name: openstack/fuel-ccp-ext-config
     check:
       - verify-tox-pep8
       - verify-tox-py27
       - verify-tox-py34
     gate:
-      - nextgen-ms-ext-config-gate-job
+      - fuel-ccp-ext-config-gate-job
 
-  - name: nextgen/ms-glance
+  - name: openstack/fuel-ccp-glance
     check:
       - verify-tox-bashate
     gate:
@@ -162,27 +116,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-grafana
-    check:
-      - verify-tox-bashate
-    gate:
-      - test-build-grafana
-    post:
-      - mcp-build-images
-
-  - name: nextgen/ms-heat
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-heka
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-heka-gate-job
-    post:
-      - mcp-build-images
-
-  - name: nextgen/ms-horizon
+  - name: openstack/fuel-ccp-horizon
     check:
       - verify-tox-bashate
     gate:
@@ -190,19 +124,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-influxdb
-    check:
-      - verify-tox-bashate
-    gate:
-      - test-build-influxdb
-    post:
-      - mcp-build-images
-
-  - name: nextgen/ms-ironic
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-keystone
+  - name: openstack/fuel-ccp-keystone
     check:
       - verify-tox-bashate
     gate:
@@ -210,31 +132,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-kibana
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-kibana-gate-job
-    post:
-      - mcp-build-images
-
-  - name: nextgen/ms-lma
-    check:
-      - verify-tox-bashate
-    gate:
-      - test-build-lma
-    post:
-      - mcp-build-images
-
-  - name: nextgen/ms-magnum
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-manila
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-mariadb
+  - name: openstack/fuel-ccp-mariadb
     check:
       - verify-tox-bashate
     gate:
@@ -242,7 +140,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-memcached
+  - name: openstack/fuel-ccp-memcached
     check:
       - verify-tox-bashate
     gate:
@@ -250,21 +148,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-mistral
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-mongodb
-    check:
-      - verify-tox-bashate
-
-  - name: nextgen/ms-murano
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-murano-gate-job
-
-  - name: nextgen/ms-neutron
+  - name: openstack/fuel-ccp-neutron
     check:
       - verify-tox-bashate
     gate:
@@ -272,7 +156,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-nova
+  - name: openstack/fuel-ccp-nova
     check:
       - verify-tox-bashate
     gate:
@@ -280,7 +164,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-openstack-base
+  - name: openstack/fuel-ccp-openstack-base
     check:
       - verify-tox-bashate
     gate:
@@ -288,15 +172,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-openvswitch
-    check:
-      - verify-tox-bashate
-    gate:
-      - test-build-openvswitch
-    post:
-      -mcp-build-images
-
-  - name: nextgen/ms-rabbitmq
+  - name: openstack/fuel-ccp-rabbitmq
     check:
       - verify-tox-bashate
     gate:
@@ -304,43 +180,7 @@ projects:
     post:
       - mcp-build-images
 
-  - name: nextgen/ms-sahara
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-sahara-gate-job
-
-  - name: nextgen/ms-swift
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-swift-gate-job
-
-  - name: nextgen/ms-tempest
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-tempest-gate-job
-
-  - name: nextgen/ms-toolbox
-    template:
-      - name: verify-tox
-    gate:
-      - nextgen-ms-toolbox-gate-job
-
-  - name: nextgen/ms-trove
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-trove-gate-job
-
-  - name: nextgen/ms-zaqar
-    check:
-      - verify-tox-bashate
-    gate:
-      - nextgen-ms-zaqar-gate-job
-
-  - name: nextgen/mcpinstaller
+  - name: openstack/fuel-ccp-installer
     template:
       - name: verify-tox
     check:
@@ -348,17 +188,21 @@ projects:
     gate:
       - nextgen-mcpinstaller
 
-  - name: nextgen/mcp-qa
+  - name: openstack/fuel-ccp-qa
     check:
       - verify-tox-py27
       - verify-tox-pep8
     gate:
       - nextgen-mcp-qa
 
-  - name: nextgen/project-config
+  - name: openstack/fuel-ccp-ci-config
     check:
       - verify-jjb-project-config
     gate:
       - verify-jjb-project-config
     post:
       - update-jenkins-jobs
+
+jobs:
+  - name: ^.*$
+    voting: false
