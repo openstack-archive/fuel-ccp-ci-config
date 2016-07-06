@@ -6,7 +6,7 @@
     builders:
       - shell: |
           env | grep ZUUL
-          git clone ssh://nextgen-ci@review.fuel-infra.org:29418/$ZUUL_PROJECT .
+          git clone https://git.openstack.org/$ZUUL_PROJECT .
           git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
           git checkout FETCH_HEAD
       - check-tox:
@@ -17,6 +17,5 @@
     node: standard
     wrappers:
       - ng-cleanup
-      - nextgen-ci-jenkins
     triggers:
       - zuul
