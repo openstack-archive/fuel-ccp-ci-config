@@ -1,0 +1,45 @@
+#
+# Jobs used to verify syntax in CI repository
+#
+
+# Shell
+- job-template:
+    name: verify-bashate-{repo}
+    builders:
+      - get-from-zuul
+      - check-tox:
+          tox-test: bashate
+    concurrent: true
+    description: |
+      Bashate syntax test
+    node: standard
+    wrappers:
+      - ng-cleanup
+
+# JJB
+- job-template:
+    name: verify-jjb-{repo}
+    builders:
+      - get-from-zuul
+      - check-tox:
+          tox-test: nextgen-ci
+    concurrent: true
+    description: |
+      JJB syntax test
+    node: standard
+    wrappers:
+      - ng-cleanup
+
+- project:
+    name: verify-ci-bashate
+    jobs:
+       - 'verify-bashate-{repo}'
+    repo:
+       - 'project-config'
+
+- project:
+    name: verify-ci-jjb
+    jobs:
+       - 'verify-jjb-{repo}'
+    repo:
+       - 'project-config'

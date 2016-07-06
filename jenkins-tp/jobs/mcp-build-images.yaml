@@ -1,0 +1,21 @@
+- job-template:
+    name: mcp-build-images
+    description: |
+      Build MCP Docker images and store them into Docker registry.
+    node: standard
+    builders:
+      - shell:
+          !include-raw 'builders/mcp-build-images.sh'
+    concurrent: false
+    scm:
+      - openstack:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'openstack/fuel-ccp'
+    wrappers:
+      - ng-cleanup
+
+- project:
+    name: Build MCP Docker images and store them into Docker registry.
+    jobs:
+       - 'mcp-build-images'

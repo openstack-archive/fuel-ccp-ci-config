@@ -1,0 +1,9 @@
+[jenkins]
+user=USER
+password=APIKEY
+url=https://jenkins-tp.ng.mirantis.net
+query_plugins_info=False
+
+[job_builder]
+ignore_cache=True
+keep_descriptions=False

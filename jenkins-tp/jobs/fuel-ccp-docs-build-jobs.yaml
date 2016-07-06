@@ -1,0 +1,51 @@
+#
+# Template for job executed manually
+#
+- job-template:
+    name: build-all-docs-manual-job-{repo}
+    description: |
+      Docs build job executed manually
+    node: docs
+    builders:
+      - shell:
+          !include-raw 'builders/ng-build-specs.sh'
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - fuel-ccp-ci-docs
+    scm:
+      - fuel-infra:
+          scm-basedir: ''
+          scm-branch: '{branch}'
+          scm-repo: 'nextgen/{repo}'
+#
+# Template for triggered job
+#
+- job-template:
+    name: build-all-docs-triggered-job-{repo}
+    description: |
+      Docs build job triggered
+    node: docs
+    builders:
+      - shell: |
+          git clone https://git.openstack.org/openstack/$ZUUL_PROJECT .
+          git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
+          git checkout FETCH_HEAD
+      - shell:
+          !include-raw 'builders/ng-build-specs.sh'
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+      - fuel-ccp-ci-docs
+    triggers:
+      - zuul
+
+
+- project:
+    name: fuel-ccp-docs-build-jobs
+    jobs:
+       - 'build-all-docs-manual-job-{repo}'
+       - 'build-all-docs-triggered-job-{repo}'
+    repo:
+       - 'fuel-ccp-specs':
+           branch: 'master'
