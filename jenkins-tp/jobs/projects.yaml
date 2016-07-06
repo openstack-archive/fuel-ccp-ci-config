@@ -1,93 +1,65 @@
 - project:
-    name: ms-debian-base
+    name: fuel-ccp-debian-base
     jobs:
       - test-build-{component}:
           component: debianbase
-          repos: ms-debian-base
+          repos: fuel-ccp-debian-base
 
 - project:
-    name: ms-glance
+    name: fuel-ccp-glance
     jobs:
       - test-build-{component}:
           component: glance
-          repos: ms-debian-base,ms-openstack-base,ms-glance
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
 
 - project:
-    name: ms-grafana
-    jobs:
-      - test-build-{component}:
-          component: grafana
-          repos: ms-debian-base,ms-openstack-base,ms-grafana
-
-- project:
-    name: ms-horizon
+    name: fuel-ccp-horizon
     jobs:
       - test-build-{component}:
           component: horizon
-          repos: ms-debian-base,ms-openstack-base,ms-horizon
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-horizon
 
 - project:
-    name: ms-influxdb
+    name: fuel-ccp-keystone
     jobs:
-      - test-build-{component}:
-          component: influxdb
-          repos: ms-debian-base,ms-openstack-base,ms-influxdb
-
-- project:
-    name: ms-keystone
-    jobs: 
       - test-build-{component}:
           component: keystone
-          repos: ms-debian-base,ms-openstack-base,ms-keystone
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-keystone
 
 - project:
-    name: ms-lma
+    name: fuel-ccp-memcached
     jobs:
       - test-build-{component}:
-          component: lma
-          repos: ms-debian-base,ms-openstack-base,ms-keystone
-
-- project:
-    name: ms-memcached
-    jobs:
-      - test-build-with-tox-{component}:
           component: memcached
-          repos: ms-debian-base,ms-memcached
+          repos: fuel-ccp-debian-base,fuel-ccp-memcached
           tox-test: py27
 
 - project:
-    name: ms-mariadb
+    name: fuel-ccp-mariadb
     jobs:
-      - test-build-with-tox-{component}:
+      - test-build-{component}:
           component: mariadb
-          repos: ms-debian-base,ms-mariadb
+          repos: fuel-ccp-debian-base,fuel-ccp-mariadb
           tox-test: py27
 
 - project:
-    name: ms-neutron
-    jobs: 
+    name: fuel-ccp-neutron
+    jobs:
       - test-build-{component}:
           component: neutron
-          repos: ms-debian-base,ms-openstack-base,ms-neutron
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
 
 - project:
-    name: ms-openstack-base
+    name: fuel-ccp-openstack-base
     jobs:
       - test-build-{component}:
           component: openstackbase
-          repos: ms-debian-base,ms-openstack-base
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base
 
 - project:
-    name: ms-openvswitch
-    jobs:
-      - test-build-{component}:
-          component: openvswitch
-          repos: ms-debian-base,ms-openstack-base,ms-openvswitch
-
-- project:
-    name: ms-rabbitmq
+    name: fuel-ccp-rabbitmq
     jobs:
       - test-build-{component}:
           component: rabbitmq
-          repos: ms-debian-base,ms-rabbitmq
+          repos: fuel-ccp-debian-base,fuel-ccp-rabbitmq
 
