@@ -22,42 +22,6 @@ pipelines:
       gerrit:
         verified: 1
 
-  - name: gate
-    description: Changes that have been approved by core developers are enqueued in order in this pipeline, and if they pass tests in Jenkins, will be merged.
-    success-message: Build succeeded (gate pipeline).
-    failure-message: Build failed (gate pipeline).  For information on how to proceed, see http://docs.openstack.org/infra/manual/developers.html#automated-testing
-    manager: DependentPipelineManager
-    source: gerrit
-    precedence: high
-    require:
-      open: True
-      current-patchset: True
-      approval:
-        - verified: [1, 2]
-          username: mirantis-fuel-ccp-ci
-        - workflow: 1
-    trigger:
-      gerrit:
-        - event: comment-added
-          approval:
-            - workflow: 1
-        - event: comment-added
-          approval:
-            - verified: 1
-          username: mirantis-fuel-ccp-ci
-    start:
-      gerrit:
-        verified: 0
-    success:
-      gerrit:
-        verified: 2
-        submit: true
-    failure:
-      gerrit:
-        verified: -2
-    window-floor: 20
-    window-increase-factor: 2
-
   - name: post
     description: This pipeline runs jobs that operate after each change is merged.
     manager: IndependentPipelineManager
@@ -67,7 +31,6 @@ pipelines:
       gerrit:
         - event: ref-updated
           ref: ^(?!refs/).*$
-
 
 
 project-templates:
@@ -89,67 +52,45 @@ projects:
   - name: openstack/fuel-ccp
     check:
       - fuel-ccp-gate-job
-    gate:
-      - fuel-ccp-gate-job
 
   - name: openstack/fuel-ccp-debian-base
     check:
-      - test-build-debianbase
-    gate:
       - test-build-debianbase
 
   - name: openstack/fuel-ccp-ext-config
     check:
       - fuel-ccp-ext-config-gate-job
-    gate:
-      - fuel-ccp-ext-config-gate-job
 
   - name: openstack/fuel-ccp-glance
     check:
-      - test-build-glance
-    gate:
       - test-build-glance
 
   - name: openstack/fuel-ccp-horizon
     check:
       - test-build-horizon
-    gate:
-      - test-build-horizon
 
   - name: openstack/fuel-ccp-keystone
     check:
-      - test-build-keystone
-    gate:
       - test-build-keystone
 
   - name: openstack/fuel-ccp-mariadb
     check:
       - test-build-mariadb
-    gate:
-      - test-build-mariadb
 
   - name: openstack/fuel-ccp-memcached
     check:
-      - test-build-memcached
-    gate:
       - test-build-memcached
 
   - name: openstack/fuel-ccp-neutron
     check:
       - test-build-neutron
-    gate:
-      - test-build-neutron
 
   - name: openstack/fuel-ccp-nova
     check:
       - test-build-nova
-    gate:
-      - test-build-nova
 
   - name: openstack/fuel-ccp-openstack-base
     check:
-      - test-build-openstackbase
-    gate:
       - test-build-openstackbase
 
   - name: openstack/fuel-ccp-rabbitmq
@@ -159,19 +100,13 @@ projects:
   - name: openstack/fuel-ccp-installer
     check:
       - fuel-ccp-installer
-    gate:
-      - fuel-ccp-installer
 
   - name: openstack/fuel-ccp-tests
     check:
       - fuel-ccp-mcp-qa
-    gate:
-      - fuel-ccp-mcp-qa
 
   - name: openstack/fuel-ccp-ci-config
     check:
-      - verify-jjb-project-config
-    gate:
       - verify-jjb-project-config
     post:
       - update-jenkins-jobs
