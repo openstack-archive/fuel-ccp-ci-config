@@ -111,10 +111,3 @@ projects:
     post:
       - update-jenkins-jobs
 
-jobs:
-  - name: ^fuel.*$
-    voting: false
-  - name: ^test.*$
-    voting: false
-  - name: ^verify-jjb.*$
-    voting: false
