@@ -20,7 +20,7 @@ pipelines:
         verified: 1
     failure:
       gerrit:
-        verified: 1
+        verified: -1
 
   - name: post
     description: This pipeline runs jobs that operate after each change is merged.
@@ -111,10 +111,3 @@ projects:
     post:
       - update-jenkins-jobs
 
-jobs:
-  - name: ^fuel.*$
-    voting: false
-  - name: ^test.*$
-    voting: false
-  - name: ^verify-jjb.*$
-    voting: false
