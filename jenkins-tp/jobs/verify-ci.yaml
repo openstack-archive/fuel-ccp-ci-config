@@ -22,7 +22,7 @@
     builders:
       - get-from-zuul
       - check-tox:
-          tox-test: nextgen-ci
+          tox-test: fuel-ccp-ci
     concurrent: true
     description: |
       JJB syntax test
