@@ -8,7 +8,7 @@ ACT=0
 
 function update_devops () {
   ACT=1
-  VIRTUAL_ENV=/home/jenkins/venv-nailgun-tests${1}
+  VIRTUAL_ENV=/home/jenkins/venv-fuel-devops${1}
   REPO_NAME=${2}
   BRANCH=${3}
 
@@ -33,23 +33,17 @@ function update_devops () {
   #
   test -f ~/.devops/log.yaml && rm ~/.devops/log.yaml
 
-  # Prepare requirements file
-  if [[ -n "${VENV_REQUIREMENTS}" ]]; then
-    echo "Install with custom requirements"
-    echo "${VENV_REQUIREMENTS}" >"${WORKSPACE}/venv-requirements.txt"
-  else
-    REPO_NAME="fuel-ccp-tests"
-    BRANCH="master"
-    if ! curl -fsS "https://raw.githubusercontent.com/openstack/${REPO_NAME}/${BRANCH}/mcp_tests/requirements.txt" > "${WORKSPACE}/venv-requirements.txt"; then
-      echo "Problem with downloading requirements"
-      exit 1
-    fi
-  fi
-
   # Upgrade pip inside virtualenv
   pip install pip --upgrade
 
-  pip install -r "${WORKSPACE}/venv-requirements.txt" --upgrade
+  if [[ -n "${VENV_REQUIREMENTS}" ]]; then
+    echo "Install with custom requirements"
+    echo "${VENV_REQUIREMENTS}" >"${WORKSPACE}/venv-requirements.txt"
+    pip install -r "${WORKSPACE}/venv-requirements.txt" --upgrade
+  fi
+
+  pip install git+git://github.com/openstack/fuel-devops.git --upgrade
+
   echo "=============================="
   pip freeze
   echo "=============================="
@@ -62,12 +56,16 @@ function update_devops () {
 function download_images () {
   ACT=1
   TARGET_CLOUD_DIR=/home/jenkins/workspace/cloud-images
+  VM_IMAGE="http://share01-scc.ng.mirantis.net/packer-ubuntu-1604-server-new.qcow2"
   mkdir -p ${TARGET_CLOUD_DIR}
+  pushd ${TARGET_CLOUD_DIR}
+  wget ${VM_IMAGE}
+  popd
 }
 
-# DevOps 2.9.x
-if [[ ${update_devops_2_9_x} == "true" ]]; then
-  update_devops "-2.9" "fuel-ccp-tests" "master"
+# DevOps 3.0.x
+if [[ ${update_devops_3_0_x} == "true" ]]; then
+  update_devops "-3.0" "fuel-ccp-tests" "master"
 fi
 
 if [[ ${download_images} == "true" ]]; then
