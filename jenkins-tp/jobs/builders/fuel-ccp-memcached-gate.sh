@@ -6,7 +6,7 @@ source memcachedenv/bin/activate
 
 pip install fuel-ccp/
 
-mcp-microservices --images-maintainer mirantis@mirantis.com \
+ccp --images-maintainer mirantis@mirantis.com \
     --images-namespace memcachedbuild --images-tag latest \
     --repositories-names {repos} \
     --repositories-path containers/openstack \

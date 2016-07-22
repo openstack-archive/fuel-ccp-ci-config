@@ -115,7 +115,7 @@
           virtualenv {component}env
           source {component}env/bin/activate
           pip install fuel-ccp/
-          mcp-microservices --images-maintainer mirantis@mirantis.com \
+          ccp --images-maintainer mirantis@mirantis.com \
               --images-namespace {component}build --images-tag latest \
               --repositories-names {repos} \
               --repositories-path containers/openstack \
