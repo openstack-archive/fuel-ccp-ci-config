@@ -6,7 +6,7 @@ source ovsenv/bin/activate
 
 pip install microservices/
 
-mcp-microservices --images-base-distro debian --images-base-tag jessie \
+ccp --images-base-distro debian --images-base-tag jessie \
     --images-maintainer mirantis@mirantis.com \
     --images-namespace ovsbuild --images-tag latest \
     --repositories-names ms-debian-base,ms-openvswitch \

@@ -6,7 +6,7 @@ source mariadbenv/bin/activate
 
 pip install fuel-ccp/
 
-mcp-microservices --images-maintainer mirantis@mirantis.com \
+ccp --images-maintainer mirantis@mirantis.com \
     --images-namespace mariadbbuild --images-tag latest \
     --repositories-names {repos} \
     --repositories-path containers/nextgen \

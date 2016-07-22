@@ -6,7 +6,7 @@ virtualenv mcp
 source mcp/bin/activate
 pip install .
 
-mcp-microservices \
+ccp \
 --images-base-distro debian \
 --images-base-tag jessie \
 --images-maintainer mos-microservices@mirantis.com \

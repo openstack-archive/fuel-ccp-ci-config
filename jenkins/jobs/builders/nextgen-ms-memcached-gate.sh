@@ -6,7 +6,7 @@ source memcachedenv/bin/activate
 
 pip install microservices/
 
-mcp-microservices --images-base-distro debian --images-base-tag jessie \
+ccp --images-base-distro debian --images-base-tag jessie \
     --images-maintainer mirantis@mirantis.com \
     --images-namespace memcachedbuild --images-tag latest \
     --repositories-path containers/nextgen --auth-gerrit-username nextgen-ci \

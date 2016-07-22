@@ -29,7 +29,7 @@ cd ..
 
 cubeip=`cat ./mcpinstaller/VLAN_IPS | head -n 1`
 
-mcp-microservices \
+ccp \
     --images-base-distro debian \
     --images-base-tag 8.4 \
     --images-maintainer mos-microservices@mirantis.com \
