@@ -8,7 +8,7 @@ pip install .
 
 mcp-microservices --images-maintainer mirantis@mirantis.com \
     --images-namespace microbuild --images-tag latest \
-    --repositories-path containers/nextgen \
+    --repositories-path containers/openstack \
 build
 
 deactivate
