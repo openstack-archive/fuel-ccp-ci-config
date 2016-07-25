@@ -50,6 +50,13 @@
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
 
 - project:
+    name: fuel-ccp-nova
+    jobs:
+      - test-build-{component}:
+          component: nova
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-nova
+
+- project:
     name: fuel-ccp-openstack-base
     jobs:
       - test-build-{component}:
