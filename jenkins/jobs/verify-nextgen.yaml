@@ -1,9 +1,0 @@
-- project:
-    name: verify-tox-tests
-    jobs:
-      - 'verify-tox-{tox-test}':
-          tox-test:
-            - pep8
-            - py27
-            - bashate
-            - py34
