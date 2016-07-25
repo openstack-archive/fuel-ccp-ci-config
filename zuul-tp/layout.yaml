@@ -61,6 +61,10 @@ projects:
     check:
       - fuel-ccp-ext-config-gate-job
 
+  - name: openstack/fuel-ccp-etcd
+    check:
+      - test-build-etcd
+
   - name: openstack/fuel-ccp-glance
     check:
       - test-build-glance
