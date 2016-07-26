@@ -8,7 +8,7 @@ pip install fuel-ccp/
 
 mcp-microservices --images-maintainer mirantis@mirantis.com \
     --images-namespace memcachedbuild --images-tag latest \
-    --repositories-names {repos} \
+    --repositories-names {repos} --builder-no-cache \
     --repositories-path containers/openstack \
     build -c memcached
 
