@@ -8,6 +8,7 @@ pip install .
 
 mcp-microservices \
 --images-maintainer mos-microservices@mirantis.com \
+--builder-no-cache \
 --builder-push \
 --auth-registry \
 --builder-registry registry01-bud.ng.mirantis.net \
