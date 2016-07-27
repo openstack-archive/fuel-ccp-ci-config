@@ -9,11 +9,13 @@ tox -e fuel-ccp-ci
 
 source ".tox/fuel-ccp-ci/bin/activate"
 
+JENKINS-TP_IP=172.18.229.11
+
 cat > jenkins_jobs.ini << EOF
 [jenkins]
 user=${JJB_USER}
 password=${JJB_PASS}
-url=https://jenkins-tp.ng.mirantis.net/
+url=https://${JENKINS-TP_IP}/
 query_plugins_info=False
 [job_builder]
 ignore_cache=True
