@@ -6,6 +6,13 @@
           repos: fuel-ccp-debian-base
 
 - project:
+    name: fuel-ccp-etcd
+    jobs:
+      - test-build-{component}:
+          component: etcd
+          repos: fuel-ccp-etcd
+
+- project:
     name: fuel-ccp-glance
     jobs:
       - test-build-{component}:
