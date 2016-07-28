@@ -55,7 +55,7 @@ projects:
 
   - name: openstack/fuel-ccp-debian-base
     check:
-      - test-build-debianbase
+      - test-build-base
 
   - name: openstack/fuel-ccp-ext-config
     check:

@@ -2,7 +2,7 @@
     name: fuel-ccp-debian-base
     jobs:
       - test-build-{component}:
-          component: debianbase
+          component: base
           repos: fuel-ccp-debian-base
 
 - project:
