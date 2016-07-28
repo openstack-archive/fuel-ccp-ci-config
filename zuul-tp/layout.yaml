@@ -105,6 +105,10 @@ projects:
     check:
       - fuel-ccp-installer
 
+  - name: openstack/fuel-ccp-stacklight
+    check:
+      - test-build-stacklight
+
   - name: openstack/fuel-ccp-tests
     check:
       - fuel-ccp-mcp-qa

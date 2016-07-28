@@ -53,3 +53,17 @@
       - ng-cleanup
     triggers:
       - zuul
+
+- job:
+    name: test-build-stacklight
+    builders:
+      - get-from-zuul-container
+      - shell: !include-raw builders/fuel-ccp-stacklight.sh
+    concurrent: true
+    description: |
+      Test build stacklight images job
+    node: standard
+    wrappers:
+      - ng-cleanup
+    triggers:
+      - zuul
