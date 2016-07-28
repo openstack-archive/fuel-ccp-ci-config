@@ -6,7 +6,7 @@ virtualenv mcp
 source mcp/bin/activate
 pip install .
 
-mcp-microservices \
+ccp \
 --images-maintainer mos-microservices@mirantis.com \
 --builder-no-cache \
 --builder-push \
