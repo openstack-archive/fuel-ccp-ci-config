@@ -1,0 +1,24 @@
+- job:
+    name: update-vm-ubuntu-image
+    builders:
+      - inject:
+          properties-content: |
+            STORAGE_USER=share
+            STORAGE_HOST=share01-scc.ng.mirantis.net
+      - shell:
+          !include-raw 'builders/update-vm-ubuntu-image.sh'
+    concurrent: true
+    description: |
+      Job updates Ubuntu images on Jenkins slaves
+    logrotate:
+      daysToKeep: 14
+    parameters:
+      - node:
+          name: NODE
+          allowed-multiselect: true
+    wrappers:
+      - ssh-agent-credentials:
+          users:
+            - 'e4fbb86b-0f5e-4670-a88f-c906a5e38014'
+      - timeout:
+          timeout: 60
