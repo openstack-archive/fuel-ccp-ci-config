@@ -55,7 +55,7 @@
             source /home/jenkins/venv-fuel-devops-3.0/bin/activate
             echo "Running on $NODE_NAME: $ENV_NAME"
 
-            dos.py erase $ENV_NAME
+            dos.py erase $ENV_NAME || true
             deactivate
 
 - job:
