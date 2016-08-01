@@ -10,7 +10,7 @@
     jobs:
       - test-build-{component}:
           component: etcd
-          repos: fuel-ccp-etcd
+          repos: fuel-ccp-debian-base,fuel-ccp-etcd
 
 - project:
     name: fuel-ccp-glance
