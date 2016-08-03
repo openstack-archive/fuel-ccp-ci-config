@@ -69,6 +69,10 @@ projects:
     check:
       - test-build-glance
 
+  - name: openstack/fuel-ccp-heat
+    check:
+      - test-build-heat
+
   - name: openstack/fuel-ccp-horizon
     check:
       - test-build-horizon

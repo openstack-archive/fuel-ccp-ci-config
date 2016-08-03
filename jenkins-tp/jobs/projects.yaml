@@ -20,6 +20,13 @@
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
 
 - project:
+    name: fuel-ccp-heat
+    jobs:
+      - test-build-{component}:
+          component: heat
+          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-heat
+
+- project:
     name: fuel-ccp-horizon
     jobs:
       - test-build-{component}:
