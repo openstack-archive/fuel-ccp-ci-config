@@ -1,9 +1,12 @@
 - job-template:
-    name: mcp-build-images
+    name: mcp-build-images-latest
     description: |
-      Build MCP Docker images and store them into Docker registry.
+      Build MCP Docker images and store them into Docker registry with latest tag.
     node: standard
     builders:
+      - inject:
+          TAG=latest
+          PURGE=false
       - shell:
           !include-raw 'builders/mcp-build-images.sh'
     concurrent: false
@@ -15,7 +18,30 @@
     wrappers:
       - ng-cleanup
 
+- job-template:
+    name: mcp-build-images-build-number
+    description: |
+      Build MCP Docker images and store them into Docker registry with BUILD_NUMBER as a tag.
+    node: standard
+    builders:
+      - inject:
+          TAG_IS_BUILD_NUMBER=true
+          PURGE=true
+          PURGE_COUNT=5
+      - shell:
+          !include-raw 'builders/mcp-build-images.sh'
+    concurrent: true
+    scm:
+      - openstack:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'openstack/fuel-ccp'
+    wrappers:
+      - ng-cleanup
+
+
 - project:
     name: Build MCP Docker images and store them into Docker registry.
     jobs:
-       - 'mcp-build-images'
+       - 'mcp-build-images-latest'
+       - 'mcp-build-images-build-number'
