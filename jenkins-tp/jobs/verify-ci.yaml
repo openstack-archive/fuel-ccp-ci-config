@@ -30,16 +30,4 @@
     wrappers:
       - ng-cleanup
 
-- project:
-    name: verify-ci-bashate
-    jobs:
-       - 'verify-bashate-{repo}'
-    repo:
-       - 'project-config'
 
-- project:
-    name: verify-ci-jjb
-    jobs:
-       - 'verify-jjb-{repo}'
-    repo:
-       - 'project-config'

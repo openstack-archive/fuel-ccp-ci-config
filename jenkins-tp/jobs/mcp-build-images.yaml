@@ -15,7 +15,3 @@
     wrappers:
       - ng-cleanup
 
-- project:
-    name: Build MCP Docker images and store them into Docker registry.
-    jobs:
-       - 'mcp-build-images'

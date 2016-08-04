@@ -77,3 +77,35 @@
           component: rabbitmq
           repos: fuel-ccp-debian-base,fuel-ccp-rabbitmq
 
+- project:
+    name: verify-tox-tests
+    jobs:
+      - 'verify-tox-{tox-test}':
+          tox-test:
+            - pep8
+            - py27
+            - bashate
+            - py34
+
+- project:
+    name: verify-ci
+    jobs:
+       - 'verify-bashate-{repo}'
+       - 'verify-jjb-{repo}'
+    repo:
+       - 'project-config'
+
+- project:
+    name: mcp-build-images
+    jobs:
+       - 'mcp-build-images'
+
+- project:
+    name: fuel-ccp-docs-build-jobs
+    jobs:
+       - 'build-all-docs-manual-job-{repo}'
+       - 'build-all-docs-triggered-job-{repo}'
+    repo:
+       - 'fuel-ccp-specs':
+           branch: 'master'
+
