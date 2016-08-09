@@ -108,6 +108,8 @@ projects:
   - name: openstack/fuel-ccp-installer
     check:
       - fuel-ccp-installer
+      - verify-tox-bashate
+      - verify-tox-shellcheck
 
   - name: openstack/fuel-ccp-tests
     check:
