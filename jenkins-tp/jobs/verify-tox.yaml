@@ -7,3 +7,4 @@
             - py27
             - bashate
             - py34
+            - shellcheck
