@@ -114,6 +114,7 @@
       - shell: |
           virtualenv {component}env
           source {component}env/bin/activate
+          pip install --upgrade pip
           pip install fuel-ccp/
           ccp --images-maintainer mirantis@mirantis.com \
               --images-namespace {component}build --images-tag latest \

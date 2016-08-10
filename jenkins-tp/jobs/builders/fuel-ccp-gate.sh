@@ -4,6 +4,8 @@ virtualenv microenv
 
 source microenv/bin/activate
 
+pip install --upgrade pip
+
 pip install .
 
 ccp --images-maintainer mirantis@mirantis.com \
