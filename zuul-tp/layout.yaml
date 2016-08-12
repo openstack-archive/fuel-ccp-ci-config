@@ -132,6 +132,7 @@ projects:
   - name: openstack/fuel-ccp-installer
     check:
       - fuel-ccp-installer
+    voting: false
 
   - name: openstack/fuel-ccp-tests
     check:

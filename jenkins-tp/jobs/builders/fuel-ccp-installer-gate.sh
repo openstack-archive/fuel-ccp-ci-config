@@ -25,5 +25,3 @@ echo "[TODO] We need some check of K8s deployment here."
 echo "Cleaning up:"
 dos.py erase $ENV_NAME
 
-# [TODO: mzawadzki] Temporary wourkaround,to be changed after job is tested.
-exit 0
