@@ -32,6 +32,14 @@ pipelines:
         - event: ref-updated
           ref: ^(?!refs/).*$
 
+  - name: periodic
+    description: Jobs in this queue are triggered on a timer.
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: low
+    trigger:
+      timer:
+        - time: '0 12,18 * * 1-5'
 
 project-templates:
   - name: verify-tox
@@ -53,13 +61,13 @@ projects:
     check:
       - fuel-ccp-gate-job
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-debian-base
     check:
       - test-build-base
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-ext-config
     check:
@@ -69,13 +77,13 @@ projects:
     check:
       - test-build-etcd
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-glance
     check:
       - test-build-glance
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-heat
     check:
@@ -91,43 +99,43 @@ projects:
     check:
       - test-build-keystone
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-mariadb
     check:
       - test-build-mariadb
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-memcached
     check:
       - test-build-memcached
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-neutron
     check:
       - test-build-neutron
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-nova
     check:
       - test-build-nova
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-openstack-base
     check:
       - test-build-openstackbase
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-rabbitmq
     check:
       - test-build-rabbitmq
     post:
-      - mcp-build-images-build-number
+      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-installer
     check:
@@ -142,4 +150,6 @@ projects:
       - verify-jjb-project-config
     post:
       - update-jenkins-jobs
+    periodic:
+      - 'mcp-build-images-build-number'
 
