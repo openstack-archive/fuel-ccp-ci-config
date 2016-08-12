@@ -15,7 +15,7 @@
       - openstack:
           scm-basedir: ''
           scm-branch: 'master'
-          scm-repo: 'openstack/fuel-ccp'
+          scm-repo: 'fuel-ccp'
     wrappers:
       - ng-cleanup
 
@@ -37,7 +37,7 @@
       - openstack:
           scm-basedir: ''
           scm-branch: 'master'
-          scm-repo: 'openstack/fuel-ccp'
+          scm-repo: 'fuel-ccp'
     wrappers:
       - ng-cleanup
 
