@@ -32,6 +32,14 @@ pipelines:
         - event: ref-updated
           ref: ^(?!refs/).*$
 
+  - name: periodic
+    description: Jobs in this queue are triggered on a timer.
+    manager: IndependentPipelineManager
+    source: gerrit
+    precedence: low
+    trigger:
+      timer:
+        - time: '0 12,18 * * 1-5'
 
 project-templates:
   - name: verify-tox
@@ -142,4 +150,8 @@ projects:
       - verify-jjb-project-config
     post:
       - update-jenkins-jobs
+
+  - name: periodic-mcp-build-images-latest
+    periodic:
+      - mcp-build-images-latest
 
