@@ -1,7 +1,6 @@
 #!/bin/bash -x
 
-# [TODO: mzawadzki] Temporary, to be uncommented after job is tested.
-# set -e
+set -e
 env
 
 export ENV_NAME="env-k8s-kargo-$BUILD_TAG"
@@ -24,6 +23,3 @@ bash -ex "utils/jenkins/run_k8s_deploy_test.sh"
 echo "[TODO] We need some check of K8s deployment here."
 echo "Cleaning up:"
 dos.py erase $ENV_NAME
-
-# [TODO: mzawadzki] Temporary wourkaround,to be changed after job is tested.
-exit 0

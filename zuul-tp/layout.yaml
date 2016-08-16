@@ -39,6 +39,10 @@ project-templates:
       - 'verify-tox-pep8'
       - 'verify-tox-py27'
 
+jobs:
+  - name: fuel-ccp-installer
+    voting: false
+
 projects:
   - name: openstack-dev/ci-sandbox
     check:
