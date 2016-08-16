@@ -34,6 +34,7 @@ ccp \
 --images-tag ${TAG} \
 --images-maintainer ${IMAGES_MAINTAINER} \
 --repositories-path ${REPOSITORIES_PATH} \
+--debug \
 build
 deactivate
 
