@@ -4,7 +4,7 @@ set -e
 env
 
 export ENV_NAME="env-k8s-kargo-$BUILD_TAG"
-export IMAGE_PATH="/home/jenkins/workspace/cloud-images/packer-ubuntu-1604-server-new.qcow2"
+export IMAGE_PATH="/home/jenkins/workspace/cloud-images/ubuntu-1604-server-13.qcow2"
 export DONT_DESTROY_ON_SUCCESS=1
 #export VLAN_BRIDGE="" # custom bridge connected to vlan
 export DEPLOY_METHOD="kargo"
