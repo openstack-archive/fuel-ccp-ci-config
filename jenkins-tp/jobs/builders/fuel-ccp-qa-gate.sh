@@ -17,7 +17,7 @@ function check_venv_exists() {
 
 check_venv_exists
 
-pip install -r mcp_tests/requirements.txt
+pip install -r fuel_ccp_tests/requirements.txt
 
 py.test -k mysql_is_running
 
