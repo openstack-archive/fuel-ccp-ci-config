@@ -40,7 +40,11 @@
           scm-repo: 'fuel-ccp'
     wrappers:
       - ng-cleanup
-
+   publishers:
+      - email-image-build:
+          body-failed:
+            !include-raw notifications/image_build.failed
+          mail-to: mos-microservices@mirantis.com
 
 - project:
     name: Build MCP Docker images and store them into Docker registry.
