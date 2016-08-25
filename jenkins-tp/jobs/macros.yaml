@@ -100,6 +100,20 @@
           artifacts: 'logs/*'
           latest-only: false
 
+- publisher:
+    name: email-image-build
+    publishers:
+      - email-ext:
+          body: '{body-failed}'
+          aborted: true
+          failure: true
+          still-failing: true
+          fixed: true
+          send-to:
+            - recipients
+          recipients: '{mail-to}'
+          subject: '[Jenkins] $JOB_NAME - #$BUILD_ID'
+
 #
 # Builders
 #
