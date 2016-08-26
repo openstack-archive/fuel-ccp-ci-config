@@ -15,6 +15,9 @@ pipelines:
         - event: change-restored
         - event: comment-added
           comment: (?i)^(Patch Set [0-9]+:)?( [\w\\+-]*)*(\n\n)?\s*(recheck|reverify|ccp-recheck)
+    start:
+      gerrit:
+        verified: 0
     success:
       gerrit:
         verified: 1
