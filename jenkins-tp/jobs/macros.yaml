@@ -108,7 +108,7 @@
           aborted: true
           failure: true
           still-failing: true
-          fixed: true
+          fixed: false
           send-to:
             - recipients
           recipients: '{mail-to}'

@@ -1,6 +1,5 @@
-Image build job fails
+Image build job failed: ${BUILD_URL}
 
-
-Please get into the slack (#mcp-engineering) to check if someone is fixing this already,
-or start fixing it yourself.
+Please raise this issue on MCP Slack channel (#mcp-engineering) to check if
+someone is fixing this already, or start fixing it yourself.
 
