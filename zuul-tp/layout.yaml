@@ -157,4 +157,5 @@ projects:
       - update-jenkins-jobs
     periodic:
       - 'mcp-build-images-build-number'
+      - 'mcp-clean-docker-registry'
 

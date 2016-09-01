@@ -16,8 +16,6 @@ DOCKER_NAMESPACE="mcp"
 IMAGES_MAINTAINER="mos-microservices@mirantis.com"
 REPOSITORIES_PATH="microservices-repos"
 : ${TAG:="latest"}
-: ${PURGE:="false"}
-: ${PURGE_COUNT:="5"}
 
 
 # Install fuel-ccp:
@@ -36,17 +34,5 @@ ccp \
 --repositories-path ${REPOSITORIES_PATH} \
 --debug \
 build
+
 deactivate
-
-
-# Purge images if requested:
-if [ ${PURGE} == "true" ] && [[ ${TAG} =~ ^[0-9]+$ ]];
-then
-  TAG_TO_DELETE=`expr $TAG - $PURGE_COUNT`
-  #FIXME (mzawadzki): remove 'echo' after tests to really rmi images
-  #FIXME (mzawadzki): this will remove images locally but not from
-  #remote registry
-  docker images| tail -n +2| awk -v TAG_TO_DELETE=${TAG_TO_DELETE} \
-  '$2 == TAG_TO_DELETE {system("echo docker rmi  " $1 ":"TAG_TO_DELETE);}'\
-  && true
-fi
