@@ -7,7 +7,6 @@
       - inject:
           properties-content: |
             TAG=latest
-            PURGE=false
       - shell:
           !include-raw-escape 'builders/mcp-build-images.sh'
     concurrent: false
@@ -28,8 +27,6 @@
       - inject:
           properties-content: |
             TAG=$BUILD_NUMBER
-            PURGE=true
-            PURGE_COUNT=5
       - shell:
           !include-raw-escape 'builders/mcp-build-images.sh'
     concurrent: true
@@ -46,8 +43,26 @@
             !include-raw notifications/image_build.failed
           mail-to: mos-microservices@mirantis.com
 
+- job-template:
+    name: mcp-clean-docker-registry
+    description: |
+      Remove old tags from MCP Docker registry.
+    node: standard
+    builders:
+      - inject:
+          properties-content: |
+            LEAVE_LAST_RECENT_TAGS=6
+            DOCKER_REGISTRY="registry.mcp.fuel-infra.org"
+            DOCKER_NAMESPACE="mcp"
+      - shell:
+          !include-raw-escape 'builders/mcp-clean-docker-registry.sh'
+    concurrent: false
+    wrappers:
+      - ng-cleanup
+
 - project:
     name: Build MCP Docker images and store them into Docker registry.
     jobs:
        - 'mcp-build-images-latest'
        - 'mcp-build-images-build-number'
+       - 'mcp-clean-docker-registry'
