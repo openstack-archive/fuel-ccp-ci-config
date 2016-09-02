@@ -126,15 +126,15 @@
     name: build-image
     builders:
       - shell: |
-          virtualenv {component}env
-          source {component}env/bin/activate
+          virtualenv {name}env
+          source {name}env/bin/activate
           pip install --upgrade pip
           pip install fuel-ccp/
           ccp --images-maintainer mirantis@mirantis.com \
-              --images-namespace {component}build --images-tag latest \
+              --images-namespace {name}build --images-tag latest \
               --repositories-names {repos} --builder-no-cache \
               --repositories-path containers/openstack \
-              build -c {component}
+              build -c {components}
           deactivate
 
 - builder:
