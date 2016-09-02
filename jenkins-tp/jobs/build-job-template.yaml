@@ -2,15 +2,16 @@
 # Template used to execute tox tests
 #
 - job-template:
-    name: test-build-{component}
+    name: test-build-{name}
     builders:
       - get-from-zuul-container
       - build-image:
-          component: '{component}'
+          name: '{name}'
+          components: '{components}'
           repos: '{repos}'
     concurrent: true
     description: |
-      Test build {component} image job
+      Test build {name} image job
     node: standard
     wrappers:
       - ng-cleanup
