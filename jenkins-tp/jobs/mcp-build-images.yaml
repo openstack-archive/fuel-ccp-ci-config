@@ -52,8 +52,8 @@
       - inject:
           properties-content: |
             LEAVE_LAST_RECENT_TAGS=6
-            DOCKER_REGISTRY="registry.mcp.fuel-infra.org"
-            DOCKER_NAMESPACE="mcp"
+            DOCKER_REGISTRY=registry.mcp.fuel-infra.org
+            DOCKER_NAMESPACE=mcp
       - shell:
           !include-raw-escape 'builders/mcp-clean-docker-registry.sh'
     concurrent: false
