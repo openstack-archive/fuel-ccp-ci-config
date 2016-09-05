@@ -142,6 +142,12 @@ projects:
     post:
       - mcp-build-images-latest
 
+  - name: openstack/fuel-ccp-stacklight
+    check:
+      - test-build-stacklight
+    post:
+      - mcp-build-images-latest
+
   - name: openstack/fuel-ccp-installer
     check:
       - fuel-ccp-installer
