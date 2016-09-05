@@ -32,5 +32,5 @@ do
   ${REGISTRY_MANAGER} list-tags ${image} | \
   grep "^[0-9]\+$" | sort -rn | tail -n +`expr ${LEAVE_LAST_RECENT_TAGS} + 1` | \
   awk -v REGISTRY_MANAGER="${REGISTRY_MANAGER}" -v image=${image} \
-    '$1 ~ /^[0-9]+$/ {system(REGISTRY_MANAGER" delete "image":"$1);}'
+    '$1 ~ /^[0-9]+$/ {exit system(REGISTRY_MANAGER" delete "image":"$1);}'
 done
