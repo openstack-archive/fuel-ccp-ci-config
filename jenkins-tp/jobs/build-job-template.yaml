@@ -7,7 +7,6 @@
       - get-from-zuul-container
       - build-image:
           name: '{name}'
-          components: '{components}'
           repos: '{repos}'
     concurrent: true
     description: |

@@ -134,7 +134,7 @@
               --images-namespace {name}build --images-tag latest \
               --repositories-names {repos} --builder-no-cache \
               --repositories-path containers/openstack \
-              build -c {components}
+              build
           deactivate
 
 - builder:
