@@ -2,49 +2,42 @@
     name: debian-base
     jobs:
       - test-build-{name}:
-          components: base
           repos: fuel-ccp-debian-base
 
 - project:
     name: etcd
     jobs:
       - test-build-{name}:
-          components: etcd
           repos: fuel-ccp-debian-base,fuel-ccp-etcd
 
 - project:
     name: glance
     jobs:
       - test-build-{name}:
-          components: glance
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
 
 - project:
     name: heat
     jobs:
       - test-build-{name}:
-          components: heat
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-heat
 
 - project:
     name: horizon
     jobs:
       - test-build-{name}:
-          components: horizon
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-horizon
 
 - project:
     name: keystone
     jobs:
       - test-build-{name}:
-          components: keystone
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-keystone
 
 - project:
     name: memcached
     jobs:
       - test-build-{name}:
-          components: memcached
           repos: fuel-ccp-debian-base,fuel-ccp-memcached
           tox-test: py27
 
@@ -52,7 +45,6 @@
     name: mariadb
     jobs:
       - test-build-{name}:
-          components: mariadb
           repos: fuel-ccp-debian-base,fuel-ccp-mariadb
           tox-test: py27
 
@@ -60,33 +52,28 @@
     name: neutron
     jobs:
       - test-build-{name}:
-          components: neutron
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
 
 - project:
     name: nova
     jobs:
       - test-build-{name}:
-          components: nova
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-nova
 
 - project:
     name: openstack-base
     jobs:
       - test-build-{name}:
-          components: openstackbase
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base
 
 - project:
     name: rabbitmq
     jobs:
       - test-build-{name}:
-          components: rabbitmq
           repos: fuel-ccp-debian-base,fuel-ccp-rabbitmq
 
 - project:
     name: stacklight
     jobs:
       - test-build-{name}:
-          components: elasticsearch grafana influxdb heka hindsight kibana snap
           repos: fuel-ccp-debian-base,fuel-ccp-stacklight
