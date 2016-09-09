@@ -3,7 +3,7 @@ pipelines:
     description: Newly uploaded patchsets enter this pipeline to receive an initial +/-1 Verified vote from Jenkins.
     success-message: Build succeeded (check pipeline).
     failure-message: Build failed (check pipeline).  For information on how to proceed, see http://docs.openstack.org/infra/manual/developers.html#automated-testing
-    manager: IndependentPipelineManager
+    manager: DependentPipelineManager
     source: gerrit
     precedence: normal
     require:
