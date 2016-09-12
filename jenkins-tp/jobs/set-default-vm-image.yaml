@@ -1,0 +1,30 @@
+- job:
+    name: set-default-vm-image
+    builders:
+      - shell: |
+          #!/bin/bash
+          cd /home/jenkins/workspace/cloud-images/
+          if [ -L default-image.qcow2 ];then
+            rm default-image.qcow2
+          fi
+          ln -s $IMAGE default-image.qcow2
+    concurrent: true
+    description: |
+      Job set default Ubuntu images on Jenkins slaves
+    logrotate:
+      daysToKeep: 14
+    parameters:
+      - extended-choice:
+          name: IMAGE
+          description: "VM image file for k8s hosts"
+          property-file: http://share01-scc.ng.mirantis.net/images.lst
+          property-key: images
+      - node:
+          name: NODE
+          allowed-multiselect: true
+    wrappers:
+      - ssh-agent-credentials:
+          users:
+            - '0859086d-e10a-4ad5-af71-8abec4b6b6ec'
+      - timeout:
+          timeout: 60
