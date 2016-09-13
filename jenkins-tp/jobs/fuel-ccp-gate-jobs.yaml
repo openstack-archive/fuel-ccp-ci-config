@@ -40,6 +40,10 @@
     triggers:
       - zuul
     publishers:
+      - archive:
+          allow-empty: true
+          artifacts: '*'
+          latest-only: false
       - post-tasks:
         - matches:
           - log-text: ''
