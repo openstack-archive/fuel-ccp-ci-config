@@ -8,72 +8,72 @@
     name: etcd
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-etcd
+          repos: fuel-ccp-debian-base fuel-ccp-etcd
 
 - project:
     name: glance
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-glance
 
 - project:
     name: heat
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-heat
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-heat
 
 - project:
     name: horizon
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-horizon
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-horizon
 
 - project:
     name: keystone
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-keystone
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-keystone
 
 - project:
     name: memcached
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-memcached
+          repos: fuel-ccp-debian-base fuel-ccp-memcached
           tox-test: py27
 
 - project:
     name: mariadb
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-mariadb
+          repos: fuel-ccp-debian-base fuel-ccp-mariadb
           tox-test: py27
 
 - project:
     name: neutron
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-neutron
 
 - project:
     name: nova
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-nova
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-nova
 
 - project:
     name: openstack-base
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base
 
 - project:
     name: rabbitmq
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-rabbitmq
+          repos: fuel-ccp-debian-base fuel-ccp-rabbitmq
 
 - project:
     name: stacklight
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-stacklight
+          repos: fuel-ccp-debian-base fuel-ccp-stacklight

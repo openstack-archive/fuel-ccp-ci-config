@@ -8,11 +8,20 @@ pip install --upgrade pip
 
 pip install .
 
-ccp --images-maintainer mirantis@mirantis.com \
-    --images-namespace microbuild --images-tag latest \
-    --repositories-path containers/openstack --builder-no-cache \
-    --debug \
-build
+cat > ccp-test.yaml << EOF
+debug: True
+builder:
+  no_cache: True
+images:
+  namespace: microbuild
+  tag: latest
+  maintainer: mirantis@mirantis.com
+repositories:
+  path: containers/openstack
+  skip_empty: True
+EOF
+
+ccp --config-file ccp-test.yaml build
 
 deactivate
 
