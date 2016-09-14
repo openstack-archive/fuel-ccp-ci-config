@@ -24,15 +24,22 @@ source mcp/bin/activate
 pip install .
 
 # Build images:
-ccp \
---builder-no-cache \
---builder-push \
---registry-address ${DOCKER_REGISTRY} \
---images-namespace ${DOCKER_NAMESPACE} \
---images-tag ${TAG} \
---images-maintainer ${IMAGES_MAINTAINER} \
---repositories-path ${REPOSITORIES_PATH} \
---debug \
-build
+cat > ccp-test.yaml << EOF
+debug: True
+builder:
+  no_cache: True
+  push: True
+images:
+  namespace: ${DOCKER_NAMESPACE}
+  tag: ${TAG}
+  maintainer: ${IMAGES_MAINTAINER}
+repositories:
+  path: ${REPOSITORIES_PATH}
+  skip_empty: True
+registry:
+  address: ${DOCKER_REGISTRY}
+EOF
+
+ccp --config-file ccp-test.yaml build
 
 deactivate
