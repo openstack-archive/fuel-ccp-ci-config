@@ -130,11 +130,27 @@
           source {name}env/bin/activate
           pip install --upgrade pip
           pip install fuel-ccp/
-          ccp --images-maintainer mirantis@mirantis.com \
-              --images-namespace {name}build --images-tag latest \
-              --repositories-names {repos} --builder-no-cache \
-              --repositories-path containers/openstack \
-              build
+          cat > ccp-test.yaml << EOF
+          debug: True
+          builder:
+          no_cache: True
+          images:
+            namespace: {name}build
+            tag: latest
+            maintainer: mirantis@mirantis.com
+          repositories:
+            path: containers/openstack
+            skip_empty: True
+            names:
+          EOF
+
+          for r in {repos}
+          do
+              echo "  - $r" >> ccp-test.yaml
+          done
+
+          ccp --config-file ccp-test.yaml build
+
           deactivate
 
 - builder:
