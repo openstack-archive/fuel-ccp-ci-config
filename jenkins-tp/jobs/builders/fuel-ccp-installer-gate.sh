@@ -11,6 +11,7 @@ export DEPLOY_METHOD="kargo"
 export SLAVES_COUNT="3"
 export WORKSPACE="/home/jenkins/workspace"
 export FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
+export ADMIN_IP=local
 echo "Running on $NODE_NAME: $ENV_NAME"
 source ${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
 bash -ex "utils/jenkins/run_k8s_deploy_test.sh"
