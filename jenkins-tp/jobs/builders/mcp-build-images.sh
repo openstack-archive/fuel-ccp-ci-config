@@ -31,7 +31,7 @@ builder:
   push: True
 images:
   namespace: ${DOCKER_NAMESPACE}
-  tag: ${TAG}
+  tag: "${TAG}"
   maintainer: ${IMAGES_MAINTAINER}
 repositories:
   path: ${REPOSITORIES_PATH}
