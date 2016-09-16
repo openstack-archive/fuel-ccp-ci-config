@@ -1,0 +1,34 @@
+- job:
+    name: 'smoke'
+    builders:
+      - inject:
+          properties-content: |
+            IMAGE_PATH=/home/jenkins/workspace/cloud-images/default-image.qcow2
+      - shell:
+          !include-raw builders/run_smoke.sh
+    concurrent: true
+    node: standard
+    description: |
+      Run tests.
+
+      <p>
+        Owned by: QA Team<br/>
+        Job owner is responsible for keeping builds green.<br/>
+        Maintenance contacts: #mcp-qa<br/>
+      </p>
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 50
+    scm:
+      - openstack:
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-tests'
+          scm-basedir: 'fuel-ccp-tests'
+      - openstack:
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-installer'
+          scm-basedir: 'fuel-ccp-installer'
+    wrappers:
+      - timeout:
+          fail: true
+          timeout: 135
