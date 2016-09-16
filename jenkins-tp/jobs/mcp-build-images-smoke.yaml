@@ -1,0 +1,33 @@
+- job:
+    name: 'mcp-build-images-smoke'
+    builders:
+      - inject:
+          properties-content: |
+            IMAGE_PATH=/home/jenkins/workspace/cloud-images/default-image.qcow2
+      - shell:
+        !include-raw builders/mcp-build-images-smoke.sh
+    concurrent: false
+    node: standard
+    description: |
+      Run tests.
+
+      <p>
+        Job for build images and run deploy with them.<BR/>
+        It's based on QA Team smoke test job.<BR/>
+      </p>
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 50
+    scm:
+      - openstack:
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-tests'
+          scm-basedir: 'fuel-ccp-tests'
+      - openstack:
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-installer'
+          scm-basedir: 'fuel-ccp-installer'
+    wrappers:
+      - timeout:
+          fail: true
+          timeout: 135
