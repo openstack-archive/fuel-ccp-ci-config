@@ -1,0 +1,11 @@
+- job:
+    name: push-images-to-registry
+    description: |
+      Pushing images to registry after smoke test.
+    node: standard
+    builders:
+      - shell:
+          !include-raw-escape 'builders/push-images-to-registry.sh'
+    concurrent: false
+    wrappers:
+      - ng-cleanup
