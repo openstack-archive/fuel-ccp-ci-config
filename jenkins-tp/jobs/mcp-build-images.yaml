@@ -63,6 +63,6 @@
 - project:
     name: Build MCP Docker images and store them into Docker registry.
     jobs:
-       - 'mcp-build-images-latest'
-       - 'mcp-build-images-build-number'
-       - 'mcp-clean-docker-registry'
+      - 'mcp-build-images-latest'
+      - 'mcp-build-images-build-number'
+      - 'mcp-clean-docker-registry'

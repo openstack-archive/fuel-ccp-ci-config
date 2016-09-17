@@ -12,4 +12,3 @@
           global: true
     triggers:
       - zuul
-
