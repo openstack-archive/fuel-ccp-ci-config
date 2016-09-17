@@ -33,13 +33,13 @@
 - project:
     name: verify-ci-bashate
     jobs:
-       - 'verify-bashate-{repo}'
+      - 'verify-bashate-{repo}'
     repo:
-       - 'project-config'
+      - 'project-config'
 
 - project:
     name: verify-ci-jjb
     jobs:
-       - 'verify-jjb-{repo}'
+      - 'verify-jjb-{repo}'
     repo:
-       - 'project-config'
+      - 'project-config'

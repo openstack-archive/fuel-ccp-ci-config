@@ -5,19 +5,19 @@
     name: mcpinstaller
     scm:
       - git:
-         url: 'ssh://nextgen-ci@review.fuel-infra.org:29418/{scm-repo}'
-         branches:
-          - '{scm-branch}'
-         basedir: '{scm-basedir}'
+          url: 'ssh://nextgen-ci@review.fuel-infra.org:29418/{scm-repo}'
+          branches:
+            - '{scm-branch}'
+          basedir: '{scm-basedir}'
 
 - scm:
     name: openstack
     scm:
       - git:
-         url: 'https://git.openstack.org/openstack/{scm-repo}.git'
-         branches:
-          - '{scm-branch}'
-         basedir: '{scm-basedir}'
+          url: 'https://git.openstack.org/openstack/{scm-repo}.git'
+          branches:
+            - '{scm-branch}'
+          basedir: '{scm-basedir}'
 
 - scm:
     name: fuel-infra
@@ -28,7 +28,6 @@
           skip-tag: true
           branches:
             - '{scm-branch}'
-
 
 - scm:
     name: zuul_repo
@@ -56,7 +55,6 @@
 # Static repositories
 #
 
-
 #
 # SSH credentials
 #
@@ -82,7 +80,7 @@
 #
 # Publishers
 #
-#TODO: check target fuel-ccp-ci
+# TODO: check target fuel-ccp-ci
 - publisher:
     name: logs-public
     publishers:

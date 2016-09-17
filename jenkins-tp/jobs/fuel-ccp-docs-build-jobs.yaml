@@ -40,12 +40,11 @@
     triggers:
       - zuul
 
-
 - project:
     name: fuel-ccp-docs-build-jobs
     jobs:
-       - 'build-all-docs-manual-job-{repo}'
-       - 'build-all-docs-triggered-job-{repo}'
+      - 'build-all-docs-manual-job-{repo}'
+      - 'build-all-docs-triggered-job-{repo}'
     repo:
-       - 'fuel-ccp-specs':
-           branch: 'master'
+      - 'fuel-ccp-specs':
+          branch: 'master'

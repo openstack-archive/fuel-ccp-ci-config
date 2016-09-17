@@ -161,4 +161,3 @@ projects:
     periodic:
       - 'mcp-build-images-build-number'
       - 'mcp-clean-docker-registry'
-
