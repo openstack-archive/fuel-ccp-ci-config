@@ -71,7 +71,7 @@ projects:
 
   - name: openstack/fuel-ccp-ext-config
     check:
-      - fuel-ccp-ext-config-gate-job
+      - fuel-ccp-ms-ext-config-gate-job
 
   - name: openstack/fuel-ccp-etcd
     check:
@@ -129,7 +129,7 @@ projects:
 
   - name: openstack/fuel-ccp-openstack-base
     check:
-      - test-build-openstackbase
+      - test-build-openstack-base
     post:
       - mcp-build-images-latest
 
