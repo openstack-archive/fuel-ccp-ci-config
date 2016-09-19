@@ -65,7 +65,7 @@ projects:
 
   - name: openstack/fuel-ccp-debian-base
     check:
-      - test-build-base
+      - test-build-debian-base
     post:
       - mcp-build-images-latest
 
