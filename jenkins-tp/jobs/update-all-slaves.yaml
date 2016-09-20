@@ -1,0 +1,18 @@
+- job:
+    name: update-all-slaves
+    description: |
+          This job will be triggered by jenkins-dev
+          and it will starts update-vm-ubuntu-image job
+          on all jenkins slaves.
+    builders:
+      - shell: |
+          echo "Update slaves"
+      - trigger-builds:
+        - project: "update-vm-ubuntu-image"
+          parameter-factories:
+            - factory: allnodesforlabel
+              name: NODE
+              node-label: standard
+    concurrent: true
+    wrappers:
+      - ng-cleanup
