@@ -1,0 +1,16 @@
+- job:
+    name: update-all-slaves
+    description: |
+          This job will trigger jobs for update all slave
+    builders:
+      - shell: |
+          echo "Update slaves"
+      - trigger-builds:
+          - project: "update-vm-ubuntu-image"
+            parameter-factories:
+              - factory: allnodesforlabel
+                name: NODE
+                node-label: standard
+    concurrent: true
+    wrappers:
+      - ng-cleanup
