@@ -4,7 +4,7 @@
       - inject:
           properties-content: |
             STORAGE_USER=share
-            STORAGE_HOST=share01-scc.ng.mirantis.net
+            STORAGE_HOST=static01-scc.mcp.mirantis.net
             IMAGE_SLAVE_PATH=/home/jenkins/workspace/cloud-images/
       - shell:
           !include-raw 'builders/update-vm-ubuntu-image.sh'
