@@ -60,14 +60,10 @@ projects:
   - name: openstack/fuel-ccp
     check:
       - fuel-ccp-gate-job
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-debian-base
     check:
       - test-build-debian-base
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-ext-config
     check:
@@ -76,74 +72,50 @@ projects:
   - name: openstack/fuel-ccp-etcd
     check:
       - test-build-etcd
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-glance
     check:
       - test-build-glance
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-heat
     check:
       - test-build-heat
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-horizon
     check:
       - test-build-horizon
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-keystone
     check:
       - test-build-keystone
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-mariadb
     check:
       - test-build-mariadb
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-memcached
     check:
       - test-build-memcached
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-neutron
     check:
       - test-build-neutron
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-nova
     check:
       - test-build-nova
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-openstack-base
     check:
       - test-build-openstack-base
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-rabbitmq
     check:
       - test-build-rabbitmq
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-stacklight
     check:
       - test-build-stacklight
-    post:
-      - mcp-build-images-latest
 
   - name: openstack/fuel-ccp-installer
     check:
@@ -159,5 +131,5 @@ projects:
     post:
       - update-jenkins-jobs
     periodic:
-      - 'mcp-build-images-build-number'
+      - 'mcp-build-images-smoke'
       - 'mcp-clean-docker-registry'
