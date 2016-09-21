@@ -60,7 +60,7 @@ else
     DOCKER_TAG="unstable"
 fi
 
-MASTER_IP=`awk '/kube_host/ {print $3}' /home/jenkins/workspace/smoke/${ENV_NAME}_k8s_deployed.ini`
+MASTER_IP=`awk '/kube_host/ {print $3}' $WORKSPACE/fuel-ccp-tests/${ENV_NAME}_k8s_deployed.ini`
 
 sshpass -p vagrant scp vagrant@${MASTER_IP}:ccp.* .
 
