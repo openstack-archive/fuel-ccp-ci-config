@@ -72,7 +72,7 @@ sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.
 
 for f in ${IMG}; do
     sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP \
-    "docker tag 127.0.0.1:31500/${IMAGE_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
+    "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
 done
 
 dos.py erase ${ENV_NAME}
