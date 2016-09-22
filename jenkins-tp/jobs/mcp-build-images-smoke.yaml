@@ -27,7 +27,3 @@
           scm-branch: 'master'
           scm-repo: 'fuel-ccp-installer'
           scm-basedir: 'fuel-ccp-installer'
-    wrappers:
-      - timeout:
-          fail: true
-          timeout: 135
