@@ -62,17 +62,17 @@ fi
 
 MASTER_IP=`awk '/kube_host/ {print $3}' $WORKSPACE/fuel-ccp-tests/${ENV_NAME}_k8s_deployed.ini`
 
-sshpass -p vagrant scp vagrant@${MASTER_IP}:ccp.* .
+sshpass -p vagrant scp -o StrictHostKeyChecking=no vagrant@${MASTER_IP}:ccp.* .
 
-IMG=`sshpass -p vagrant ssh vagrant@$MASTER_IP docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
+IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
 
 # we need docker config file to authentication in remote repository
-sshpass -p vagrant ssh vagrant@$MASTER_IP mkdir -p /home/jenkins/.docker/
-sshpass -p vagrant scp /home/jenkins/.docker/config.json vagrant@${MASTER_IP}:~/.docker/
+sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP mkdir -p /home/vagrant/.docker/
+sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.json vagrant@${MASTER_IP}:~/.docker/
 
 for f in ${IMG}; do
-    sshpass  -p vagrant ssh vagrant@$MASTER_IP \
-    "docker tag $f ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
+    sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP \
+    "docker tag 127.0.0.1:31500/${IMAGE_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
 done
 
 dos.py erase ${ENV_NAME}
