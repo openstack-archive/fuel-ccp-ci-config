@@ -77,6 +77,4 @@ for f in ${IMG}; do
     "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
 done
 
-dos.py erase ${ENV_NAME}
-
 deactivate
