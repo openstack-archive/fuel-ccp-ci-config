@@ -62,6 +62,8 @@ fi
 
 MASTER_IP=`awk '/kube_host/ {print $3}' $WORKSPACE/fuel-ccp-tests/${ENV_NAME}_k8s_deployed.ini`
 
+ssh-keygen -R $MASTER_IP
+
 sshpass -p vagrant scp -o StrictHostKeyChecking=no vagrant@${MASTER_IP}:ccp.* .
 
 IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
