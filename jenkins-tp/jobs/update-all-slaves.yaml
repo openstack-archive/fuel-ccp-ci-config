@@ -14,3 +14,4 @@
     concurrent: true
     wrappers:
       - ng-cleanup
+    auth-token: 42e7ac191
