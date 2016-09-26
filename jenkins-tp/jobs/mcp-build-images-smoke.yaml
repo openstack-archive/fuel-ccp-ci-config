@@ -44,7 +44,7 @@
               export ENV_PREFIX="fuel-ccp-tests"
               export ENV_NAME=${ENV_PREFIX}.${BUILD_NUMBER}
 
-              source venv-fuel-devops-3.0/bin/activate
+              source /home/jenkins/venv-fuel-devops-3.0/bin/activate
 
               dos.py erase ${ENV_NAME}
 
