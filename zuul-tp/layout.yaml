@@ -39,7 +39,7 @@ pipelines:
     precedence: low
     trigger:
       timer:
-        - time: '0 12,18 * * 1-5'
+        - time: '5 12,18 * * 1-5'
 
 project-templates:
   - name: verify-tox
