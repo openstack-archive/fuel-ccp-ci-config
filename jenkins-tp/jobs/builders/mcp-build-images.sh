@@ -23,6 +23,12 @@ virtualenv mcp
 source mcp/bin/activate
 pip install .
 
+if [ $TAG == "newton" ]; then
+    GIT_BRANCH="stable/newton"
+else
+    GIT_BRANCH="master"
+fi
+
 # Build images:
 cat > ccp-test.yaml << EOF
 debug: True
@@ -38,6 +44,31 @@ repositories:
   skip_empty: True
 registry:
   address: ${DOCKER_REGISTRY}
+sources:
+  openstack/keystone:
+    git_url: https://github.com/openstack/keystone.git
+    git_ref: ${GIT_BRANCH}
+  openstack/horizon:
+    git_url: https://github.com/openstack/horizon.git
+    git_ref: ${GIT_BRANCH}
+  openstack/nova:
+    git_url: https://github.com/openstack/nova.git
+    git_ref: ${GIT_BRANCH}
+  openstack/neutron:
+    git_url: https://github.com/openstack/neutron.git
+    git_ref: ${GIT_BRANCH}
+  openstack/heat:
+    git_url: https://github.com/openstack/heat.git
+    git_ref: ${GIT_BRANCH}
+  openstack/keystone:
+    git_url: https://github.com/openstack/keystone.git
+    git_ref: ${GIT_BRANCH}
+  openstack/glance:
+    git_url: https://github.com/openstack/glance.git
+    git_ref: ${GIT_BRANCH}
+  openstack/horizon:
+    git_url: https://github.com/openstack/horizon.git
+    git_ref: ${GIT_BRANCH}
 EOF
 
 ccp --config-file ccp-test.yaml build

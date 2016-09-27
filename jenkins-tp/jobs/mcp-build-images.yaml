@@ -1,12 +1,12 @@
 - job-template:
-    name: mcp-build-images-latest
+    name: mcp-build-images-{version}
     description: |
       Build MCP Docker images and store them into Docker registry with latest tag.
     node: standard
     builders:
       - inject:
           properties-content: |
-            TAG=latest
+            TAG={version}
       - shell:
           !include-raw-escape 'builders/mcp-build-images.sh'
     concurrent: false
@@ -63,6 +63,9 @@
 - project:
     name: Build MCP Docker images and store them into Docker registry.
     jobs:
-      - 'mcp-build-images-latest'
+      - 'mcp-build-images-{version}':
+          version:
+            - ocata
+            - newton
       - 'mcp-build-images-build-number'
       - 'mcp-clean-docker-registry'
