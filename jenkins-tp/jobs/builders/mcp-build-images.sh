@@ -38,6 +38,31 @@ repositories:
   skip_empty: True
 registry:
   address: ${DOCKER_REGISTRY}
+sources:
+  openstack/keystone:
+    git_url: https://github.com/openstack/keystone.git
+    git_ref: master
+  openstack/horizon:
+    git_url: https://github.com/openstack/horizon.git
+    git_ref: master
+  openstack/nova:
+    git_url: https://github.com/openstack/nova.git
+    git_ref: master
+  openstack/neutron:
+    git_url: https://github.com/openstack/neutron.git
+    git_ref: master
+  openstack/heat:
+    git_url: https://github.com/openstack/heat.git
+    git_ref: master
+  openstack/keystone:
+    git_url: https://github.com/openstack/keystone.git
+    git_ref: master
+  openstack/glance:
+    git_url: https://github.com/openstack/glance.git
+    git_ref: master
+  openstack/horizon:
+    git_url: https://github.com/openstack/horizon.git
+    git_ref: master
 EOF
 
 ccp --config-file ccp-test.yaml build
