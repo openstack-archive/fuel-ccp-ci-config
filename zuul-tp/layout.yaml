@@ -132,4 +132,3 @@ projects:
       - update-jenkins-jobs
     periodic:
       - 'mcp-build-images-smoke'
-      - 'mcp-clean-docker-registry'

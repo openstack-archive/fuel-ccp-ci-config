@@ -7,13 +7,14 @@
 
 # CONFIGURATION:
 ######################################################
-: ${LEAVE_LAST_RECENT_TAGS:="6"}
 : ${DOCKER_NAMESPACE:="mcp"}
 : ${DOCKER_REGISTRY:="registry.mcp.fuel-infra.org"}
 REGISTRY_MANAGER="registry-manage --host ${DOCKER_REGISTRY}"
+export TAG_REGEXP=${PARAM_TAG_REGEXP}
 
-[[ ! ${LEAVE_LAST_RECENT_TAGS} =~ ^[0-9]+$ ]] && exit 1
 
+# List all tags for all images, select and delete tags matching TAG_REGEXP:
+# 
 # Sample output from registry-manage tool:
 # "list" subcommand:
 # mcp/base
@@ -29,7 +30,8 @@ REGISTRY_MANAGER="registry-manage --host ${DOCKER_REGISTRY}"
 # new
 for image in `${REGISTRY_MANAGER} list | grep "^${DOCKER_NAMESPACE}/"`; do
     ${REGISTRY_MANAGER} list-tags ${image} | \
-    grep "^[0-9]\+$" | sort -rn | tail -n +`expr ${LEAVE_LAST_RECENT_TAGS} + 1` | \
+    grep "${TAG_REGEXP}"  | \
     awk -v REGISTRY_MANAGER="${REGISTRY_MANAGER}" -v image=${image} \
-        '$1 ~ /^[0-9]+$/ {exit system(REGISTRY_MANAGER" delete "image":"$1);}'
+        -v TAG_REGEXP=${TAG_REGEXP} \
+        '$1 ~ TAG_REGEXP {exit system(REGISTRY_MANAGER" delete "image":"$1);}'
 done
