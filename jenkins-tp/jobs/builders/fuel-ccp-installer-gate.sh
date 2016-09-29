@@ -11,6 +11,9 @@ export DEPLOY_METHOD="kargo"
 export SLAVES_COUNT="3"
 export WORKSPACE="/home/jenkins/workspace"
 export FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
+export CUSTOM_YAML='hyperkube_image_repo: "quay.io/coreos/hyperkube"
+hyperkube_image_tag: "v1.4.0_coreos.1"
+kube_version: "v1.4.0"'
 echo "Running on $NODE_NAME: $ENV_NAME"
 source ${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
 echo "Use image:"
