@@ -12,26 +12,38 @@
 
 - project:
     name: glance
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
 
 - project:
     name: heat
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-heat
 
 - project:
     name: horizon
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-horizon
 
 - project:
     name: keystone
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-keystone
 
 - project:
@@ -50,20 +62,29 @@
 
 - project:
     name: neutron
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
 
 - project:
     name: nova
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-nova
 
 - project:
     name: openstack-base
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base
 
 - project:
