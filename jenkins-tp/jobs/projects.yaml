@@ -1,79 +1,112 @@
 - project:
     name: debian-base
+    os_version:
+      - all
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base
 
 - project:
     name: etcd
+    os_version:
+      - all
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-etcd
 
 - project:
     name: glance
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
 
 - project:
     name: heat
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-heat
 
 - project:
     name: horizon
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-horizon
 
 - project:
     name: keystone
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-keystone
 
 - project:
     name: memcached
+    os_version:
+      - all
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-memcached
           tox-test: py27
 
 - project:
     name: mariadb
+    os_version:
+      - all
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-mariadb
           tox-test: py27
 
 - project:
     name: neutron
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
 
 - project:
     name: nova
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-nova
 
 - project:
     name: openstack-base
+    os_version:
+      - master
+      - newton
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-openstack-base
 
 - project:
     name: rabbitmq
+    os_version:
+      - all
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-rabbitmq
 
 - project:
     name: stacklight
+    os_version:
+      - all
     jobs:
-      - test-build-{name}:
+      - test-{os_version}-build-{name}:
           repos: fuel-ccp-debian-base,fuel-ccp-stacklight

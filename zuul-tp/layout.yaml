@@ -63,7 +63,7 @@ projects:
 
   - name: openstack/fuel-ccp-debian-base
     check:
-      - test-build-debian-base
+      - test-all-build-debian-base
 
   - name: openstack/fuel-ccp-ext-config
     check:
@@ -71,51 +71,58 @@ projects:
 
   - name: openstack/fuel-ccp-etcd
     check:
-      - test-build-etcd
+      - test-all-build-etcd
 
   - name: openstack/fuel-ccp-glance
     check:
-      - test-build-glance
+      - test-master-build-glance
+      - test-newton-build-glance
 
   - name: openstack/fuel-ccp-heat
     check:
-      - test-build-heat
+      - test-newton-build-heat
+      - test-master-build-heat
 
   - name: openstack/fuel-ccp-horizon
     check:
-      - test-build-horizon
+      - test-newton-build-horizon
+      - test-master-build-horizon
 
   - name: openstack/fuel-ccp-keystone
     check:
-      - test-build-keystone
+      - test-newton-build-keystone
+      - test-master-build-keystone
 
   - name: openstack/fuel-ccp-mariadb
     check:
-      - test-build-mariadb
+      - test-all-build-mariadb
 
   - name: openstack/fuel-ccp-memcached
     check:
-      - test-build-memcached
+      - test-all-build-memcached
 
   - name: openstack/fuel-ccp-neutron
     check:
-      - test-build-neutron
+      - test-newton-build-neutron
+      - test-master-build-neutron
 
   - name: openstack/fuel-ccp-nova
     check:
-      - test-build-nova
+      - test-newton-build-nova
+      - test-master-build-nova
 
   - name: openstack/fuel-ccp-openstack-base
     check:
-      - test-build-openstack-base
+      - test-newton-build-openstack-base
+      - test-master-build-openstack-base
 
   - name: openstack/fuel-ccp-rabbitmq
     check:
-      - test-build-rabbitmq
+      - test-all-build-rabbitmq
 
   - name: openstack/fuel-ccp-stacklight
     check:
-      - test-build-stacklight
+      - test-all-build-stacklight
 
   - name: openstack/fuel-ccp-installer
     check:
