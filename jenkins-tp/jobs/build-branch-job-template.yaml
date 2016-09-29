@@ -2,13 +2,13 @@
 # Template used to execute tox tests
 #
 - job-template:
-    name: test-build-{name}
+    name: test-{os_version}-build-{name}
     builders:
       - get-from-zuul-container
       - build-image-branch:
           name: '{name}'
           repos: '{repos}'
-          GIT_BRANCH: 'master'
+          GIT_BRANCH: '{os_version}'
     concurrent: true
     description: |
       Test build {name} image job
