@@ -11,6 +11,8 @@ export DEPLOY_METHOD="kargo"
 export SLAVES_COUNT="3"
 export WORKSPACE="/home/jenkins/workspace"
 export FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
+export CUSTOM_YAML='hyperkube_image_repo: "artifactory.mcp.mirantis.net:5000/hyperkube-amd64"
+hyperkube_image_tag: "v1.4.0-beta.10-3-gf36f43_108"'
 echo "Running on $NODE_NAME: $ENV_NAME"
 source ${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
 echo "Use image:"
