@@ -46,12 +46,15 @@
 - job-template:
     name: mcp-clean-docker-registry
     description: |
-      Remove old tags from MCP Docker registry.
+      Manual job for removing selected tags from MCP Docker registry.
     node: standard
+    parameters:
+      - text:
+          name: PARAM_TAG_REGEXP
+          description: "Tag (regexp) to delete for all images in mcp namespace"
     builders:
       - inject:
           properties-content: |
-            LEAVE_LAST_RECENT_TAGS=6
             DOCKER_REGISTRY=registry.mcp.fuel-infra.org
             DOCKER_NAMESPACE=mcp
       - shell:
