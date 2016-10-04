@@ -30,6 +30,12 @@ export IMAGES_NAMESPACE='mcp'
 export SHUTDOWN_ENV_ON_TEARDOWN=false
 # docker registry
 export DOCKER_REGISTRY="registry.mcp.fuel-infra.org"
+# hypercube image
+export HYPERKUBE_IMAGE_NAME="quay.io/coreos/hyperkube"
+# hypercube version
+export HYPERKUBE_IMAGE_TAG="v1.4.0_coreos.1"
+# etcd version
+export ETCD_IMAGE_TAG="v3.0.10"
 
 if [[ -z ${IMAGE_PATH} ]]; then
     echo "The IMAGE_PATH variable is not set!"
