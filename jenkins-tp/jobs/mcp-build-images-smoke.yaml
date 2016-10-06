@@ -1,9 +1,10 @@
-- job:
-    name: 'mcp-build-images-smoke'
+- job-template:
+    name: 'build-{version}-images-smoke'
     builders:
       - inject:
           properties-content: |
             IMAGE_PATH=/home/jenkins/workspace/cloud-images/default-image.qcow2
+            OS_VER={version}
       - shell:
           !include-raw builders/mcp-build-images-smoke.sh
     concurrent: false
@@ -49,3 +50,11 @@
               dos.py erase ${ENV_NAME}
 
               deactivate
+
+- project:
+    name: smoke-build
+    version:
+      - newton
+      - ocata
+    jobs:
+      - build-{version}-images-smoke
