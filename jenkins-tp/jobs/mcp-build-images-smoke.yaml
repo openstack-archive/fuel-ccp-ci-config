@@ -1,11 +1,12 @@
-- job:
-    name: 'mcp-build-images-smoke'
+- job-template:
+    name: 'build-{version}-images-smoke'
     builders:
       - inject:
           properties-content: |
             IMAGE_PATH=/home/jenkins/workspace/cloud-images/default-image.qcow2
+            OS_VER={version}
       - shell:
-          !include-raw builders/mcp-build-images-smoke.sh
+          !include-raw-escape builders/mcp-build-images-smoke.sh
     concurrent: false
     node: standard
     description: |
@@ -42,10 +43,18 @@
 
               set -xe
               export ENV_PREFIX="fuel-ccp-tests"
-              export ENV_NAME=${ENV_PREFIX}.${BUILD_NUMBER}
+              export ENV_NAME=$ENV_PREFIX.$BUILD_NUMBER
 
               source /home/jenkins/venv-fuel-devops-3.0/bin/activate
 
-              dos.py erase ${ENV_NAME}
+              dos.py erase $ENV_NAME
 
               deactivate
+
+- project:
+    name: smoke-build
+    version:
+      - newton
+      - ocata
+    jobs:
+      - build-{version}-images-smoke
