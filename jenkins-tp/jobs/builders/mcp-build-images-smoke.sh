@@ -36,6 +36,12 @@ export HYPERKUBE_IMAGE_NAME="quay.io/coreos/hyperkube"
 export HYPERKUBE_IMAGE_TAG="v1.4.0_coreos.1"
 # etcd version
 export ETCD_IMAGE_TAG="v3.0.10"
+# set version of openstack
+if [ $OS_VER == "ocata"];then
+    OS_RELEASE="master"
+else
+    OS_RELEASE="stable/newton"
+fi
 
 if [[ -z ${IMAGE_PATH} ]]; then
     echo "The IMAGE_PATH variable is not set!"
@@ -61,9 +67,9 @@ set -e
 
 #set tag dependent from test result
 if [[ ${SMOKE_STATUS} == 0 ]]; then
-    DOCKER_TAG="latest"
+    DOCKER_TAG=$OS_VER
 else
-    DOCKER_TAG="unstable"
+    DOCKER_TAG="$OS_VER-unstable"
 fi
 
 MASTER_IP=`awk '/kube_host/ {print $3}' $WORKSPACE/fuel-ccp-tests/${ENV_NAME}_k8s_deployed.ini`
@@ -81,6 +87,11 @@ sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.
 for f in ${IMG}; do
     sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP \
     "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
+    if [ $DOCKER_TAG == "ocata" ]; then
+        sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$MASTER_IP \
+	"docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:latest \
+	&& docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:latest"
+    fi
 done
 
 deactivate
