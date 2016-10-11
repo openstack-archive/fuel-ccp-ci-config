@@ -4,6 +4,8 @@ JOB_NAME={name}
 OS_VER={GIT_BRANCH}
 REPO_LIST={repos}
 
+export PATH="$HOME/.local/bin:$PATH"
+
 if [ $OS_VER == "master" ]; then
     GIT_BRANCH=master
 else
