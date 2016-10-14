@@ -1,0 +1,25 @@
+- job-template:
+    name: fuel-ccp-simple-deployment
+    description: |
+      Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
+    node: standard
+    builders:
+      - shell:
+          !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
+    concurrent: false
+    scm:
+      - openstack:
+          scm-basedir: ''
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp'
+      - openstack:
+          scm-basedir: 'fuel-ccp-installer'
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-installer'
+    wrappers:
+      - ng-cleanup
+
+- project:
+    name: Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
+    jobs:
+      - 'fuel-ccp-simple-deployment'
