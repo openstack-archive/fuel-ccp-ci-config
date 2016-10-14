@@ -60,6 +60,7 @@ projects:
   - name: openstack/fuel-ccp
     check:
       - fuel-ccp-gate-job
+      - fuel-ccp-simple-deployment
 
   - name: openstack/fuel-ccp-cinder
     check:
@@ -159,3 +160,7 @@ projects:
       - update-jenkins-jobs
     periodic:
       - 'mcp-build-images-smoke'
+
+jobs:
+  - name: fuel-ccp-simple-deployment
+    voting: false
