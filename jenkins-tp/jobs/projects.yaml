@@ -5,7 +5,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-cinder
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-cinder
 
 - project:
     name: debian-base
@@ -17,7 +17,7 @@
     name: etcd
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-etcd
+          repos: fuel-ccp-debian-base fuel-ccp-etcd
 
 - project:
     name: glance
@@ -26,7 +26,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-glance
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-glance
 
 - project:
     name: heat
@@ -35,7 +35,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-heat
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-heat
 
 - project:
     name: horizon
@@ -44,7 +44,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-horizon
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-horizon
 
 - project:
     name: ironic
@@ -53,7 +53,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-ironic
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-ironic
 
 - project:
     name: keystone
@@ -62,20 +62,20 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-keystone
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-keystone
 
 - project:
     name: memcached
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-memcached
+          repos: fuel-ccp-debian-base fuel-ccp-memcached
           tox-test: py27
 
 - project:
     name: mariadb
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-mariadb
+          repos: fuel-ccp-debian-base fuel-ccp-mariadb
           tox-test: py27
 
 - project:
@@ -85,7 +85,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-murano
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-murano
 
 - project:
     name: neutron
@@ -94,7 +94,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-neutron
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-neutron
 
 - project:
     name: nova
@@ -103,7 +103,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-nova
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-nova
 
 - project:
     name: openstack-base
@@ -112,13 +112,13 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base
 
 - project:
     name: rabbitmq
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-rabbitmq
+          repos: fuel-ccp-debian-base fuel-ccp-rabbitmq
 
 - project:
     name: sahara
@@ -127,10 +127,10 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-openstack-base,fuel-ccp-sahara
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-sahara
 
 - project:
     name: stacklight
     jobs:
       - test-build-{name}:
-          repos: fuel-ccp-debian-base,fuel-ccp-stacklight
+          repos: fuel-ccp-debian-base fuel-ccp-stacklight
