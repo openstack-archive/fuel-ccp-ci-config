@@ -2,7 +2,7 @@
 
 JOB_NAME={name}
 OS_VER={GIT_BRANCH}
-REPO_LIST={repos}
+REPO_LIST="{repos}"
 
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -20,9 +20,16 @@ images:
   tag: latest
   maintainer: mirantis@mirantis.com
 repositories:
+EOF
+
+for r in $REPO_LIST;do
+    echo "  - git_url: https://git.openstack.org/openstack/$r" >> fuel-ccp/ccp-test.yaml
+    echo "    name: $r" >> fuel-ccp/ccp-test.yaml
+done
+
+tee -a fuel-ccp/ccp-test.yaml << EOF
   path: $WORKSPACE/containers/openstack
   skip_empty: True
-  names: [$REPO_LIST]
 sources:
   openstack/cinder:
     git_url: https://github.com/openstack/cinder.git
