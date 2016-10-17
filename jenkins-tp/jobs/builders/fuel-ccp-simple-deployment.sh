@@ -50,7 +50,9 @@ echo "Use image:"
 ls -la \${IMAGE_PATH}
 env
 
-bash -ex "fuel-ccp-installer/utils/jenkins/run_k8s_deploy_test.sh"
+pushd fuel-ccp-installer
+bash -ex "./utils/jenkins/run_k8s_deploy_test.sh"
+popd
 EOF
     chmod +x k8s_deploy.sh
 
