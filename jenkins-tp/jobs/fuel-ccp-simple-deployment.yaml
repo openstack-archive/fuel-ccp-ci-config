@@ -9,7 +9,7 @@
     concurrent: false
     scm:
       - openstack:
-          scm-basedir: ''
+          scm-basedir: 'fuel-ccp'
           scm-branch: 'master'
           scm-repo: 'fuel-ccp'
       - openstack:
