@@ -3,8 +3,8 @@
 # Deploys CCP and runs simple, built-in OpenStack tests.
 # Kubernetes cluster is expected to be pre-deployed and snapshoted - if not
 # this script will ensure this.
-# The script expects fuel-ccp cloned into cwd and fuel-ccp-installer cloned
-# into fuel-ccp-installer/ directory (e.g. by Jenkins SCM plugin).
+# The script expects fuel-ccp cloned into fuel-ccp/ and fuel-ccp-installer
+# cloned into fuel-ccp-installer/ directory (e.g. by Jenkins SCM plugin).
 
 
 # CONFIGURATION:
@@ -71,9 +71,17 @@ fi
 # Get IP address of first node in the cluster:
 ADMIN_IP=$(ENV_NAME=${FUEL_DEVOPS_ENV_NAME} python fuel-ccp-installer/utils/jenkins/env.py get_slaves_ips | grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+" | head -1)
 SSH_COMMAND="sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP}"
+SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
+
+# Prepare env on "admin" VM:
+pushd fuel-ccp
+git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
+git checkout FETCH_HEAD
+popd
+${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
 
 # Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} tox -e multi-deploy -- --number-of-envs 1
+${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- --number-of-envs 1"
 
 # Clean-up (snapshot should remain for next jobs):
 dos.py destroy "${FUEL_DEVOPS_ENV_NAME}"

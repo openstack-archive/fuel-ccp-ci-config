@@ -6,10 +6,25 @@
     builders:
       - shell:
           !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
+    publishers:
+      - post-tasks:
+          - matches:
+              - log-text: ''
+            escalate-status: false
+            run-if-job-successful: false
+            script: |
+              #!/bin/bash
+
+              set -ex
+              export ENV_NAME="ccp-simple-deployment-env"
+              source /home/jenkins/venv-nailgun-tests-3.0/bin/activate
+              echo "Running on $NODE_NAME: $ENV_NAME"
+              dos.py destroy $ENV_NAME
+              deactivate
     concurrent: false
     scm:
       - openstack:
-          scm-basedir: ''
+          scm-basedir: 'fuel-ccp'
           scm-branch: 'master'
           scm-repo: 'fuel-ccp'
       - openstack:
