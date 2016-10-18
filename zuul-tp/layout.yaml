@@ -158,4 +158,5 @@ projects:
     post:
       - update-jenkins-jobs
     periodic:
-      - 'mcp-build-images-smoke'
+      - 'build-newton-images-smoke'
+      - 'build-ocata-images-smoke'
