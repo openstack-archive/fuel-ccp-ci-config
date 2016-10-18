@@ -38,9 +38,11 @@ export HYPERKUBE_IMAGE_TAG="v1.4.0_coreos.1"
 export ETCD_IMAGE_TAG="v3.0.10"
 # set version of openstack
 if [ ${OS_VER} == "ocata" ];then
-    OS_RELEASE="master"
+    export OS_RELEASE="master"
+    export IMAGES_TAG=ocata
 else
-    OS_RELEASE="stable/newton"
+    export OS_RELEASE="stable/newton"
+    export IMAGES_TAG=newton
 fi
 
 if [[ -z ${IMAGE_PATH} ]]; then
@@ -86,10 +88,10 @@ sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.
 
 for f in ${IMG}; do
     sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${MASTER_IP} \
-    "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:${OS_VER} ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
+    "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:${IMAGES_TAG} ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
     if [ ${DOCKER_TAG} == "ocata" ]; then
         sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${MASTER_IP} \
-        "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/${f}:${OS_VER} ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:latest \
+        "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/${f}:${IMAGES_TAG} ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:latest \
         && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:latest"
     fi
 done
