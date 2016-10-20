@@ -81,14 +81,20 @@ ssh-keygen -R "${ADMIN_IP}"
 ${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
 
 # Prepare env on "admin" VM:
-pushd fuel-ccp
-git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
-git checkout FETCH_HEAD
-popd
-${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
-
+if [ ${COMPONENT} == "full" ];then
+    pushd fuel-ccp
+    git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
+    git checkout FETCH_HEAD
+    popd
+    ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+else
+    ${SSH_COMMAND} "git clone https://git.openstack.org/openstack/fuel-ccp"
+    REPO=`echo ${ZUUL_PROJECT} | cut -d '/' -f 2`
+    ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp fetch"
+    ${SSH_COMMAND} "cd /tmp/ccp-repos/${REPO} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
+fi
 # Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- --number-of-envs 1"
+${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- -v ${VERSION} --number-of-envs 1"
 
 # Clean-up (snapshot should remain for next jobs):
 dos.py destroy "${FUEL_DEVOPS_ENV_NAME}"
