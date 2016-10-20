@@ -1,0 +1,65 @@
+- job-template:
+    name: fuel-ccp-{component}-{version}-deployment
+    description: |
+      Deploy CCP and run basic OpenStack tests for component(uses snapshot for K8s cluster)
+    node: standard
+    builders:
+      - inject:
+          properties-content: |
+            COMPONENT={component}
+            VERSION={version}
+      - shell:
+          !include-raw-escape 'builders/fuel-ccp-component-deployment.sh'
+    publishers:
+      - post-tasks:
+          - matches:
+              - log-text: ''
+            escalate-status: false
+            run-if-job-successful: false
+            script: |
+              #!/bin/bash
+
+              set -ex
+              export ENV_NAME="ccp-{component}-{version}-deployment-env"
+              source /home/jenkins/venv-nailgun-tests-3.0/bin/activate
+              echo "Running on $NODE_NAME: $ENV_NAME"
+              dos.py destroy $ENV_NAME
+              deactivate
+    concurrent: false
+    scm:
+      - openstack:
+          scm-basedir: 'fuel-ccp'
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp'
+      - openstack:
+          scm-basedir: 'fuel-ccp-installer'
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-installer'
+    wrappers:
+      - ng-cleanup
+
+- project:
+    name: Deploy CCP and run basic OpenStack tests for component (uses snapshot for K8s cluster)
+    version:
+      - newton
+      - master
+    component:
+      - debian-base
+      - etcd
+      - mariadb
+      - memcached
+      - rabbitmq
+      - stacklight
+      - cinder
+      - glance
+      - heat
+      - horizon
+      - ironic
+      - keystone
+      - murano
+      - neutron
+      - nova
+      - openstack-base
+      - sahara
+    jobs:
+      - 'fuel-ccp-{component}-{version}-deployment'
