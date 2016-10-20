@@ -87,7 +87,7 @@ sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${MASTER_IP}" mkdir 
 sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.json vagrant@"${MASTER_IP}":~/.docker/
 
 for f in ${IMG}; do
-    sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@$"{MASTER_IP}" \
+    sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${MASTER_IP}" \
     "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:${IMAGES_TAG} ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${IMAGES_NAMESPACE}/${f}:${DOCKER_TAG}"
     if [ "${DOCKER_TAG}" == "ocata" ]; then
         sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${MASTER_IP}" \
