@@ -77,13 +77,59 @@ SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
 # merged to packer scripts in fuel-ccp-installer:
 ${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
 
-# Prepare env on "admin" VM:
-pushd fuel-ccp
-git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
-git checkout FETCH_HEAD
-popd
-${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+ssh-keygen -R "${ADMIN_IP}"
 
+if [ ${VERSION} == "newton" ]; then
+    GIT_BRANCH="stable/newton"
+else
+    GIT_BRANCH="master"
+fi
+
+
+# Prepare env on "admin" VM:
+if [ ${COMPONENT} == "full" ];then
+    pushd fuel-ccp
+    git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
+    git checkout FETCH_HEAD
+    popd
+    ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+else
+    ${SSH_COMMAND} "git clone https://git.openstack.org/openstack/fuel-ccp"
+    cat > ccp-fetch.yaml << EOF
+debug: True
+repositories:
+  path: /tmp/ccp-repos
+  skip_empty: True
+sources:
+  openstack/keystone:
+    git_url: https://github.com/openstack/keystone.git
+    git_ref: ${GIT_BRANCH}
+  openstack/horizon:
+    git_url: https://github.com/openstack/horizon.git
+    git_ref: ${GIT_BRANCH}
+  openstack/nova:
+    git_url: https://github.com/openstack/nova.git
+    git_ref: ${GIT_BRANCH}
+  openstack/neutron:
+    git_url: https://github.com/openstack/neutron.git
+    git_ref: ${GIT_BRANCH}
+  openstack/heat:
+    git_url: https://github.com/openstack/heat.git
+    git_ref: ${GIT_BRANCH}
+  openstack/keystone:
+    git_url: https://github.com/openstack/keystone.git
+    git_ref: ${GIT_BRANCH}
+  openstack/glance:
+    git_url: https://github.com/openstack/glance.git
+    git_ref: ${GIT_BRANCH}
+  openstack/horizon:
+    git_url: https://github.com/openstack/horizon.git
+    git_ref: ${GIT_BRANCH}
+EOF
+    ${SCP_COMMAND} ccp-fetch.yaml vagrant@"${ADMIN_IP}":~/
+    ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp --config-file ~/ccp-fetch.yaml fetch"
+    ${SSH_COMMAND} "cd /tmp/ccp-repos/${ZUUL_PROJECT} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
+fi
 # Run CCP deployment and OpenStack tests:
 ${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- --number-of-envs 1"
 
