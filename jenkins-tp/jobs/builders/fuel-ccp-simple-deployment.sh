@@ -67,14 +67,15 @@ EOF
     dos.py resume "${FUEL_DEVOPS_ENV_NAME}"
 fi
 
-# FIXME(mzawadzki): adjust time brutally before proper solution with ntp is
-# merged to packer scripts in fuel-ccp-installer:
-sudo /sbin/hwclock --hctosys
 
 # Get IP address of first node in the cluster:
 ADMIN_IP=$(ENV_NAME=${FUEL_DEVOPS_ENV_NAME} python fuel-ccp-installer/utils/jenkins/env.py get_slaves_ips | grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+" | head -1)
 SSH_COMMAND="sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP}"
 SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
+
+# FIXME(mzawadzki): adjust time brutally before proper solution with ntp is
+# merged to packer scripts in fuel-ccp-installer:
+${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
 
 # Prepare env on "admin" VM:
 pushd fuel-ccp
