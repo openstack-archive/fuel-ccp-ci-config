@@ -66,10 +66,14 @@ projects:
     check:
       - test-master-build-cinder
       - test-newton-build-cinder
+      - fuel-ccp-cinder-newton-deployment
+      - fuel-ccp-cinder-master-deployment
 
   - name: openstack/fuel-ccp-debian-base
     check:
       - test-build-debian-base
+      - fuel-ccp-debian-base-newton-deployment
+      - fuel-ccp-debian-base-master-deployment
 
   - name: openstack/fuel-ccp-ext-config
     check:
@@ -78,72 +82,102 @@ projects:
   - name: openstack/fuel-ccp-etcd
     check:
       - test-build-etcd
+      - fuel-ccp-etcd-newton-deployment
+      - fuel-ccp-etcd-master-deployment
 
   - name: openstack/fuel-ccp-glance
     check:
       - test-master-build-glance
       - test-newton-build-glance
+      - fuel-ccp-etcd-newton-deployment
+      - fuel-ccp-etcd-master-deployment
 
   - name: openstack/fuel-ccp-heat
     check:
       - test-newton-build-heat
       - test-master-build-heat
+      - fuel-ccp-heat-newton-deployment
+      - fuel-ccp-heat-master-deployment
 
   - name: openstack/fuel-ccp-horizon
     check:
       - test-newton-build-horizon
       - test-master-build-horizon
+      - fuel-ccp-horizon-newton-deployment
+      - fuel-ccp-horizon-master-deployment
 
   - name: openstack/fuel-ccp-ironic
     check:
       - test-newton-build-ironic
       - test-master-build-ironic
+      - fuel-ccp-ironic-newton-deployment
+      - fuel-ccp-ironic-master-deployment
 
   - name: openstack/fuel-ccp-keystone
     check:
       - test-newton-build-keystone
       - test-master-build-keystone
+      - fuel-ccp-keystone-newton-deployment
+      - fuel-ccp-keystone-master-deployment
 
   - name: openstack/fuel-ccp-mariadb
     check:
       - test-build-mariadb
+      - fuel-ccp-mariadb-newton-deployment
+      - fuel-ccp-mariadb-master-deployment
 
   - name: openstack/fuel-ccp-memcached
     check:
       - test-build-memcached
+      - fuel-ccp-memchached-newton-deployment
+      - fuel-ccp-memchached-master-deployment
 
   - name: openstack/fuel-ccp-murano
     check:
       - test-newton-build-murano
       - test-master-build-murano
+      - fuel-ccp-murano-newton-deployment
+      - fuel-ccp-murano-master-deployment
 
   - name: openstack/fuel-ccp-neutron
     check:
       - test-newton-build-neutron
       - test-master-build-neutron
+      - fuel-ccp-neutron-newton-deployment
+      - fuel-ccp-neutron-master-deployment
 
   - name: openstack/fuel-ccp-nova
     check:
       - test-newton-build-nova
       - test-master-build-nova
+      - fuel-ccp-nova-newton-deployment
+      - fuel-ccp-nova-master-deployment
 
   - name: openstack/fuel-ccp-openstack-base
     check:
       - test-newton-build-openstack-base
       - test-master-build-openstack-base
+      - fuel-ccp-openstack-base-newton-deployment
+      - fuel-ccp-openstack-base-master-deployment
 
   - name: openstack/fuel-ccp-rabbitmq
     check:
       - test-build-rabbitmq
+      - fuel-ccp-rabbitmq-newton-deployment
+      - fuel-ccp-rabbitmq-master-deployment
 
   - name: openstack/fuel-ccp-sahara
     check:
       - test-newton-build-sahara
       - test-master-build-sahara
+      - fuel-ccp-sahara-newton-deployment
+      - fuel-ccp-sahara-master-deployment
 
   - name: openstack/fuel-ccp-stacklight
     check:
       - test-build-stacklight
+      - fuel-ccp-stacklight-newton-deployment
+      - fuel-ccp-stacklight-master-deployment
 
   - name: openstack/fuel-ccp-installer
     check:
@@ -165,3 +199,6 @@ projects:
 jobs:
   - name: fuel-ccp-simple-deployment
     voting: false
+  - name: ^(fuel-ccp).*(newton-deployment)
+    voting: false
+  - name: ^(fuel-ccp).*(master-deployment)
