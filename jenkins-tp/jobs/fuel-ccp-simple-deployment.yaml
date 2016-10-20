@@ -17,9 +17,10 @@
 
               set -ex
               export ENV_NAME="ccp-simple-deployment-env"
-              source /home/jenkins/venv-nailgun-tests-3.0/bin/activate
+              FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
+              source "$FUEL_DEVOPS_INSTALLATION_DIR"/bin/activate
               echo "Running on $NODE_NAME: $ENV_NAME"
-              dos.py destroy $ENV_NAME
+              dos.py destroy "$ENV_NAME"
               deactivate
     concurrent: false
     scm:
