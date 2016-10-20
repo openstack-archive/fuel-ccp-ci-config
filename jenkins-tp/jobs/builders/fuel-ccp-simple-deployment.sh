@@ -77,13 +77,20 @@ SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
 # merged to packer scripts in fuel-ccp-installer:
 ${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
 
-# Prepare env on "admin" VM:
-pushd fuel-ccp
-git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
-git checkout FETCH_HEAD
-popd
-${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+ssh-keygen -R "${ADMIN_IP}"
 
+# Prepare env on "admin" VM:
+if [ ${COMPONENT} == 'full' ];then
+    pushd fuel-ccp
+    git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
+    git checkout FETCH_HEAD
+    popd
+    ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+else
+    ${SSH_COMMAND} "git clone https://git.openstack.org/openstack/fuel-ccp"
+    ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp fetch"
+    ${SSH_COMMAND} "cd ccp-repos/${ZUUL_PROJECT} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD && git checkout FETCH_HEAD"
+fi
 # Run CCP deployment and OpenStack tests:
 ${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- --number-of-envs 1"
 
