@@ -1,9 +1,13 @@
 - job-template:
-    name: fuel-ccp-simple-deployment
+    name: fuel-ccp-{component}-{version}-deployment
     description: |
       Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
     node: standard
     builders:
+      - inject:
+          properties-content: |
+            COMPONENT={component}
+            VERSION={version}
       - shell:
           !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
     publishers:
@@ -41,5 +45,27 @@
 
 - project:
     name: Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
+    version:
+      - master
+      - newton
+    component:
+      - full
+      - debian-base
+      - etcd
+      - mariadb
+      - memcached
+      - rabbitmq
+      - stacklight
+      - cinder
+      - glance
+      - heat
+      - horizon
+      - ironic
+      - keystone
+      - murano
+      - neutron
+      - nova
+      - openstack-base
+      - sahara
     jobs:
-      - 'fuel-ccp-simple-deployment'
+      - 'fuel-ccp-{component}-{version}-deployment'
