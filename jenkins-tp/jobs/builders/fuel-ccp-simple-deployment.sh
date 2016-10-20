@@ -80,13 +80,26 @@ ssh-keygen -R "${ADMIN_IP}"
 # merged to packer scripts in fuel-ccp-installer:
 ${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
 
-# Prepare env on "admin" VM:
-pushd fuel-ccp
-git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
-git checkout FETCH_HEAD
-popd
-${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+if [ ${VERSION} == "newton" ]; then
+    GIT_BRANCH="stable/newton"
+else
+    GIT_BRANCH="master"
+fi
 
+# Prepare env on "admin" VM:
+if [ ${COMPONENT} == "full" ];then
+    pushd fuel-ccp
+    git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
+    git checkout FETCH_HEAD
+    popd
+    ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+else
+    ${SSH_COMMAND} "git clone https://git.openstack.org/openstack/fuel-ccp"
+    REPO=`echo ${ZUUL_PROJECT} | cut -d '/' -f 2`
+    ${SCP_COMMAND} ccp-fetch.yaml vagrant@"${ADMIN_IP}":~/
+    ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp --config-file ~/ccp-fetch.yaml fetch"
+    ${SSH_COMMAND} "cd /tmp/ccp-repos/${REPO} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
+fi
 # Run CCP deployment and OpenStack tests:
 ${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- --number-of-envs 1"
 
