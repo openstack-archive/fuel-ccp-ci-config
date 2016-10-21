@@ -25,6 +25,7 @@
     concurrent: true
     properties:
       - throttle:
+          option: project
           max-per-node: 1
     scm:
       - openstack:
