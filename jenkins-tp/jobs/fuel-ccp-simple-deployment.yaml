@@ -22,7 +22,10 @@
               echo "Running on $NODE_NAME: $ENV_NAME"
               dos.py destroy "$ENV_NAME"
               deactivate
-    concurrent: false
+    concurrent: true
+    properties:
+      - throttle:
+          max-per-node: 1
     scm:
       - openstack:
           scm-basedir: 'fuel-ccp'
