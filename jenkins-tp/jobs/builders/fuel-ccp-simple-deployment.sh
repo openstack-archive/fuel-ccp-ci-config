@@ -73,6 +73,9 @@ ADMIN_IP=$(ENV_NAME=${FUEL_DEVOPS_ENV_NAME} python fuel-ccp-installer/utils/jenk
 SSH_COMMAND="sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP}"
 SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
 
+# remove old key:
+ssh-keygen -R "${ADMIN_IP}"
+
 # FIXME(mzawadzki): adjust time brutally before proper solution with ntp is
 # merged to packer scripts in fuel-ccp-installer:
 ${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
