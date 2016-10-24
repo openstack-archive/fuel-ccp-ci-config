@@ -1,0 +1,17 @@
+- job:
+    name: remove-all-snapshots
+    description: |
+          This job will trigger jobs for removing K8s snaphosts on all slaves.
+    builders:
+      - shell: |
+          echo "Removing snaphosts on slaves"
+      - trigger-builds:
+          - project: "remove-snapshots-simple-deployment"
+            parameter-factories:
+              - factory: allnodesforlabel
+                name: NODE
+                node-label: standard
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+    auth-token: 578ht2yui
