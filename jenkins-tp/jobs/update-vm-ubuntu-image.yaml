@@ -8,6 +8,10 @@
             IMAGE_SLAVE_PATH=/home/jenkins/workspace/cloud-images/
       - shell:
           !include-raw 'builders/update-vm-ubuntu-image.sh'
+      - trigger-builds:
+        - project: "remove-snapshots-simple-deployment"
+          same-node: true
+          current-parameters: true
     concurrent: true
     description: |
       Job updates Ubuntu images on Jenkins slaves
