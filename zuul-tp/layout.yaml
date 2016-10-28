@@ -67,8 +67,6 @@ projects:
     check:
       - test-master-build-cinder
       - test-newton-build-cinder
-      - fuel-ccp-cinder-newton-deployment
-      - fuel-ccp-cinder-master-deployment
 
   - name: openstack/fuel-ccp-debian-base
     check:
@@ -107,8 +105,6 @@ projects:
     check:
       - test-newton-build-ironic
       - test-master-build-ironic
-      - fuel-ccp-ironic-newton-deployment
-      - fuel-ccp-ironic-master-deployment
 
   - name: openstack/fuel-ccp-keystone
     check:
@@ -133,8 +129,6 @@ projects:
     check:
       - test-newton-build-murano
       - test-master-build-murano
-      - fuel-ccp-murano-newton-deployment
-      - fuel-ccp-murano-master-deployment
 
   - name: openstack/fuel-ccp-neutron
     check:
@@ -167,14 +161,10 @@ projects:
     check:
       - test-newton-build-sahara
       - test-master-build-sahara
-      - fuel-ccp-sahara-newton-deployment
-      - fuel-ccp-sahara-master-deployment
 
   - name: openstack/fuel-ccp-stacklight
     check:
       - test-build-stacklight
-      - fuel-ccp-stacklight-newton-deployment
-      - fuel-ccp-stacklight-master-deployment
 
   - name: openstack/fuel-ccp-installer
     check:
