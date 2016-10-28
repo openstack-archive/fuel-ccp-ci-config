@@ -90,6 +90,11 @@ if [ ${COMPONENT} == "full" ];then
 else
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
     REPO=`echo ${ZUUL_PROJECT} | cut -d '/' -f 2`
+    # set +x is just for security reason to don't publish internal ip
+    set +x
+    ZUUL_IP=`getent hosts zuul.mcp.fuel-infra.org | awk {'print $1'}`
+    ${SSH_COMMAND} "echo $ZUUL_IP zuul.mcp.fuel-infra.org >> /etc/hosts"
+    set -x
     ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp --verbose --debug --config-file ~/fuel-ccp/tools/ccp-multi-deploy/config/ccp-cli-${VERSION}-config-1.yaml fetch"
     ${SSH_COMMAND} "cd /tmp/ccp-repos/${REPO} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
 fi
