@@ -42,8 +42,34 @@ function update_devops {
         pip install -r "${WORKSPACE}/venv-requirements.txt" --upgrade
     fi
 
-    pip install git+git://git.openstack.org/openstack/fuel-devops@3.0.1 --upgrade
+    # Change CPU mode (disable host-passthrough):
+    cat > /tmp/fuel-devops_change_cpu_mode.patch << EOF
+---
+ devops/templates/default.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
+diff --git a/devops/templates/default.yaml b/devops/templates/default.yaml
+index aac4566..48d1a5a 100644
+--- a/devops/templates/default.yaml
++++ b/devops/templates/default.yaml
+@@ -86,7 +86,7 @@ template:
+            storage_pool_name: !os_env STORAGE_POOL_NAME, default
+            stp: True
+            hpet: False
+-           use_host_cpu: !os_env DRIVER_USE_HOST_CPU, true
++           use_host_cpu: false
+ 
+        network_pools:  # Address pools for OpenStack networks.
+          # Actual names should be used for keys
+-- 
+1.9.1
+EOF
+    git clone https://github.com/openstack/fuel-devops.git
+    pushd fuel-devops
+    git checkout tags/3.0.3
+    git apply /tmp/fuel-devops_change_cpu_mode.patch
+    pip install . --upgrade
+    popd
     echo "=============================="
     pip freeze
     echo "=============================="
