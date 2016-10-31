@@ -24,6 +24,7 @@
               FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
               source "$FUEL_DEVOPS_INSTALLATION_DIR"/bin/activate
               echo "Running on $NODE_NAME: $ENV_NAME"
+              virsh list --all
               dos.py destroy "$ENV_NAME"
               deactivate
     concurrent: true
