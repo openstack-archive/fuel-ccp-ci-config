@@ -77,6 +77,9 @@ SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
 # remove old key:
 ssh-keygen -R "${ADMIN_IP}"
 
+# Store info about Jenkins job on VM:
+echo "${BUILD_TAG}" | ${SSH_COMMAND} "tee -a JENKINS_INFO.TXT"
+
 # FIXME(mzawadzki): adjust time brutally before proper solution with ntp is
 # merged to packer scripts in fuel-ccp-installer:
 ${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
