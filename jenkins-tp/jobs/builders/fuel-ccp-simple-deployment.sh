@@ -38,6 +38,7 @@ export IMAGE_PATH="/home/jenkins/workspace/cloud-images/default-image.qcow2"
 export DONT_DESTROY_ON_SUCCESS=1
 export DEPLOY_METHOD="kargo"
 export SLAVES_COUNT="3"
+export DRIVER_USE_HOST_CPU=false
 export WORKSPACE="/home/jenkins/workspace"
 export FUEL_DEVOPS_INSTALLATION_DIR=${FUEL_DEVOPS_INSTALLATION_DIR}
 export CUSTOM_YAML='hyperkube_image_repo: "${HYPERKUBE_REPO}"
