@@ -84,8 +84,8 @@ projects:
     check:
       - test-master-build-glance
       - test-newton-build-glance
-      - fuel-ccp-etcd-newton-deployment
-      - fuel-ccp-etcd-master-deployment
+      - fuel-ccp-glance-newton-deployment
+      - fuel-ccp-glance-master-deployment
 
   - name: openstack/fuel-ccp-heat
     check:
