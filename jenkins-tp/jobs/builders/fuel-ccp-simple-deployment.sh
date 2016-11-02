@@ -9,7 +9,6 @@
 
 # CONFIGURATION:
 ######################################################
-FUEL_DEVOPS_ENV_NAME="ccp-simple-deployment-env"
 : ${FUEL_DEVOPS_ENV_NAME:="fuel-ccp-${COMPONENT}-${VERSION}-deployment"}
 FUEL_DEVOPS_SNAPSHOT_NAME="fresh"
 FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
