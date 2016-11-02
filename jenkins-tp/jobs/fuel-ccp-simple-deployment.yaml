@@ -29,6 +29,8 @@
               deactivate
     concurrent: true
     properties:
+      - heavy-job:
+          weight: 2
       - throttle:
           option: project
           max-per-node: 1
