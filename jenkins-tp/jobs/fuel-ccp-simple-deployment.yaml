@@ -20,7 +20,7 @@
               #!/bin/bash
 
               set -ex
-              export ENV_NAME="ccp-simple-deployment-env"
+              export ENV_NAME="fuel-ccp-{COMPONENT}-{VERSION}-deployment"
               FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
               source "$FUEL_DEVOPS_INSTALLATION_DIR"/bin/activate
               echo "Running on $NODE_NAME: $ENV_NAME"
