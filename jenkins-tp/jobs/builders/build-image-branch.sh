@@ -5,6 +5,9 @@ OS_VER={GIT_BRANCH}
 REPO_LIST="{repos}"
 
 export PATH="$HOME/.local/bin:$PATH"
+export APT_CACHE_SERVER_IP="`getent hosts cache-scc.ng.mirantis.net| awk '{print $1}'`"
+export APT_CACHE_SERVER_PORT="3142"
+export APT_CACHE_SERVER="${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT}"
 
 if [ $OS_VER == "master" ]; then
     GIT_BRANCH=master
@@ -70,6 +73,15 @@ sources:
   openstack/glance:
     git_url: https://github.com/openstack/glance.git
     git_ref: $GIT_BRANCH
+url:
+  debian: http://${APT_CACHE_SERVER}/debian
+  security: http://${APT_CACHE_SERVER}/security
+  ceph:
+    debian:
+      repo: http://${APT_CACHE_SERVER}/ceph
+  mariadb:
+     debian:
+       repo: http://${APT_CACHE_SERVER}/mariadb
 EOF
 
 cd fuel-ccp
