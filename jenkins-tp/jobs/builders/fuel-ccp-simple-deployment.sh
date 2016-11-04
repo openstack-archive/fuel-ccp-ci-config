@@ -15,7 +15,8 @@ FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
 HYPERKUBE_REPO="quay.io/coreos/hyperkube"
 HYPERKUBE_TAG="v1.4.0_coreos.1"
 HYPERKUBE_VERSION="v1.4.0"
-
+export APT_CACHE_SERVER_IP="http://`getent hosts cache-scc.ng.mirantis.net| awk '{print $1}'`"
+export APT_CACHE_SERVER_PORT=3142
 
 # Prepare K8s env:
 source "${FUEL_DEVOPS_INSTALLATION_DIR}"/bin/activate
@@ -102,7 +103,7 @@ else
     ${SSH_COMMAND} "cd /tmp/ccp-repos/${REPO} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
 fi
 # Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} "pushd fuel-ccp && tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
+${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
 
 # Clean-up (snapshot should remain for next jobs):
 dos.py destroy "${FUEL_DEVOPS_ENV_NAME}"
