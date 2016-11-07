@@ -26,7 +26,7 @@ EOF
 for r in $REPO_LIST;do
 tee -a fuel-ccp/ccp-test.yaml << EOF
     - git_url: https://git.openstack.org/openstack/$r
-      name: $r
+      name: ${{r/fuel-ccp-/}}
 EOF
 done
 
