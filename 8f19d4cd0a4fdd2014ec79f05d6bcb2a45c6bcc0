@@ -1,0 +1,10 @@
+Verified+1: Mirantis CCP CI <mirantis-fuel-ccp-ci@mirantis.com>
+Code-Review+2: Yuriy Taraday <yorik.sar@gmail.com>
+Code-Review+2: Marek Zawadzki <mzawadzki@mirantis.com>
+Workflow+1: Marek Zawadzki <mzawadzki@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 07 Nov 2016 15:19:07 +0000
+Reviewed-on: https://review.openstack.org/394481
+Project: openstack/fuel-ccp-ci-config
+Branch: refs/heads/master
