@@ -130,8 +130,8 @@
     builders:
       - shell: |
           git clone https://git.openstack.org/openstack/fuel-ccp
-          mkdir -p containers/${{ZUUL_PROJECT/fuel-ccp-/}}
-          cd containers/${{ZUUL_PROJECT/fuel-ccp-/}}
+          mkdir -p containers/${ZUUL_PROJECT/fuel-ccp-/}
+          cd containers/${ZUUL_PROJECT/fuel-ccp-/}
           git clone https://git.openstack.org/$ZUUL_PROJECT .
           git fetch $ZUUL_URL/$ZUUL_PROJECT $ZUUL_REF
           git checkout FETCH_HEAD
