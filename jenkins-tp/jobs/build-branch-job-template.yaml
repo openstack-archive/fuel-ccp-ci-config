@@ -17,3 +17,6 @@
       - ng-cleanup
     triggers:
       - zuul
+    properties:
+      - least-load:
+          disabled: False

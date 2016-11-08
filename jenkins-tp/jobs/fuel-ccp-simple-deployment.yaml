@@ -34,6 +34,8 @@
       - throttle:
           option: project
           max-per-node: 1
+      - least-load:
+          disabled: False
     scm:
       - openstack:
           scm-basedir: 'fuel-ccp'
