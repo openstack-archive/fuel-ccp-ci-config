@@ -1,0 +1,8 @@
+Code-Review+2: Marek Zawadzki <mzawadzki@mirantis.com>
+Workflow+1: Marek Zawadzki <mzawadzki@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 08 Nov 2016 11:15:08 +0000
+Reviewed-on: https://review.openstack.org/394898
+Project: openstack/fuel-ccp-ci-config
+Branch: refs/heads/master
