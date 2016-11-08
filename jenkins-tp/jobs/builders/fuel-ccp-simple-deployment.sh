@@ -80,9 +80,10 @@ ssh-keygen -R "${ADMIN_IP}"
 # Store info about Jenkins job on VM:
 echo "${BUILD_TAG}" | ${SSH_COMMAND} "tee -a JENKINS_INFO.TXT"
 
-# FIXME(mzawadzki): adjust time brutally before proper solution with ntp is
-# merged to packer scripts in fuel-ccp-installer:
-${SSH_COMMAND} "sudo /sbin/hwclock --hctosys"
+# After restore snapshot ntp service doesn't work and need restart on all machines
+${SSH_COMMAND} "sudo service ntp restart"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service ntp restart"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
