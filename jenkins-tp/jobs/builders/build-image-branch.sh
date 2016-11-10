@@ -11,6 +11,12 @@ if [ $OS_VER == "master" ]; then
 else
     GIT_BRANCH=stable/newton
 fi
+
+if [[ "$REPO_LIST" =~ "glance" ]] || [[ "$REPO_LIST" =~ "nova" ]];then
+    cd $WORKSPACE/containers/openstack/ceph
+    git clone https://git.openstack.org/openstack/fuel-ccp-ceph .
+fi
+
 tee fuel-ccp/ccp-test.yaml << EOF
 debug: True
 builder:
