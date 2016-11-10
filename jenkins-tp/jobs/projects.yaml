@@ -26,7 +26,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-glance
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-ceph fuel-ccp-glance
 
 - project:
     name: heat
@@ -103,7 +103,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-nova
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-ceph fuel-ccp-nova
 
 - project:
     name: openstack-base
