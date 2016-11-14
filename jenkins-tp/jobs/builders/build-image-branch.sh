@@ -71,6 +71,9 @@ sources:
   openstack/glance:
     git_url: https://github.com/openstack/glance.git
     git_ref: $GIT_BRANCH
+  openstack/requirements:
+    git_url: https://github.com/openstack/requirements.git
+    git_ref: $GIT_BRANCH
 EOF
 
 cd fuel-ccp
