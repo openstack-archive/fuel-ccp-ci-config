@@ -108,3 +108,6 @@ ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}
 
 # Clean-up (snapshot should remain for next jobs):
 dos.py destroy "${FUEL_DEVOPS_ENV_NAME}"
+
+# Revert to fresh to decrease image size
+dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
