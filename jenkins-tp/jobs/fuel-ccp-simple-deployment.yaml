@@ -20,12 +20,14 @@
               #!/bin/bash
 
               set -ex
-              export ENV_NAME="fuel-ccp-{component}-{version}-deployment"
+              ENV_NAME="fuel-ccp-{component}-{version}-deployment"
+              FUEL_DEVOPS_SNAPSHOT_NAME="fresh"
               FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
               source "$FUEL_DEVOPS_INSTALLATION_DIR"/bin/activate
               echo "Running on $NODE_NAME: $ENV_NAME"
               virsh list --all
               dos.py destroy "$ENV_NAME"
+              dos.py revert "$ENV_NAME" "$FUEL_DEVOPS_SNAPSHOT_NAME"
               deactivate
     concurrent: true
     properties:
