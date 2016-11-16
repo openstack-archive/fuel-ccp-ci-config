@@ -26,6 +26,7 @@
               echo "Running on $NODE_NAME: $ENV_NAME"
               virsh list --all
               dos.py destroy "$ENV_NAME"
+              dos.py revert "$ENV_NAME" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
               deactivate
     concurrent: true
     properties:
