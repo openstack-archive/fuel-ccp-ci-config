@@ -19,7 +19,7 @@ else
     GIT_BRANCH="stable/newton"
 fi
 
-tee fuel-ccp/ccp-test.yaml << EOF
+tee ccp-test.yaml << EOF
 debug: True
 builder:
   no_cache: True
@@ -80,5 +80,7 @@ url:
      debian:
        repo: http://${APT_CACHE_SERVER}/mariadb
 EOF
+
+ccp --config-file ccp-test.yaml build
 
 deactivate
