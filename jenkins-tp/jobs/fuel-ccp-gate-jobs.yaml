@@ -1,18 +1,4 @@
 - job:
-    name: fuel-ccp-gate-job
-    description: |
-      Fuel CCP gate job
-    node: standard
-    builders:
-      - get-from-zuul
-      - shell: !include-raw builders/fuel-ccp-gate.sh
-    concurrent: true
-    wrappers:
-      - ng-cleanup
-    triggers:
-      - zuul
-
-- job:
     name: fuel-ccp-ms-ext-config-gate-job
     description: |
       Some gate fuel-ccp-ms-ext-config test job
