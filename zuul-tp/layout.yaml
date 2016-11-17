@@ -59,7 +59,8 @@ projects:
 
   - name: openstack/fuel-ccp
     check:
-      - fuel-ccp-gate-job
+      - test-master-build-all
+      - test-newton-build-all
       - fuel-ccp-full-newton-deployment
       - fuel-ccp-full-master-deployment
 

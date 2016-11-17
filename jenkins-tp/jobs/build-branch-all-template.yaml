@@ -1,0 +1,16 @@
+- job-template:
+    name: test-{os_version}-build-all
+    description: |
+      Fuel CCP test build job
+    node: standard
+    builders:
+      - inject:
+          properties-content: |
+            OS_VER: '{os_version}'
+      - get-from-zuul
+      - shell: !include-raw-escape builders/build-all-images-branch.sh
+    concurrent: true
+    wrappers:
+      - ng-cleanup
+    triggers:
+      - zuul
