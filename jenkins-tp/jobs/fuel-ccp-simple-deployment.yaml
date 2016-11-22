@@ -61,6 +61,7 @@
       - master
       - newton
     component:
+      - smoke
       - full
       - debian-base
       - etcd
