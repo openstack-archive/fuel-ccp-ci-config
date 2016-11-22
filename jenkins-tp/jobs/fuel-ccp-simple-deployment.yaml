@@ -19,11 +19,31 @@
             run-if-job-successful: false
             script: |
               #!/bin/bash
-
-              set -ex
+              COMPONENT={component}
+              VERSION={version}
+              DOCKER_REGISTRY="registry.mcp.fuel-infra.org"
+              IMAGES_NAMESPACE="ccp"
+              REGISTRY_NAMESPACE="mcp"
               ENV_NAME="fuel-ccp-{component}-{version}-deployment"
               FUEL_DEVOPS_SNAPSHOT_NAME="fresh"
               FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
+              IMAGES_TAG=$VERSION-unstable
+
+              set -ex
+              if [ "${COMPONENT}" == "smoke" ]; then
+                  ADMIN_IP=$(ENV_NAME=${FUEL_DEVOPS_ENV_NAME} python fuel-ccp-installer/utils/jenkins/env.py get_slaves_ips | grep -o "[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+" | head -1)
+                  SSH_COMMAND="sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP}"
+                  sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" mkdir -p /home/vagrant/.docker/
+                  sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.json vagrant@"${ADMIN_IP}":~/.docker/
+                  for f in ${IMG}; do
+                      sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" \
+                      "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:${IMAGES_TAG} && docker push ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:${IMAGES_TAG}"
+                      if [ "${IMAGES_TAG}" == "ocata" ]; then
+                          sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" \                                                                                           "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/${f}:latest ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:latest-unstable \
+                          && docker push ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:latest-unstable"
+                      fi
+                   done
+              fi
               source "$FUEL_DEVOPS_INSTALLATION_DIR"/bin/activate
               echo "Running on $NODE_NAME: $ENV_NAME"
               virsh list --all
@@ -61,6 +81,7 @@
       - master
       - newton
     component:
+      - smoke
       - full
       - debian-base
       - etcd
