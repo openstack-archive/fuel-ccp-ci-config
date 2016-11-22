@@ -19,11 +19,11 @@
             run-if-job-successful: false
             script: |
               #!/bin/bash
-
-              set -ex
               ENV_NAME="fuel-ccp-{component}-{version}-deployment"
               FUEL_DEVOPS_SNAPSHOT_NAME="fresh"
               FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
+
+              set -ex
               source "$FUEL_DEVOPS_INSTALLATION_DIR"/bin/activate
               echo "Running on $NODE_NAME: $ENV_NAME"
               virsh list --all
@@ -61,6 +61,7 @@
       - master
       - newton
     component:
+      - smoke
       - full
       - debian-base
       - etcd
