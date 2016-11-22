@@ -6,7 +6,6 @@
 # The script expects fuel-ccp cloned into fuel-ccp/ and fuel-ccp-installer
 # cloned into fuel-ccp-installer/ directory (e.g. by Jenkins SCM plugin).
 
-
 # CONFIGURATION:
 ######################################################
 : ${FUEL_DEVOPS_ENV_NAME:="fuel-ccp-${COMPONENT}-${VERSION}-deployment"}
@@ -17,6 +16,9 @@ HYPERKUBE_TAG="v1.4.0_coreos.1"
 HYPERKUBE_VERSION="v1.4.0"
 export APT_CACHE_SERVER_IP="`getent hosts cache-scc.ng.mirantis.net| awk '{print $1}'`"
 export APT_CACHE_SERVER_PORT="3142"
+export DOCKER_REGISTRY="registry.mcp.fuel-infra.org"
+export IMAGES_NAMESPACE="ccp"
+export REGISTRY_NAMESPACE="mcp"
 
 # Prepare K8s env:
 source "${FUEL_DEVOPS_INSTALLATION_DIR}"/bin/activate
@@ -85,12 +87,22 @@ ${SSH_COMMAND} "sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
+# set version of openstack
+if [ "${VERSION}" == "master" ];then
+    export IMAGES_TAG="ocata"
+else
+    export IMAGES_TAG="newton"
+fi
+
+
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
     pushd fuel-ccp
     git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
     git checkout FETCH_HEAD
     popd
+    ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+elif [ ${COMPONENT} == "smoke" ];then
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
 else
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
@@ -102,8 +114,41 @@ else
     ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp --verbose --debug --config-file ~/fuel-ccp/tools/ccp-multi-deploy/config/ccp-cli-${VERSION}-config-1.yaml fetch"
     ${SSH_COMMAND} "cd /tmp/ccp-repos/${REPO} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
 fi
-# Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
+
+if [ ${COMPONENT} == "smoke" ]; then
+    set +e
+    # Run CCP deployment and OpenStack tests:
+    ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
+    SMOKE_STATUS=$?
+    set -e
+
+    #set tag dependent from test result
+    if [[ "${SMOKE_STATUS}" == 0 ]]; then
+        DOCKER_TAG="${IMAGES_TAG}"
+    else
+        DOCKER_TAG="${IMAGES_TAG}-unstable"
+    fi
+
+    IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP} docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
+
+    # we need docker config file to authentication in remote repository
+    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" mkdir -p /home/vagrant/.docker/
+    sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.json vagrant@"${ADMIN_IP}":~/.docker/
+
+    for f in ${IMG}; do
+        sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" \
+        "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:${DOCKER_TAG}"
+        if [ "${IMAGES_TAG}" == "ocata" ]; then
+            sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" \
+            "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/${f}:latest ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:latest \
+            && docker push ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:latest"
+        fi
+    done
+else
+     # Run CCP deployment and OpenStack tests:
+    ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
+fi
+
 
 # Revert to fresh to decrease image size
 dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
