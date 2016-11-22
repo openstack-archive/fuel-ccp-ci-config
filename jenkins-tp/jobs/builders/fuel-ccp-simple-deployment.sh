@@ -6,7 +6,6 @@
 # The script expects fuel-ccp cloned into fuel-ccp/ and fuel-ccp-installer
 # cloned into fuel-ccp-installer/ directory (e.g. by Jenkins SCM plugin).
 
-
 # CONFIGURATION:
 ######################################################
 : ${FUEL_DEVOPS_ENV_NAME:="fuel-ccp-${COMPONENT}-${VERSION}-deployment"}
@@ -21,6 +20,10 @@ export REGISTRY_IP=`ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'`
 export REGISTRY_PORT=5000
 JENKINS_GID=`getent group jenkins | cut -d":" -f3`
 REGISTRY_HASH=`docker inspect --format "{{.Id}}" registry`
+export DOCKER_REGISTRY="registry.mcp.fuel-infra.org"
+export IMAGES_NAMESPACE="ccp"
+export REGISTRY_NAMESPACE="mcp"
+
 
 # Prepare K8s env:
 source "${FUEL_DEVOPS_INSTALLATION_DIR}"/bin/activate
@@ -93,6 +96,7 @@ ${SSH_COMMAND} "sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
+
 # Dirty hack for workaround network problems on CI envs.
 # When we deploy env some time after (few minutes) it change resolv.conf into broken one
 # From this reason after bring up env we restart network and and kill dhclient,
@@ -121,8 +125,18 @@ images:
   tag: "${ZUUL_CHANGE}"
 EOF
 
+# set version of openstack
+if [ "${VERSION}" == "master" ];then
+    export IMAGES_TAG="ocata"
+else
+    export IMAGES_TAG="newton"
+fi
+
+
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
+    ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
+elif [ ${COMPONENT} == "smoke" ];then
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
 else
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
@@ -133,11 +147,7 @@ else
     ${SCP_COMMAND} -r containers/openstack/ vagrant@"${ADMIN_IP}":/tmp/ccp-repos
 fi
 
-# Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
-
-docker exec "${REGISTRY_HASH}" chgrp -R "${JENKINS_GID}" /var/lib/registry
-docker exec "${REGISTRY_HASH}" chmod -R  g+w /var/lib/registry
+<<<<<<< HEAD
 
 set +e
 # download snapshot if exists
@@ -148,6 +158,54 @@ for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repo
         REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"${ZUUL_CHANGE}"
 done
 set -e
+=======
+if [ ${COMPONENT} == "smoke" ]; then
+    set +e
+    # Run CCP deployment and OpenStack tests:
+    ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
+    SMOKE_STATUS=$?
+    set -e
+
+    docker exec "${REGISTRY_HASH}" chgrp -R "${JENKINS_GID}" /var/lib/registry
+    docker exec "${REGISTRY_HASH}" chmod -R  g+w /var/lib/registry
+
+    #set tag dependent from test result
+    if [[ "${SMOKE_STATUS}" == 0 ]]; then
+        DOCKER_TAG="${IMAGES_TAG}"
+    else
+        DOCKER_TAG="${IMAGES_TAG}-unstable"
+    fi
+
+    IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP} docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
+
+    # we need docker config file to authentication in remote repository
+    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" mkdir -p /home/vagrant/.docker/
+    sshpass -p vagrant scp -o StrictHostKeyChecking=no /home/jenkins/.docker/config.json vagrant@"${ADMIN_IP}":~/.docker/
+
+    for f in ${IMG}; do
+        sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" \
+        "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/$f:latest ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:${DOCKER_TAG} && docker push ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:${DOCKER_TAG}"
+        if [ "${IMAGES_TAG}" == "ocata" ]; then
+            sshpass  -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" \
+            "docker tag 127.0.0.1:31500/${IMAGES_NAMESPACE}/${f}:latest ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:latest \
+            && docker push ${DOCKER_REGISTRY}/${REGISTRY_NAMESPACE}/${f}:latest"
+        fi
+    done
+else
+     # Run CCP deployment and OpenStack tests:
+    ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
+fi
+
+set +e
+# download snapshot if exists
+${SCP_COMMAND} vagrant@"${ADMIN_IP}":/tmp/ccp-diag/*.tar.gz .
+
+# remove images from local registry
+for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repositories[]'`; do
+        REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"$    {ZUUL_CHANGE}"
+done
+set -e
+
 
 # Revert to fresh to decrease image size
 dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
