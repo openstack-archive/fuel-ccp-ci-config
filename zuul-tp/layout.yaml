@@ -197,8 +197,10 @@ projects:
     post:
       - update-jenkins-jobs
     periodic:
-      - 'build-newton-images-smoke'
-      - 'build-ocata-images-smoke'
+      - 'fuel-ccp-smoke-master-deployment'
+      - 'fuel-ccp-smoke-newton-deployment'
+      - 'fuel-ccp-smoke-ocata-deployment'
+      - 'fuel-ccp-smoke-mitaka-deployment'
 
 jobs:
   - name: ^(fuel-ccp).*(newton-deployment)

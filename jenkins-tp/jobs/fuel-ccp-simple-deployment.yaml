@@ -60,7 +60,10 @@
     version:
       - master
       - newton
+      - mitaka
+      - ocata
     component:
+      - smoke
       - full
       - debian-base
       - etcd
