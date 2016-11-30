@@ -49,6 +49,9 @@
           scm-repo: 'fuel-ccp-installer'
     wrappers:
       - ng-cleanup
+      - timeout:
+          timeout: 120
+          fail: true
 
 - project:
     name: Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
