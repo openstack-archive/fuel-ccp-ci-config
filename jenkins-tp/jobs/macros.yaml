@@ -126,6 +126,11 @@
       - shell: !include-raw: builders/build-image-branch.sh
 
 - builder:
+    name: zuul-clone
+    builders:
+      - shell: !include-raw: builders/clone-with-zuul.sh
+
+- builder:
     name: get-from-zuul-container
     builders:
       - shell: |

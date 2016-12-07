@@ -4,7 +4,7 @@
 - job-template:
     name: test-{os_version}-build-{name}
     builders:
-      - get-from-zuul-container
+      - zuul-clone
       - build-image-branch:
           name: '{name}'
           repos: '{repos}'
@@ -15,6 +15,7 @@
     node: standard
     wrappers:
       - ng-cleanup
+      - fuel-ccp-ci-jenkins
     triggers:
       - zuul
     properties:
