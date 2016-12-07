@@ -63,6 +63,19 @@ function download_images {
     popd
 }
 
+function install_zuul_env {
+    ACT=1
+    VIRTUAL_ENV="/home/jenkins/venv-zuul"
+    virtualenv "${VIRTUAL_ENV}"
+    source "${VIRTUAL_ENV}"/bin/activate
+
+    # Upgrade pip inside virtualenv
+    pip install pip --upgrade
+
+    pip install zuul
+}
+
+
 # DevOps 3.0.x
 if [[ ${update_devops_3_0_x} == "true" ]]; then
     update_devops "-3.0" "fuel-ccp-tests" "master"
@@ -70,6 +83,10 @@ fi
 
 if [[ ${download_images} == "true" ]]; then
     download_images
+fi
+
+if [[ "${install_zuul}" == "true" ]]; then
+    install_zuul_env
 fi
 
 if [ ${ACT} -eq 0 ]; then
