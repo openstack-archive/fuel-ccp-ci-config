@@ -12,9 +12,12 @@
     parameters:
       - bool:
           name: 'update_devops_3_0_x'
-          default: true
+          default: false
       - bool:
           name: 'download_images'
+          default: false
+      - bool:
+          name: 'install_zuul'
           default: false
       - bool:
           name: FORCE_DELETE_DEVOPS
