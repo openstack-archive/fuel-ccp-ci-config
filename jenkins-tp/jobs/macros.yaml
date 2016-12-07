@@ -63,7 +63,7 @@
     wrappers:
       - ssh-agent-credentials:
           users:
-            - '77acc946-f346-4665-8271-c141b6ae9764'
+            - '623272f1-bc9a-4c75-93f3-b7ec6f242581'
 
 - wrapper:
     name: fuel-ccp-ci-docs
@@ -124,6 +124,11 @@
     name: build-image-branch
     builders:
       - shell: !include-raw: builders/build-image-branch.sh
+
+- builder:
+    name: zuul-clone
+    builders:
+      - shell: !include-raw: builders/clone-with-zuul.sh
 
 - builder:
     name: get-from-zuul-container
