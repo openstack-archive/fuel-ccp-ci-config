@@ -87,20 +87,14 @@ ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
-    pushd fuel-ccp
-    git fetch "${ZUUL_URL}"/"${ZUUL_PROJECT}" "${ZUUL_REF}"
-    git checkout FETCH_HEAD
-    popd
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
 else
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
-    REPO=`echo ${ZUUL_PROJECT} | cut -d '/' -f 2`
     # set +x is just for security reasons to avoid publishing internal IP
     set +x
     getent hosts zuul.mcp.fuel-infra.org | ${SSH_COMMAND} "sudo tee -a /etc/hosts"
     set -x
-    ${SSH_COMMAND} "pushd fuel-ccp && tox -e venv -- ccp --verbose --debug --config-file ~/fuel-ccp/tools/ccp-multi-deploy/config/ccp-cli-${VERSION}-config-1.yaml fetch"
-    ${SSH_COMMAND} "cd /tmp/ccp-repos/${REPO} && git fetch ${ZUUL_URL}/${ZUUL_PROJECT} ${ZUUL_REF} && git checkout FETCH_HEAD"
+    ${SCP_COMMAND} -r containers/openstack/ vagrant@"${ADMIN_IP}":~/tmp/ccp-repos
 fi
 # Run CCP deployment and OpenStack tests:
 ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
