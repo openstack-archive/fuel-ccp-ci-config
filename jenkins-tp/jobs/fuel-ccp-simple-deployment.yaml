@@ -4,6 +4,7 @@
       Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
     node: standard
     builders:
+      - zuul-clone
       - inject:
           properties-content: |
             COMPONENT={component}
@@ -49,6 +50,7 @@
           scm-repo: 'fuel-ccp-installer'
     wrappers:
       - ng-cleanup
+      - fuel-ccp-ci-jenkins
       - timeout:
           timeout: 120
           fail: true
