@@ -5,7 +5,7 @@
       - newton
     jobs:
       - test-{os_version}-build-{name}:
-          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-cinder
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-ceph fuel-ccp-cinder
 
 - project:
     name: debian-base
