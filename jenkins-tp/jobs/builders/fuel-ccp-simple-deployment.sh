@@ -97,7 +97,7 @@ else
     ${SCP_COMMAND} -r containers/openstack/ vagrant@"${ADMIN_IP}":/tmp/ccp-repos
 fi
 # Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1"
+${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
 
 # Revert to fresh to decrease image size
 dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
