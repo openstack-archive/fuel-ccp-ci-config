@@ -130,6 +130,15 @@
           repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-sahara
 
 - project:
+    name: searchlight
+    os_version:
+      - master
+      - newton
+    jobs:
+      - test-{os_version}-build-{name}:
+          repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-searchlight
+
+- project:
     name: stacklight
     jobs:
       - test-build-{name}:

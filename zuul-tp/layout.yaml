@@ -163,6 +163,12 @@ projects:
       - test-newton-build-sahara
       - test-master-build-sahara
 
+  - name: openstack/fuel-ccp-searchlight
+    check:
+      - test-newton-build-searchlight
+      - test-master-build-searchlight
+
+
   - name: openstack/fuel-ccp-stacklight
     check:
       - test-build-stacklight
