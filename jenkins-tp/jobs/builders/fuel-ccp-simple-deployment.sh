@@ -13,8 +13,8 @@
 FUEL_DEVOPS_SNAPSHOT_NAME="fresh"
 FUEL_DEVOPS_INSTALLATION_DIR="/home/jenkins/venv-fuel-devops-3.0"
 HYPERKUBE_REPO="quay.io/coreos/hyperkube"
-HYPERKUBE_TAG="v1.4.0_coreos.1"
-HYPERKUBE_VERSION="v1.4.0"
+HYPERKUBE_TAG="v1.5.1_coreos.0"
+HYPERKUBE_VERSION="v1.5.1"
 export APT_CACHE_SERVER_IP="`getent hosts cache-scc.ng.mirantis.net| awk '{print $1}'`"
 export APT_CACHE_SERVER_PORT="3142"
 
