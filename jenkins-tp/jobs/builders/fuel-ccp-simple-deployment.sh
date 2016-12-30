@@ -43,7 +43,8 @@ export WORKSPACE="/home/jenkins/workspace"
 export FUEL_DEVOPS_INSTALLATION_DIR=${FUEL_DEVOPS_INSTALLATION_DIR}
 export CUSTOM_YAML='hyperkube_image_repo: "${HYPERKUBE_REPO}"
 hyperkube_image_tag: "${HYPERKUBE_TAG}"
-kube_version: "${HYPERKUBE_VERSION}"'
+kube_version: "${HYPERKUBE_VERSION}"
+searchdomains: "mcp.mirantis.net ccp-${VERSION}-1.svc.cluster.local"'
 
 echo "Running on \${NODE_NAME}: \${ENV_NAME}"
 source \${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
