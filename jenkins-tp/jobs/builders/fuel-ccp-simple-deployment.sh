@@ -85,6 +85,21 @@ ${SSH_COMMAND} "sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
+# Dirty hack for workaround network problems on CI envs.
+# When we deploy env some time after (few minutes) it change resolv.conf into broken one
+# From this reason after bring up env we restart network and set resolv.conf to read-only,
+# we also restart docker to make sure that all net-host containers are in good shape
+${SSH_COMMAND} "sudo service networking restart"
+${SSH_COMMAND} "sudo chmod 444 /run/resolvconf/resolv.conf"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service networking restart"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo chmod 444 /run/resolvconf/resolv.conf"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service networking restart"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo chmod 444 /run/resolvconf/resolv.conf"
+
+${SSH_COMMAND} "sudo service docker restart"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service docker restart"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service docker restart"
+
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
