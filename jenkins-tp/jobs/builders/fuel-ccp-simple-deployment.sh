@@ -85,6 +85,27 @@ ${SSH_COMMAND} "sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo service ntp restart"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
+# Dirty hack for workaround network problems on CI envs.
+# When we deploy env some time after (few minutes) it change resolv.conf into broken one
+# From this reason after bring up env we restart network and and kill dhclient,
+# we also restart docker and kubelet to make sure that all net-host containers are in good shape
+
+cat > fix_dns.sh << EOF
+sudo service networking restart
+sudo pkill -9 dhclient
+sudo service kubelet restart
+sudo service docker restart
+EOF
+
+chmod +x fix_dns.sh
+
+${SCP_COMMAND} fix_dns.sh vagrant@"${ADMIN_IP}":~/
+${SSH_COMMAND} "scp -o StrictHostKeyChecking=no fix_dns.sh vagrant@node2:~/"
+${SSH_COMMAND} "scp -o StrictHostKeyChecking=no fix_dns.sh vagrant@node3:~/"
+${SSH_COMMAND} "sudo ./fix_dns.sh"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo ./fix_dns.sh"
+${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo ./fix_dns.sh"
+
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
