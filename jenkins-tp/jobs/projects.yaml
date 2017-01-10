@@ -29,6 +29,15 @@
           repos: fuel-ccp-debian-base fuel-ccp-openstack-base fuel-ccp-ceph fuel-ccp-glance
 
 - project:
+    name: grafana
+    os_version:
+      - master
+      - newton
+    jobs:
+      - test-{os_version}-build-{name}:
+          repos: fuel-ccp-debian-base fuel-ccp-grafana
+
+- project:
     name: heat
     os_version:
       - master
