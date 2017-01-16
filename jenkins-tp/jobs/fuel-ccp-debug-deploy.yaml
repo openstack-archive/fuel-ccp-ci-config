@@ -1,0 +1,48 @@
+- job-template:
+    name: fuel-ccp-debug-{version}-deployment
+    description: |
+      Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
+    node: standard
+    builders:
+      - inject:
+          properties-content: |
+            COMPONENT=full
+            VERSION={version}
+      - shell:
+          !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
+    concurrent: true
+    properties:
+      - heavy-job:
+          weight: 2
+      - throttle:
+          option: project
+          max-per-node: 1
+      - least-load:
+          disabled: False
+    scm:
+      - openstack:
+          scm-basedir: 'fuel-ccp'
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp'
+      - openstack:
+          scm-basedir: 'fuel-ccp-installer'
+          scm-branch: 'master'
+          scm-repo: 'fuel-ccp-installer'
+    wrappers:
+      - ng-cleanup
+      - fuel-ccp-ci-jenkins
+      - timeout:
+          timeout: 120
+          fail: true
+    parameters:
+      - node:
+          name: NODE
+          allowed-multiselect: true
+
+- project:
+    name: Deploy CCP in debug mode without remove snapshots and with selected node
+    version:
+      - master
+      - newton
+    jobs:
+      - 'fuel-ccp-debug-{version}-deployment'
