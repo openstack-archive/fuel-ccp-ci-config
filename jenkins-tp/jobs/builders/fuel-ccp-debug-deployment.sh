@@ -45,7 +45,7 @@ export FUEL_DEVOPS_INSTALLATION_DIR=${FUEL_DEVOPS_INSTALLATION_DIR}
 export CUSTOM_YAML='hyperkube_image_repo: "${HYPERKUBE_REPO}"
 hyperkube_image_tag: "${HYPERKUBE_TAG}"
 kube_version: "${HYPERKUBE_VERSION}"
-docker_options: "--insecure-registry=${REGISTRY_IP}'
+docker_options: "--insecure-registry=${REGISTRY_IP}"'
 
 echo "Running on \${NODE_NAME}: \${ENV_NAME}"
 source \${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
