@@ -109,7 +109,10 @@ ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo ./fix_dns.sh"
 
 sed -i 's/127.0.0.1:31500/'${REGISTRY_IP}'/g' fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
-sed -i '/builder:/a\  tag:'${ZUUL_CHANGE} fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
+cat >> fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml << EOF
+images:
+  tag: "${BUILD_ID}"
+EOF
 
 ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
 
