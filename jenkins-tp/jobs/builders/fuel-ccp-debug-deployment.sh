@@ -45,7 +45,7 @@ export FUEL_DEVOPS_INSTALLATION_DIR=${FUEL_DEVOPS_INSTALLATION_DIR}
 export CUSTOM_YAML='hyperkube_image_repo: "${HYPERKUBE_REPO}"
 hyperkube_image_tag: "${HYPERKUBE_TAG}"
 kube_version: "${HYPERKUBE_VERSION}"
-docker_options: "--insecure-registry=${REGISTRY_IP}"'
+docker_options: "--insecure-registry=${REGISTRY_IP}:5000"'
 
 echo "Running on \${NODE_NAME}: \${ENV_NAME}"
 source \${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
@@ -108,7 +108,7 @@ ${SSH_COMMAND} "sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo ./fix_dns.sh"
 
-sed -i 's/127.0.0.1:31500/'${REGISTRY_IP}'/g' fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
+sed -i 's/127.0.0.1:31500/'${REGISTRY_IP}':5000/g' fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
 cat >> fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml << EOF
 images:
   tag: "${BUILD_ID}"
