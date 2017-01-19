@@ -19,6 +19,9 @@ export APT_CACHE_SERVER_IP="`getent hosts cache-scc.ng.mirantis.net| awk '{print
 export APT_CACHE_SERVER_PORT="3142"
 export REGISTRY_IP=`ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'`
 export REGISTRY_PORT=5000
+JENKINS_GID=`getent group jenkins | cut -d":" -f3`
+REGISTRY_HASH=`docker inspect --format "{{.Id}}" registry`
+
 
 # Prepare K8s env:
 source "${FUEL_DEVOPS_INSTALLATION_DIR}"/bin/activate
@@ -120,6 +123,14 @@ ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
 
 # Run CCP deployment and OpenStack tests:
 ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
+
+docker exec "${REGISTRY_HASH}" sudo chgrp -R "${JENKINS_GID}" /var/lib/registry
+docker exec "${REGISTRY_HASH}" sudo chmod -R  g+w /var/lib/registry
+
+for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repositories[]'`; do
+        REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"${BUILD_ID}"
+done
+
 
 # Revert to fresh to decrease image size
 dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
