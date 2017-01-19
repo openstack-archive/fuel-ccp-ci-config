@@ -1,12 +1,12 @@
 - job:
-    name: remove-all-snapshots
+    name: remove-all-simple-deployment-envs
     description: |
-          This job will trigger jobs for removing K8s snaphosts on all slaves.
+          This job will trigger jobs for removing all simple deployment envs on all slaves.
     builders:
       - shell: |
-          echo "Removing snaphosts on slaves"
+          echo "Removing simple deployment envs from all  slaves"
       - trigger-builds:
-          - project: "remove-snapshots-simple-deployment"
+          - project: "remove-simple-deployment-envs"
             parameter-factories:
               - factory: allnodesforlabel
                 name: NODE

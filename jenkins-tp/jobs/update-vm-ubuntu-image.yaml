@@ -9,7 +9,7 @@
       - shell:
           !include-raw 'builders/update-vm-ubuntu-image.sh'
       - trigger-builds:
-          - project: "remove-snapshots-simple-deployment"
+          - project: "remove-simple-deployment-envs"
             same-node: true
             current-parameters: true
     concurrent: true

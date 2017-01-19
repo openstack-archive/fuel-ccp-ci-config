@@ -1,5 +1,5 @@
 - job:
-    name: remove-snapshots-simple-deployment
+  name: remove-simple-deployment-envs
     builders:
       - inject:
           properties-content: |
@@ -12,7 +12,7 @@
       - heavy-job:
           weight: 6
     description: |
-      Removes snapshot of K8s env for fuel-ccp simple deployment test.
+      Removes envs for simple deployment tests.
     logrotate:
       daysToKeep: 14
     parameters:
