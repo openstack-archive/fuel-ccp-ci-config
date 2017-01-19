@@ -18,6 +18,7 @@ HYPERKUBE_VERSION="v1.5.1"
 export APT_CACHE_SERVER_IP="`getent hosts cache-scc.ng.mirantis.net| awk '{print $1}'`"
 export APT_CACHE_SERVER_PORT="3142"
 export REGISTRY_IP=`ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'`
+export REGISTRY_PORT=5000
 
 # Prepare K8s env:
 source "${FUEL_DEVOPS_INSTALLATION_DIR}"/bin/activate
@@ -45,7 +46,7 @@ export FUEL_DEVOPS_INSTALLATION_DIR=${FUEL_DEVOPS_INSTALLATION_DIR}
 export CUSTOM_YAML='hyperkube_image_repo: "${HYPERKUBE_REPO}"
 hyperkube_image_tag: "${HYPERKUBE_TAG}"
 kube_version: "${HYPERKUBE_VERSION}"
-docker_options: "--insecure-registry=${REGISTRY_IP}"'
+docker_options: "--insecure-registry=${REGISTRY_IP}:${REGISTRY_PORT}"'
 
 echo "Running on \${NODE_NAME}: \${ENV_NAME}"
 source \${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
@@ -108,7 +109,7 @@ ${SSH_COMMAND} "sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo ./fix_dns.sh"
 
-sed -i 's/127.0.0.1:31500/'${REGISTRY_IP}'/g' fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
+sed -i 's/127.0.0.1:31500/'${REGISTRY_IP}':'${REGISTRY_PORT}'/g' fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
 cat >> fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml << EOF
 images:
   tag: "${BUILD_ID}"
