@@ -17,6 +17,10 @@ HYPERKUBE_TAG="v1.5.1_coreos.0"
 HYPERKUBE_VERSION="v1.5.1"
 export APT_CACHE_SERVER_IP="`getent hosts cache-scc.ng.mirantis.net| awk '{print $1}'`"
 export APT_CACHE_SERVER_PORT="3142"
+export REGISTRY_IP=`ip -4 addr show eth0 | grep -oP '(?<=inet\s)\d+(\.\d+){3}'`
+export REGISTRY_PORT=5000
+JENKINS_GID=`getent group jenkins | cut -d":" -f3`
+REGISTRY_HASH=`docker inspect --format "{{.Id}}" registry`
 
 # Prepare K8s env:
 source "${FUEL_DEVOPS_INSTALLATION_DIR}"/bin/activate
@@ -43,7 +47,8 @@ export WORKSPACE="/home/jenkins/workspace"
 export FUEL_DEVOPS_INSTALLATION_DIR=${FUEL_DEVOPS_INSTALLATION_DIR}
 export CUSTOM_YAML='hyperkube_image_repo: "${HYPERKUBE_REPO}"
 hyperkube_image_tag: "${HYPERKUBE_TAG}"
-kube_version: "${HYPERKUBE_VERSION}"'
+kube_version: "${HYPERKUBE_VERSION}"
+docker_options: "--insecure-registry=${REGISTRY_IP}:${REGISTRY_PORT}"'
 
 echo "Running on \${NODE_NAME}: \${ENV_NAME}"
 source \${FUEL_DEVOPS_INSTALLATION_DIR}/bin/activate
@@ -106,6 +111,13 @@ ${SSH_COMMAND} "sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node2 sudo ./fix_dns.sh"
 ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo ./fix_dns.sh"
 
+# Change registry ip address to slave and set tag
+sed -i 's/127.0.0.1:31500/'${REGISTRY_IP}':'${REGISTRY_PORT}'/g' fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml
+cat >> fuel-ccp/tools/ccp-multi-deploy/config/ccp-configs-common.yaml << EOF
+images:
+  tag: "${ZUUL_CHANGE}"
+EOF
+
 # Prepare env on "admin" VM:
 if [ ${COMPONENT} == "full" ];then
     ${SCP_COMMAND} -r fuel-ccp/ vagrant@"${ADMIN_IP}":~/
@@ -117,6 +129,14 @@ else
     set -x
     ${SCP_COMMAND} -r containers/openstack/ vagrant@"${ADMIN_IP}":/tmp/ccp-repos
 fi
+
+docker exec "${REGISTRY_HASH}" sudo chgrp -R "${JENKINS_GID}" /var/lib/registry
+docker exec "${REGISTRY_HASH}" sudo chmod -R  g+w /var/lib/registry
+
+for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repositories[]'`; do
+        REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"${ZUUL_CHANGE}"
+done
+
 # Run CCP deployment and OpenStack tests:
 ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
 
