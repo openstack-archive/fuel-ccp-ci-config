@@ -130,15 +130,15 @@ else
     ${SCP_COMMAND} -r containers/openstack/ vagrant@"${ADMIN_IP}":/tmp/ccp-repos
 fi
 
+# Run CCP deployment and OpenStack tests:
+${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
+
 docker exec "${REGISTRY_HASH}" chgrp -R "${JENKINS_GID}" /var/lib/registry
 docker exec "${REGISTRY_HASH}" chmod -R  g+w /var/lib/registry
 
 for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repositories[]'`; do
         REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"${ZUUL_CHANGE}"
 done
-
-# Run CCP deployment and OpenStack tests:
-${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}:${APT_CACHE_SERVER_PORT} tox -e multi-deploy -- --openstack-version ${VERSION} --number-of-envs 1 -d"
 
 # Revert to fresh to decrease image size
 dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
