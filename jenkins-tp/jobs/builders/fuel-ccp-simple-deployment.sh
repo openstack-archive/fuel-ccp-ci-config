@@ -130,8 +130,8 @@ else
     ${SCP_COMMAND} -r containers/openstack/ vagrant@"${ADMIN_IP}":/tmp/ccp-repos
 fi
 
-docker exec "${REGISTRY_HASH}" sudo chgrp -R "${JENKINS_GID}" /var/lib/registry
-docker exec "${REGISTRY_HASH}" sudo chmod -R  g+w /var/lib/registry
+docker exec "${REGISTRY_HASH}" chgrp -R "${JENKINS_GID}" /var/lib/registry
+docker exec "${REGISTRY_HASH}" chmod -R  g+w /var/lib/registry
 
 for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repositories[]'`; do
         REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"${ZUUL_CHANGE}"
