@@ -136,9 +136,11 @@ ${SSH_COMMAND} "pushd fuel-ccp && APT_CACHE_SERVER=http://${APT_CACHE_SERVER_IP}
 docker exec "${REGISTRY_HASH}" chgrp -R "${JENKINS_GID}" /var/lib/registry
 docker exec "${REGISTRY_HASH}" chmod -R  g+w /var/lib/registry
 
+set +e
 for i in `curl http://${REGISTRY_IP}:${REGISTRY_PORT}/v2/_catalog | jq -r '.repositories[]'`; do
         REGISTRY_DATA_DIR=/home/jenkins/registry/data/docker/registry/v2/ /home/jenkins/registry/delete_docker_registry_image.py --image "${i}":"${ZUUL_CHANGE}"
 done
+set -e
 
 # Revert to fresh to decrease image size
 dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
