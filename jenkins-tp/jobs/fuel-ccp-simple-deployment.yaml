@@ -12,6 +12,13 @@
       - shell:
           !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
     publishers:
+      - ssh:
+          site: logs.mcp.fuel-infra.org
+          target: /srv/static/logs/snapshots/
+          source: $WORKSPACE/*.tar.gzzzz
+          fail-on-error: false
+          always-publish-from-master: true
+          flatten: true
       - post-tasks:
           - matches:
               - log-text: ''
