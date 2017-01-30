@@ -2,7 +2,7 @@
     name: fuel-ccp-{component}-{version}-deployment
     description: |
       Deploy CCP and run basic OpenStack tests (uses snapshot for K8s cluster)
-    node: standard
+    node: {component}
     builders:
       - zuul-clone
       - inject:
