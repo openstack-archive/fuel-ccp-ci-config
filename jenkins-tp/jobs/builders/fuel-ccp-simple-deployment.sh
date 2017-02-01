@@ -147,3 +147,10 @@ dos.py revert "${FUEL_DEVOPS_ENV_NAME}" "${FUEL_DEVOPS_SNAPSHOT_NAME}"
 
 # Clean-up (snapshot should remain for next jobs):
 dos.py destroy "${FUEL_DEVOPS_ENV_NAME}"
+
+# Convert images to save some diskspace
+for f in {0..2}; do
+    docker exec converter qemu-img convert -O qcow2 /images/"${FUEL_DEVOPS_ENV_NAME}_slave-${f}_system" /images/"${FUEL_DEVOPS_ENV_NAME}_slave-${f}_system.converted"
+    docker exec converter rm /images/"${FUEL_DEVOPS_ENV_NAME}_slave-${f}_system"
+    docker exec converter mv /images/"${FUEL_DEVOPS_ENV_NAME}_slave-${f}_system.converted" /images/"${FUEL_DEVOPS_ENV_NAME}_slave-${f}_system"
+done
