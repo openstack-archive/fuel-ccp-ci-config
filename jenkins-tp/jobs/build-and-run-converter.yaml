@@ -1,0 +1,20 @@
+- job:
+    name: build-and-run-converter
+    builders:
+      - shell:
+          !include-raw 'builders/build-and-run-converter.sh'
+    concurrent: true
+    properties:
+      - heavy-job:
+          weight: 6
+    description: |
+      Build converter image
+    logrotate:
+      daysToKeep: 14
+    parameters:
+      - node:
+          name: NODE
+          allowed-multiselect: true
+    wrappers:
+      - timeout:
+          timeout: 60
