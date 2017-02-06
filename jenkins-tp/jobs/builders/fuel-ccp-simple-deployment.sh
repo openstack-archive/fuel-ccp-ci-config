@@ -82,6 +82,9 @@ SCP_COMMAND="sshpass -p vagrant scp -o StrictHostKeyChecking=no"
 # remove old key:
 ssh-keygen -R "${ADMIN_IP}"
 
+# Let's wait 5 sec to all vms up
+sleep 5
+
 # Store info about Jenkins job on VM:
 echo "${BUILD_TAG}" | ${SSH_COMMAND} "tee -a JENKINS_INFO.TXT"
 
