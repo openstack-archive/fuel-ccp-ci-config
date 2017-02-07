@@ -1,18 +1,18 @@
 - job:
-    name: remove-snapshots-simple-deployment
+    name: remove-simple-deployment-envs
     builders:
       - inject:
           properties-content: |
             FUEL_DEVOPS_ENV_NAME=ccp-simple-deployment-env
             FUEL_DEVOPS_SNAPSHOT_NAME=fresh
       - shell:
-          !include-raw 'builders/remove-snapshots.sh'
+          !include-raw 'builders/remove-simple-deployment-envs.sh'
     concurrent: true
     properties:
       - heavy-job:
           weight: 6
     description: |
-      Removes snapshot of K8s env for fuel-ccp simple deployment test.
+      Removes envs for simple deployment tests.
     logrotate:
       daysToKeep: 14
     parameters:
