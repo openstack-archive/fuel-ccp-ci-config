@@ -69,6 +69,7 @@
       - rabbitmq
       - stacklight
       - cinder
+      - galera
       - glance
       - heat
       - horizon

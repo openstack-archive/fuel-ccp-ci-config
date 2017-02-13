@@ -81,6 +81,12 @@ projects:
       - fuel-ccp-etcd-newton-deployment
       - fuel-ccp-etcd-master-deployment
 
+  - name: openstack/fuel-ccp-galera
+    check:
+      - test-build-galera
+      - fuel-ccp-galera-newton-deployment
+      - fuel-ccp-galera-master-deployment
+
   - name: openstack/fuel-ccp-glance
     check:
       - test-master-build-glance
