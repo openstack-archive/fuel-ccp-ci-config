@@ -20,6 +20,13 @@
           repos: fuel-ccp-debian-base fuel-ccp-etcd
 
 - project:
+    name: galera
+    jobs:
+      - test-build-{name}:
+          repos: fuel-ccp-debian-base fuel-ccp-galera
+          tox-test: pep8
+
+- project:
     name: glance
     os_version:
       - master
