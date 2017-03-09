@@ -263,7 +263,6 @@ roles:
     - nova-consoleauth
     - nova-novncproxy
     - nova-scheduler
-    - rabbitmq
   compute:
     - nova-compute
     - nova-libvirt
