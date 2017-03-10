@@ -33,7 +33,7 @@
     concurrent: true
     properties:
       - heavy-job:
-          weight: 2
+          weight: 3
       - throttle:
           option: project
           max-per-node: 1
