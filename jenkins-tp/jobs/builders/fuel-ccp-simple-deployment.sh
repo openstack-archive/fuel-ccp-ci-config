@@ -164,6 +164,8 @@ repositories:
       name: neutron
     - git_url: https://git.openstack.org/openstack/fuel-ccp-nova
       name: nova
+    - git_url: https://git.openstack.org/openstack/fuel-ccp-nginx
+      name: nginx
     - git_url: https://git.openstack.org/openstack/fuel-ccp-openstack-base
       name: openstack-base
     - git_url: https://git.openstack.org/openstack/fuel-ccp-rabbitmq
@@ -306,13 +308,13 @@ function ccp_install {
 function deploy_ccp {
     pwd
     ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera"
+    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera percona"
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c etcd memcached database"
-    ccp_wait_for_deployment_to_finish 50
+    ccp_wait_for_deployment_to_finish 70
     if [ $? -ne 0 ]; then
         return 1
     fi
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c keystone"
+    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c keystonei nginx"
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c keystone"
     ccp_wait_for_deployment_to_finish 30
     if [ $? -ne 0 ]; then
