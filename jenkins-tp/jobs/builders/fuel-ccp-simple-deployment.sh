@@ -306,9 +306,9 @@ function ccp_install {
 function deploy_ccp {
     pwd
     ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera"
+    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera percona"
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c etcd memcached database"
-    ccp_wait_for_deployment_to_finish 50
+    ccp_wait_for_deployment_to_finish 70
     if [ $? -ne 0 ]; then
         return 1
     fi
