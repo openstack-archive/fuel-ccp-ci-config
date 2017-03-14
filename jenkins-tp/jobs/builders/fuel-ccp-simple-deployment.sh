@@ -139,8 +139,10 @@ registry:
   address: "${REGISTRY_IP}:${REGISTRY_PORT}"
   timeout: 1500
 replicas:
+  etcd: 3
   database: 3
   rpc: 3
+  notifications: 1
 repositories:
   path: /tmp/ccp-repos
   skip_empty: True
@@ -180,6 +182,9 @@ repositories:
       name: ironic
 configs:
     private_interface: ens3
+    etcd:
+      tls:
+        enabled: false
 nodes:
   node[1-3]:
     roles:
@@ -312,15 +317,9 @@ function ccp_install {
 function deploy_ccp {
     pwd
     ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera percona"
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c etcd memcached database"
+    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera percona rabbitmq"
+    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c etcd memcached database rpc notifications"
     ccp_wait_for_deployment_to_finish 70
-    if [ $? -ne 0 ]; then
-        return 1
-    fi
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c keystone nginx"
-    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c keystone"
-    ccp_wait_for_deployment_to_finish 30
     if [ $? -ne 0 ]; then
         return 1
     fi
@@ -330,7 +329,6 @@ function deploy_ccp {
     if [ $? -ne 0 ]; then
         return 1
     fi
-
 }
 
 prepare_k8s_env
