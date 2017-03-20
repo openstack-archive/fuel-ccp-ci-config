@@ -180,11 +180,17 @@ repositories:
       name: ceph
     - git_url: https://git.openstack.org/openstack/fuel-ccp-ironic
       name: ironic
+    - git_url: https://git.openstack.org/openstack/fuel-ccp-rally
+      name: rally
+
 configs:
     private_interface: ens3
     etcd:
       tls:
         enabled: false
+    rally:
+      tempest:
+        openstack_release: ${VERSION}
 nodes:
   node[1-3]:
     roles:
@@ -316,7 +322,6 @@ function ccp_install {
 
 function deploy_ccp {
     pwd
-    ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml build -c etcd memcached rabbitmq galera percona rabbitmq"
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml deploy -c etcd memcached database rpc notifications"
     ccp_wait_for_deployment_to_finish 70
@@ -373,19 +378,41 @@ prepare_ccp_config
 ccp_install
 
 if [ ${COMPONENT} == "smoke" ]; then
+
+    ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
+    ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml fetch"
+    ${SCP_COMMAND} -r ~/skel/* vagrant@"${ADMIN_IP}":/tmp/ccp-repos/rally/service/files
     set +e
     # Run CCP deployment and OpenStack tests:
     deploy_ccp
     DEPLOY_STATUS=$?
-    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "echo ${DOCKER_REGISTRY_IP} ${DOCKER_REGISTRY_HOST} |sudo tee -a /etc/hosts"
-    set -e
-
     #set tag dependent from test result
-    if [[ "${DEPLOY_STATUS}" == 0 ]]; then
-        DOCKER_TAG="${IMAGES_TAG}"
-    else
-        DOCKER_TAG="${IMAGES_TAG}-unstable"
+    if [[ "${DEPLOY_STATUS}" != 0 ]]; then
+        echo "Deployment fail! Check diagnostic snapshot."
+        exit 1
     fi
+
+    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "echo ${DOCKER_REGISTRY_IP} ${DOCKER_REGISTRY_HOST} |sudo tee -a /etc/hosts"
+    TEMPEST_NAME=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "ccp -vvv --debug --config-file ~/ccp.yml action run tempest -f value -c name"`
+
+    stop = 0
+    until [ ${stop} -eq 1 ]; do
+        test_status=`${SSH_COMMAND} ccp -vvv --debug action status ${TEMPEST_NAME} -f value -c status`
+        if [ "${test_status}" == "fail" ]; then
+            stop=1
+            DOCKER_TAG="${IMAGES_TAG}-unstable"
+        elif [ "${test_status}" == "ok" ]; then
+            stop=1
+            DOCKER_TAG="${IMAGES_TAG}"
+        else
+            sleep 60
+        fi
+    done
+
+
+    ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} | grep -A 9 Totals
+    ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} -p | grep -A 9 Totals
+    set -e
 
     IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP} docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
 
