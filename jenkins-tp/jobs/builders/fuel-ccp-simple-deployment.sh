@@ -180,6 +180,9 @@ repositories:
       name: ceph
     - git_url: https://git.openstack.org/openstack/fuel-ccp-ironic
       name: ironic
+    - git_url: https://git.openstack.org/openstack/fuel-ccp-rally
+      name: rally
+
 configs:
     private_interface: ens3
     etcd:
@@ -373,19 +376,40 @@ prepare_ccp_config
 ccp_install
 
 if [ ${COMPONENT} == "smoke" ]; then
+    ${SSH_COMMAND} "mkdir -p /tmp/ccp-repos/rally"
+    ${SCP_COMMAND} -r /home/jenkins/fuel-ccp-rally/* vagrant@"${ADMIN_IP}":/tmp/ccp-repos/rally
+
+
     set +e
     # Run CCP deployment and OpenStack tests:
     deploy_ccp
     DEPLOY_STATUS=$?
-    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "echo ${DOCKER_REGISTRY_IP} ${DOCKER_REGISTRY_HOST} |sudo tee -a /etc/hosts"
-    set -e
-
     #set tag dependent from test result
-    if [[ "${DEPLOY_STATUS}" == 0 ]]; then
-        DOCKER_TAG="${IMAGES_TAG}"
-    else
-        DOCKER_TAG="${IMAGES_TAG}-unstable"
+    if [[ "${DEPLOY_STATUS}" != 0 ]]; then
+        echo "Deployment fail! Check diagnostic snapshot."
+        exit 1
     fi
+
+    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "echo ${DOCKER_REGISTRY_IP} ${DOCKER_REGISTRY_HOST} |sudo tee -a /etc/hosts"
+    TEMPEST_NAME=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "ccp -vvv --debug --config-file ~/ccp.yml action run tempest -f value -c name"`
+
+    until [ ${stop} -eq 1 ]; do
+        test_status=`${SSH_COMMAND} ccp -vvv --debug action status ${TEMPEST_NAME} -f value -c status`
+        if [ "${test_status}" == "fail" ]; then
+            stop=1
+            DOCKER_TAG="${IMAGES_TAG}-unstable"
+        elif [ "${test_status}" == "ok" ]; then
+            stop=1
+            DOCKER_TAG="${IMAGES_TAG}"
+        else
+            sleep 60
+        fi
+    done
+
+    set +e
+    ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} | grep -A 9 Totals
+    ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} -p | grep -A 9 Totals
+    set -e
 
     IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP} docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
 
