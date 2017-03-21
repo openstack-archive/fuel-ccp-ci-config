@@ -185,6 +185,15 @@ repositories:
 
 configs:
     private_interface: ens3
+    public_interface: ens4
+    neutron:
+      physnets:
+        - name: "physnet1"
+          bridge_name: "br-ex"
+          interface: "ens4"
+          flat: true
+          vlan_range: "1001:1030"
+          dpdk: false
     etcd:
       tls:
         enabled: false
