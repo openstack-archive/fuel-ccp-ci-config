@@ -1,0 +1,9 @@
+Verified+1: Mirantis CCP CI <mirantis-fuel-ccp-ci@mirantis.com>
+Code-Review+2: Artur Zarzycki <azarzycki@mirantis.com>
+Workflow+1: Artur Zarzycki <azarzycki@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 21 Mar 2017 20:11:16 +0000
+Reviewed-on: https://review.openstack.org/448259
+Project: openstack/fuel-ccp-ci-config
+Branch: refs/heads/master
