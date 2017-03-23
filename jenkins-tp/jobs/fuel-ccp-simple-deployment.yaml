@@ -12,6 +12,9 @@
       - shell:
           !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
     publishers:
+      - junit:
+          results: result-{version}.html
+          allow-empty-results: true
       - post-tasks:
           - matches:
               - log-text: ''

@@ -423,6 +423,8 @@ if [ ${COMPONENT} == "smoke" ]; then
     ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} -p | grep -A 9 Totals
     set -e
 
+    wget http://share01-scc.ng.mirantis.net/tests/tests/result-${VERSION}.xml
+
     IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP} docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
 
     # we need docker config file to authentication in remote repository
