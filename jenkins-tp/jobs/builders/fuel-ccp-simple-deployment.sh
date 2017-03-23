@@ -390,7 +390,7 @@ prepare_ccp_config
 ccp_install
 
 if [ ${COMPONENT} == "smoke" ]; then
-
+    ssh -i ~/.ssh/jenkins_storage share@share01-scc.ng.mirantis.net rm /srv/static/share/tests/tests/result-${VERSION}.xml
     ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml fetch"
     ${SCP_COMMAND} -r ~/skel/* vagrant@"${ADMIN_IP}":/tmp/ccp-repos/rally/service/files
@@ -400,7 +400,9 @@ if [ ${COMPONENT} == "smoke" ]; then
     DEPLOY_STATUS=$?
     #set tag dependent from test result
     if [[ "${DEPLOY_STATUS}" != 0 ]]; then
-        echo "Deployment fail! Check diagnostic snapshot."
+        echo "Deployment failed! Check diagnostic snapshot."
+        ${SCP_COMMAND} vagrant@"${ADMIN_IP}":~/tmp/ccp-diag/*.tar.gz .
+        scp -i ~/.ssh/jenkins_storage *.tar.gz share@share01-scc.ng.mirantis.net:/srv/static/share/tests/diagnostic/
         exit 1
     fi
 
@@ -424,6 +426,7 @@ if [ ${COMPONENT} == "smoke" ]; then
 
     ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} | grep -A 9 Totals
     ${SSH_COMMAND} kubectl -n ccp logs ${TEMPEST_NAME} -p | grep -A 9 Totals
+    wget http://share01-scc.ng.mirantis.net/tests/tests/result-${VERSION}.xml
     set -e
 
     IMG=`sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@${ADMIN_IP} docker images --format "{{.Repository}}" | awk -F'/' -v search=/${IMAGES_NAMESPACE}/ '$0 ~ search {print $3}'`
