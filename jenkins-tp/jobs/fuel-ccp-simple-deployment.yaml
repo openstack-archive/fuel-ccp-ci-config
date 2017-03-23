@@ -13,7 +13,7 @@
           !include-raw-escape 'builders/fuel-ccp-simple-deployment.sh'
     publishers:
       - junit:
-          results: result-{version}.html
+          results: result-{version}.xml
           allow-empty-results: true
       - post-tasks:
           - matches:
