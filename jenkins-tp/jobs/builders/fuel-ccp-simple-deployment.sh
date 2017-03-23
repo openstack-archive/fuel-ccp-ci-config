@@ -25,6 +25,8 @@ export DOCKER_REGISTRY="${DOCKER_REGISTRY_HOST}:6000"
 export DOCKER_REGISTRY_IP="`getent hosts ${DOCKER_REGISTRY_HOST} | awk '{print $1}'`"
 export IMAGES_NAMESPACE="ccp"
 export REGISTRY_NAMESPACE="mcp"
+export SHARE_IP="`getent hosts share01-scc.ng.mirantis.net | awk '{print $1}'`"
+export SHARE_HOST="share01-scc.ng.mirantis.net"
 
 function prepare_k8s_env {
     # Prepare K8s env:
@@ -310,7 +312,6 @@ ccp_wait_for_deployment_to_finish () {
             echo "Max time exceeded"
             ${SSH_COMMAND} ccp status
             ${SSH_COMMAND} fuel-ccp/tools/diagnostic-snapshot.sh -n ccp -c ccp.yml
-            ${SCP_COMMAND} vagrant@"${ADMIN_IP}":/tmp/ccp-diag/*.tar.gz .
             return 1
         fi
     done
@@ -387,6 +388,7 @@ prepare_ccp_config
 ccp_install
 
 if [ ${COMPONENT} == "smoke" ]; then
+    sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "echo ${SHARE_IP} ${SHARE_HOST} |sudo tee -a /etc/hosts"
     ssh -i ~/.ssh/jenkins_storage share@share01-scc.ng.mirantis.net rm /srv/static/share/tests/tests/result-${VERSION}.xml
     ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml fetch"
