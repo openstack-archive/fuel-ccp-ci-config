@@ -247,6 +247,9 @@ sources:
   openstack/neutron:
     git_url: https://git.openstack.org/openstack/neutron.git
     git_ref: ${BRANCH}
+  openstack/networking-odl:
+      git_url: https://git.openstack.org/openstack/networking-odl.git
+      git_ref: ${BRANCH}
   openstack/heat:
     git_url: https://git.openstack.org/openstack/heat.git
     git_ref: ${BRANCH}
