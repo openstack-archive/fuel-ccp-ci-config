@@ -392,7 +392,9 @@ ccp_install
 
 if [ ${COMPONENT} == "smoke" ]; then
     sshpass -p vagrant ssh -o StrictHostKeyChecking=no vagrant@"${ADMIN_IP}" "echo ${SHARE_IP} ${SHARE_HOST} |sudo tee -a /etc/hosts"
+    set +e
     ssh -i ~/.ssh/jenkins_storage share@share01-scc.ng.mirantis.net rm /srv/static/share/tests/tests/result-${VERSION}.xml
+    set -e
     ${SCP_COMMAND} ccp.yml vagrant@"${ADMIN_IP}":~/
     ${SSH_COMMAND} "ccp -vvv --debug --config-file ~/ccp.yml fetch"
     ${SCP_COMMAND} -r ~/skel/* vagrant@"${ADMIN_IP}":/tmp/ccp-repos/rally/service/files
