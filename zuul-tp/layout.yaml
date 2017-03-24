@@ -168,8 +168,3 @@ projects:
       - verify-jjb-project-config
     post:
       - update-jenkins-jobs
-    periodic:
-      - 'fuel-ccp-smoke-master-deployment'
-      - 'fuel-ccp-smoke-newton-deployment'
-      - 'fuel-ccp-smoke-ocata-deployment'
-      - 'fuel-ccp-smoke-mitaka-deployment'
