@@ -93,7 +93,7 @@ ${SSH_COMMAND} "ssh -o StrictHostKeyChecking=no node3 sudo service ntp restart"
 
 # Dirty hack for workaround network problems on CI envs.
 # When we deploy env some time after (few minutes) it change resolv.conf into broken one
-# From this reason after bring up env we restart network and and kill dhclient,
+# From this reason after bring up env we restart network and kill dhclient,
 # we also restart docker and kubelet to make sure that all net-host containers are in good shape
 
 cat > fix_dns.sh << EOF
