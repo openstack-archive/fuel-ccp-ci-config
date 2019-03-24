@@ -42,7 +42,7 @@ function update_devops {
         pip install -r "${WORKSPACE}/venv-requirements.txt" --upgrade
     fi
 
-    pip install git+git://git.openstack.org/openstack/fuel-devops@3.0.1 --upgrade
+    pip install git+https://git.openstack.org/openstack/fuel-devops@3.0.1 --upgrade
 
     echo "=============================="
     pip freeze
