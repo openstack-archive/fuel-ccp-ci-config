@@ -1,2 +1,0 @@
-bashate>=0.2
-yamllint
